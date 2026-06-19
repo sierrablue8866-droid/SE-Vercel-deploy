@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import { api } from '../lib/apiClient';
 import { Lead, Agent } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 import PriceHeatmapWidget from './PriceHeatmapWidget';
@@ -39,58 +38,32 @@ export default function ReportsPage({ T, isAr = false }: ReportsPageProps) {
   // Fixed reference date as "June 17, 2026" matching metadata
   const today = useMemo(() => new Date("2026-06-17T05:35:46-07:00"), []);
 
+  // Backend-polled leads/agents (replaces Firestore onSnapshot — see ARCHITECTURE_INTEGRATION.md).
   useEffect(() => {
-    // Standard Firebase real-time listeners mapping
-    const unsubLeads = onSnapshot(collection(db, 'leads'), (snap) => {
-      const loadedLeads: Lead[] = [];
-      snap.forEach((doc) => {
-        const d = doc.data();
-        loadedLeads.push({
-          id: doc.id,
-          name: d.name || 'Unnamed Lead',
-          phone: d.phone || '',
-          interest: d.interest || '',
-          stage: d.stage || 'Initial Contact',
-          color: d.color || '#C8961A',
-          hot: !!d.hot,
-          archived: !!d.archived,
-          ownerId: d.ownerId || '',
-          createdAt: d.createdAt?.toDate ? d.createdAt.toDate() : new Date(),
-          updatedAt: d.updatedAt?.toDate ? d.updatedAt.toDate() : new Date(),
-        });
-      });
-      setLeads(loadedLeads);
-    }, (err) => {
-      console.error("Leads reporting sub limits: ", err);
-    });
-
-    const unsubAgents = onSnapshot(collection(db, 'agents'), (snap) => {
-      const loadedAgents: Agent[] = [];
-      snap.forEach((doc) => {
-        const d = doc.data();
-        loadedAgents.push({
-          id: doc.id,
-          name: d.name || 'Agent',
-          desc: d.desc || '',
-          emoji: d.emoji || '👤',
-          color: d.color || '#06b6d4',
-          status: d.status || 'Online',
-          load: d.load || 0,
-          tasks: d.tasks || 0,
-          updatedAt: d.updatedAt?.toDate ? d.updatedAt.toDate() : new Date(),
-        });
-      });
-      setAgents(loadedAgents);
-      setLoading(false);
-    }, (err) => {
-      console.error("Agents reporting sub error: ", err);
-      setLoading(false);
-    });
-
-    return () => {
-      unsubLeads();
-      unsubAgents();
+    const refresh = async () => {
+      try {
+        const [{ leads: loadedLeads }, { agents: loadedAgents }] = await Promise.all([
+          api.get<{ leads: any[] }>('/api/admin/leads'),
+          api.get<{ agents: any[] }>('/api/admin/agents'),
+        ]);
+        setLeads(
+          loadedLeads.map((d) => ({
+            ...d,
+            createdAt: d.createdAt ? new Date(d.createdAt) : new Date(),
+            updatedAt: d.updatedAt ? new Date(d.updatedAt) : new Date(),
+          }))
+        );
+        setAgents(loadedAgents.map((d) => ({ ...d, updatedAt: d.updatedAt ? new Date(d.updatedAt) : new Date() })));
+      } catch (err) {
+        console.error('Failed to fetch report data:', err);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    refresh();
+    const interval = setInterval(refresh, 20000);
+    return () => clearInterval(interval);
   }, []);
 
   // Compute calculated dynamic date ranges

@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { collection, onSnapshot, query, limit, where, Timestamp } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../firebase';
-import { Lead, Listing, Agent, SearchLog } from '../types';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
+import { api } from '../lib/apiClient';
+import { Lead, Agent, SearchLog } from '../types';
 import { ComposedChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardWidgets from './DashboardWidgets';
 import AgentLeaderboard from './AgentLeaderboard';
@@ -101,76 +102,39 @@ export default function OverviewPage({ T }: OverviewPageProps) {
       (err) => console.error('Error fetching searches:', err)
     );
 
-    // Listen to Leads in Firestore
-    const unsubLeads = onSnapshot(
-      collection(db, 'leads'),
-      (snap) => {
-        const loaded: Lead[] = [];
-        snap.forEach((doc) => {
-          const d = doc.data();
-          loaded.push({
-            id: doc.id,
-            name: d.name,
-            phone: d.phone,
-            interest: d.interest,
-            stage: d.stage,
-            color: d.color,
-            hot: d.hot,
-            createdAt: d.createdAt?.toDate ? d.createdAt.toDate() : new Date(),
-            updatedAt: d.updatedAt?.toDate ? d.updatedAt.toDate() : new Date(),
-          });
-        });
-        setLeads(loaded);
-        setLoading(false);
-      },
-      (err) => {
-        handleFirestoreError(err, OperationType.LIST, 'leads');
-      }
-    );
-
-    // Listen to Listings count
-    const unsubListings = onSnapshot(
-      collection(db, 'listings'),
-      (snap) => {
-        setListingsCount(snap.size || 1547);
-      },
-      (err) => {
-        handleFirestoreError(err, OperationType.LIST, 'listings');
-      }
-    );
-
-    // Listen to Agents
-    const unsubAgents = onSnapshot(
-      collection(db, 'agents'),
-      (snap) => {
-        const loaded: Agent[] = [];
-        snap.forEach((doc) => {
-          const d = doc.data();
-          loaded.push({
-            id: doc.id,
-            name: d.name,
-            desc: d.desc,
-            emoji: d.emoji,
-            color: d.color,
-            status: d.status,
-            load: d.load,
-            tasks: d.tasks,
-            updatedAt: d.updatedAt?.toDate ? d.updatedAt.toDate() : new Date(),
-          });
-        });
-        setAgents(loaded);
-      },
-      (err) => {
-        handleFirestoreError(err, OperationType.LIST, 'agents');
-      }
-    );
-
     return () => {
       unsubSearches();
-      unsubLeads();
-      unsubListings();
-      unsubAgents();
     };
+  }, []);
+
+  // Backend-polled leads/listings-count/agents (replaces Firestore onSnapshot — see ARCHITECTURE_INTEGRATION.md).
+  useEffect(() => {
+    const refresh = async () => {
+      try {
+        const [{ leads: loadedLeads }, { listings }, { agents: loadedAgents }] = await Promise.all([
+          api.get<{ leads: any[] }>('/api/admin/leads'),
+          api.get<{ listings: any[] }>('/api/admin/listings'),
+          api.get<{ agents: any[] }>('/api/admin/agents'),
+        ]);
+        setLeads(
+          loadedLeads.map((d) => ({
+            ...d,
+            createdAt: d.createdAt ? new Date(d.createdAt) : new Date(),
+            updatedAt: d.updatedAt ? new Date(d.updatedAt) : new Date(),
+          }))
+        );
+        setListingsCount(listings.length || 1547);
+        setAgents(loadedAgents.map((d) => ({ ...d, updatedAt: d.updatedAt ? new Date(d.updatedAt) : new Date() })));
+      } catch (err) {
+        console.error('Failed to fetch overview data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    refresh();
+    const interval = setInterval(refresh, 20000);
+    return () => clearInterval(interval);
   }, []);
 
   // Compute stats
