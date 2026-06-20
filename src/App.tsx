@@ -29,6 +29,10 @@ import EasyListingPage from './components/EasyListingPage';
 import DataSyncHubPage from './components/DataSyncHubPage';
 import ClientHub from './components/ClientHub';
 import SearchInsightsPage from './components/SearchInsightsPage';
+import DBEditorPage from './components/DBEditorPage';
+import PageEditorPage from './components/PageEditorPage';
+import FollowupsPage from './components/FollowupsPage';
+import BotsControlPage from './components/BotsControlPage';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
 import AdminHealthMonitor from './components/AdminHealthMonitor';
@@ -50,6 +54,10 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     closer: 'Stage-9 Closer',
     reports: 'Reports',
     searchInsights: 'Search Insights',
+    followups: 'Follow-ups',
+    bots: 'Bots Control',
+    pageEditor: 'Page Editor (CMS)',
+    dbEditor: 'DB Editor (Raw)',
     settings: 'System Config',
     main: 'Main',
     operations: 'Operations',
@@ -137,6 +145,10 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     closer: 'المغلق · المرحلة 9',
     reports: 'التقارير التحليلية',
     searchInsights: 'تحليلات البحث',
+    followups: 'المتابعات',
+    bots: 'التحكم بالبوتات',
+    pageEditor: 'محرر الصفحات',
+    dbEditor: 'محرر قاعدة البيانات',
     settings: 'إعدادات النظام',
     main: 'رئيسي',
     operations: 'العمليات',
@@ -482,6 +494,14 @@ export default function App() {
         return <DataSyncHubPage />;
       case 'searchInsights':
         return <SearchInsightsPage T={T} isAr={isAr} />;
+      case 'followups':
+        return <FollowupsPage T={T} isAr={isAr} />;
+      case 'bots':
+        return <BotsControlPage T={T} isAr={isAr} />;
+      case 'pageEditor':
+        return <PageEditorPage T={T} isAr={isAr} />;
+      case 'dbEditor':
+        return <DBEditorPage T={T} isAr={isAr} />;
       default:
         return <OverviewPage T={T} />;
     }

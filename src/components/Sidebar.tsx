@@ -20,12 +20,16 @@ export const NAV_ITEMS = (T: (k: string) => string) => [
   { id: 'overview', label: 'Live Dashboard', icon: '📊', section: 'CORE' },
   { id: 'leads', label: 'Leads & CRM Hub', icon: '👥', section: 'CORE' },
   { id: 'listings', label: 'Property Inventory', icon: '🏢', section: 'CORE' },
+  { id: 'followups', label: T('followups') || 'Follow-ups', icon: '📅', section: 'CORE' },
   { id: 'searchInsights', label: T('searchInsights') || 'Search Insights', icon: '📈', section: 'CORE' },
+  { id: 'pageEditor', label: T('pageEditor') || 'Page Editor (CMS)', icon: '📝', section: 'CORE' },
+  { id: 'bots', label: T('bots') || 'Bots Control', icon: '🤖', section: 'AUTOMATION & AGENTS' },
   { id: 'agents', label: 'Ai Bots & Agents', icon: '🤖', section: 'AUTOMATION & AGENTS', badge: '6', badgeCls: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' },
   { id: 'workflows', label: 'Workflows', icon: '⚡', section: 'AUTOMATION & AGENTS', badge: '8', badgeCls: 'bg-blue-500/10 text-blue-400 border border-blue-500/20' },
   { id: 'easyListing', label: 'Easy Listing', icon: '📑', section: 'INTEGRATIONS' },
   { id: 'automation', label: 'Automation Portal', icon: '⚙️', section: 'INTEGRATIONS' },
   { id: 'dataSync', label: 'Data Sync & Hub', icon: '🔄', section: 'INTEGRATIONS' },
+  { id: 'dbEditor', label: T('dbEditor') || 'DB Editor (Raw)', icon: '🗄️', section: 'SYSTEM' },
 ];
 
 export default function Sidebar({
