@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../lib/apiClient';
 import { motion, AnimatePresence } from 'motion/react';
-import { Database, RefreshCw, Edit3, Trash2, Plus, X, Search, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Edit3, Trash2, Plus, X, Search, AlertTriangle } from 'lucide-react';
 
 interface DBDoc {
   id: string;
@@ -109,36 +109,33 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
   };
 
   return (
-    <div className="p-6 space-y-4">
+    <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Database className="text-cyan-400" size={24} />
-          <div>
-            <h2 className="text-lg font-bold text-white">
-              {isAr ? 'محرر قاعدة البيانات' : 'Database Editor'}
-            </h2>
-            <p className="text-xs text-slate-400">
-              {isAr
-                ? 'تصفح وحرّر أي مجموعة في Firestore (يتطلب صلاحية superadmin)'
-                : 'Browse and edit any Firestore collection (requires superadmin)'}
-            </p>
-          </div>
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white tracking-tight">
+            {isAr ? 'محرر قاعدة البيانات' : 'Database Editor'}
+          </h2>
+          <p className="text-[13px] text-slate-500 mt-0.5">
+            {isAr
+              ? 'تصفح وحرّر أي مجموعة في Firestore (يتطلب صلاحية superadmin)'
+              : 'Browse and edit any Firestore collection (requires superadmin)'}
+          </p>
         </div>
         <button
           onClick={fetchDocs}
           disabled={loading}
-          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition"
+          className="flex items-center gap-1.5 px-3 h-8 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-md text-[13px] font-medium transition disabled:opacity-50"
         >
-          <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} strokeWidth={1.75} />
           {isAr ? 'تحديث' : 'Refresh'}
         </button>
       </div>
 
       {/* Security warning */}
-      <div className="flex items-start gap-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-        <AlertTriangle className="text-amber-400 flex-shrink-0 mt-0.5" size={16} />
-        <p className="text-xs text-amber-300">
+      <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg">
+        <AlertTriangle className="text-amber-500 dark:text-amber-400 flex-shrink-0 mt-0.5" size={16} strokeWidth={1.75} />
+        <p className="text-[12px] text-amber-700 dark:text-amber-300">
           {isAr
             ? 'تحذير: هذا يمنح وصولاً مباشراً لقاعدة البيانات. التعديلات فورية ولا يمكن التراجع عنها.'
             : 'Warning: this grants raw DB access. Changes are immediate and irreversible.'}
@@ -154,7 +151,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
           <select
             value={collection}
             onChange={(e) => { setCollection(e.target.value); setCustomCollection(''); }}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-[13px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/40 transition"
           >
             {COLLECTION_PRESETS.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -170,7 +167,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
             value={customCollection}
             onChange={(e) => setCustomCollection(e.target.value)}
             placeholder="e.g. custom_collection"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-[13px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/40 transition"
           />
         </div>
         <div>
@@ -182,7 +179,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
             value={where}
             onChange={(e) => setWhere(e.target.value)}
             placeholder="role==admin"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-[13px] text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/40 transition"
           />
         </div>
         <div>
@@ -194,7 +191,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
             value={order}
             onChange={(e) => setOrder(e.target.value)}
             placeholder="createdAt:desc"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono"
+            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-[13px] text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/40 transition"
           />
         </div>
       </div>
@@ -207,11 +204,11 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
       )}
 
       {/* Docs table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden">
         <div className="flex items-center justify-between p-3 border-b border-slate-800">
           <span className="text-xs text-slate-400">
             {docs.length} {isAr ? 'مستند' : 'documents'} {isAr ? 'في' : 'in'}{' '}
-            <span className="text-cyan-400 font-mono">{activeCollection}</span>
+            <span className="text-blue-600 dark:text-blue-400 font-mono">{activeCollection}</span>
           </span>
           <button
             onClick={() => setShowNewDoc(true)}
@@ -233,7 +230,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
             </div>
           ) : (
             <table className="w-full text-xs">
-              <thead className="bg-slate-950/50 sticky top-0">
+              <thead className="bg-slate-50 dark:bg-slate-950/50 sticky top-0">
                 <tr className="text-slate-500 uppercase tracking-wider">
                   <th className="text-left p-2 font-mono">id</th>
                   <th className="text-left p-2 font-mono">data (preview)</th>
@@ -248,7 +245,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
                     .map(([k, v]) => `${k}: ${typeof v === 'object' ? '...' : String(v).slice(0, 30)}`)
                     .join(' · ');
                   return (
-                    <tr key={doc.id} className="border-t border-slate-800 hover:bg-slate-800/50">
+                    <tr key={doc.id} className="border-t border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
                       <td className="p-2 font-mono text-cyan-400 align-top">{doc.id}</td>
                       <td className="p-2 text-slate-300 font-mono break-all">{preview}</td>
                       <td className="p-2 text-right">
@@ -290,13 +287,13 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="bg-slate-900 border border-slate-700 rounded-xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between p-4 border-b border-slate-700">
                 <h3 className="text-sm font-bold text-white">
                   {isAr ? 'تحرير مستند' : 'Edit doc'}{' '}
-                  <span className="text-cyan-400 font-mono">{editingDoc.id}</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-mono">{editingDoc.id}</span>
                 </h3>
                 <button onClick={() => setEditingDoc(null)} className="text-slate-400 hover:text-white">
                   <X size={18} />
@@ -306,7 +303,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
                 <textarea
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
-                  className="w-full h-96 bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs font-mono text-emerald-300"
+                  className="w-full h-96 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md p-3 text-xs font-mono text-emerald-700 dark:text-emerald-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition resize-none"
                   spellCheck={false}
                 />
                 <p className="text-[10px] text-slate-500 mt-2">
@@ -349,13 +346,13 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full overflow-hidden"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-2xl w-full overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between p-4 border-b border-slate-700">
                 <h3 className="text-sm font-bold text-white">
                   {isAr ? 'مستند جديد في' : 'New doc in'}{' '}
-                  <span className="text-cyan-400 font-mono">{activeCollection}</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-mono">{activeCollection}</span>
                 </h3>
                 <button onClick={() => setShowNewDoc(false)} className="text-slate-400 hover:text-white">
                   <X size={18} />
@@ -365,7 +362,7 @@ export default function DBEditorPage({ T, isAr = false }: DBEditorPageProps) {
                 <textarea
                   value={newDocText}
                   onChange={(e) => setNewDocText(e.target.value)}
-                  className="w-full h-64 bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs font-mono text-emerald-300"
+                  className="w-full h-64 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md p-3 text-xs font-mono text-emerald-700 dark:text-emerald-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition resize-none"
                   spellCheck={false}
                 />
               </div>

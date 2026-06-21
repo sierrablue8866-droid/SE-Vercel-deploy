@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../lib/apiClient';
 import { motion, AnimatePresence } from 'motion/react';
-import { FileText, RefreshCw, Edit3, Trash2, Plus, X, Eye, EyeOff, Globe } from 'lucide-react';
+import { RefreshCw, Edit3, Trash2, Plus, X, Eye, EyeOff, Globe } from 'lucide-react';
 
 interface CMSPage {
   id: string;
@@ -121,33 +121,30 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
   };
 
   return (
-    <div className="p-6 space-y-4">
+    <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <FileText className="text-purple-400" size={24} />
-          <div>
-            <h2 className="text-lg font-bold text-white">
-              {isAr ? 'محرر صفحات العميل' : 'Client Page Editor'}
-            </h2>
-            <p className="text-xs text-slate-400">
-              {isAr
-                ? 'حرّر عناوين ونصوص صفحات الموقع العام بدون نشر كود'
-                : 'Edit public site copy and CTAs without a code deploy'}
-            </p>
-          </div>
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white tracking-tight">
+            {isAr ? 'محرر صفحات العميل' : 'Client Page Editor'}
+          </h2>
+          <p className="text-[13px] text-slate-500 mt-0.5">
+            {isAr
+              ? 'حرّر عناوين ونصوص صفحات الموقع العام بدون نشر كود'
+              : 'Edit public site copy and CTAs without a code deploy'}
+          </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={fetchPages}
             disabled={loading}
-            className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition"
+            className="flex items-center gap-1.5 px-3 h-8 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-md text-[13px] font-medium transition disabled:opacity-50"
           >
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} strokeWidth={1.75} />
             {isAr ? 'تحديث' : 'Refresh'}
           </button>
           <button
             onClick={() => setShowNewPage(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500 hover:bg-purple-400 text-white rounded-lg text-xs font-bold transition"
+            className="flex items-center gap-1.5 px-3 h-8 bg-blue-600 hover:bg-blue-500 text-white rounded-md text-[13px] font-medium transition shadow-sm"
           >
             <Plus size={14} />
             {isAr ? 'صفحة جديدة' : 'New page'}
@@ -176,11 +173,11 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
           pages.map((page) => (
             <div
               key={page.id}
-              className="bg-slate-900 border border-slate-800 rounded-lg p-4 hover:border-purple-500/50 transition"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 hover:border-slate-300 dark:hover:border-slate-700 transition"
             >
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="font-mono text-sm text-purple-300">{page.slug}</h3>
+                  <h3 className="font-mono text-sm text-blue-600 dark:text-blue-400">{page.slug}</h3>
                   <div className="flex items-center gap-1.5 mt-1">
                     <Globe size={11} className="text-slate-500" />
                     <span className="text-[10px] uppercase tracking-wider text-slate-500">
@@ -253,11 +250,11 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="bg-slate-900 border border-slate-700 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-3xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between p-4 border-b border-slate-700">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-[15px] font-semibold text-slate-900 dark:text-white">
                   <span className="text-purple-400 font-mono">{editingPage.slug}</span>
                   <span className="text-slate-500 mx-2">·</span>
                   <span className="text-slate-400 uppercase text-xs">{editingPage.locale}</span>
@@ -275,7 +272,7 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
                 <textarea
                   value={editSections}
                   onChange={(e) => setEditSections(e.target.value)}
-                  className="w-full h-96 bg-slate-950 border border-slate-700 rounded-lg p-3 text-xs font-mono text-emerald-300"
+                  className="w-full h-96 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md p-3 text-xs font-mono text-emerald-700 dark:text-emerald-300 focus:outline-none focus:ring-2 focus:ring-blue-500/30 transition resize-none"
                   spellCheck={false}
                 />
                 <div className="mt-3 p-3 bg-slate-950/50 rounded border border-slate-800">
@@ -300,7 +297,7 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="px-4 py-2 bg-purple-500 hover:bg-purple-400 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition"
                 >
                   {saving ? '...' : isAr ? 'حفظ الأقسام' : 'Save sections'}
                 </button>
@@ -324,11 +321,11 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full overflow-hidden"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-md w-full overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between p-4 border-b border-slate-700">
-                <h3 className="text-sm font-bold text-white">
+                <h3 className="text-[15px] font-semibold text-slate-900 dark:text-white">
                   {isAr ? 'صفحة جديدة' : 'New page'}
                 </h3>
                 <button onClick={() => setShowNewPage(false)} className="text-slate-400 hover:text-white">
@@ -386,7 +383,7 @@ export default function PageEditorPage({ T, isAr = false }: PageEditorPageProps)
                 <button
                   onClick={handleCreate}
                   disabled={saving}
-                  className="px-4 py-2 bg-purple-500 hover:bg-purple-400 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition"
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition"
                 >
                   {saving ? '...' : isAr ? 'إنشاء' : 'Create'}
                 </button>
