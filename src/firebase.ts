@@ -9,8 +9,10 @@ const app = initializeApp(firebaseConfig);
 // Initialize Auth
 export const auth = getAuth(app);
 
-// Initialize Firestore
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+// Initialize Firestore — uses the (default) database, shared with the
+// Sierra-Estates-Final backend (apps/sierra-estates-realty), so admin writes
+// (notifications, etc.) land in the same Firestore the backend reads from.
+export const db = getFirestore(app);
 
 async function testConnection() {
   try {
