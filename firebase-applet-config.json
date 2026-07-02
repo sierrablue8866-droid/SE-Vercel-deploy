@@ -1,10 +1,9 @@
 {
-  "projectId": "sierra-blu-494404",
-  "appId": "1:755638710103:web:86c1e4c62565d7915c9812",
-  "apiKey": "AIzaSyA65tNOrcNJSo-M13XjFT_Nt0j6y5iA__k",
-  "authDomain": "sierra-blu-494404.firebaseapp.com",
-  "firestoreDatabaseId": "remixed-firestore-database-id",
-  "storageBucket": "sierra-blu-494404.firebasestorage.app",
-  "messagingSenderId": "755638710103",
-  "measurementId": ""
+  "projectId": "sierra-blu",
+  "appId": "1:941030513456:web:56209a1495d69f217086f5",
+  "apiKey": "AIzaSyBZLN2jTTKV34SneGPoWRz1zoRpX5uODjs",
+  "authDomain": "sierra-blu.firebaseapp.com",
+  "storageBucket": "sierra-blu.firebasestorage.app",
+  "messagingSenderId": "941030513456",
+  "measurementId": "G-ZP054BPJ8Q"
 }

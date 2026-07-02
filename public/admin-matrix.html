@@ -73,7 +73,7 @@ function AdminMatrixApp() {
         setTraceFault({ area: "Property Finder Cloud Webhook Portal", cause: err.message, fix: "Verify cloud function endpoint status logs." });
       });
 
-    return () => { 
+    return () => {
       try { killListingsWatcher(); } catch(e){}
       try { killLeadsWatcher(); } catch(e){}
     };

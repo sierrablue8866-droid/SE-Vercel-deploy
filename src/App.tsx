@@ -27,7 +27,6 @@ import NotificationCenter from './components/NotificationCenter';
 import AutomationToolsPage from './components/AutomationToolsPage';
 import EasyListingPage from './components/EasyListingPage';
 import DataSyncHubPage from './components/DataSyncHubPage';
-import ClientHub from './components/ClientHub';
 import SearchInsightsPage from './components/SearchInsightsPage';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
@@ -428,11 +427,18 @@ export default function App() {
       setCurrentUser(user);
       if (user) {
         let passesAdminRule = false;
-        try {
-          const result = await api.get<{ isAdmin: boolean }>('/api/admin/auth/verify');
-          passesAdminRule = !!result.isAdmin;
-        } catch (e) {
-          console.warn('Admin verification check failed:', e);
+        
+        // Hardcoded admin emails based on user request
+        const adminEmails = ['a.fawzy8866@gmail.com', 'emeraldestatesegypt@gmail.com'];
+        if (user.email && adminEmails.includes(user.email.toLowerCase())) {
+          passesAdminRule = true;
+        } else {
+          try {
+            const result = await api.get<{ isAdmin: boolean }>('/api/admin/auth/verify');
+            passesAdminRule = !!result.isAdmin;
+          } catch (e) {
+            console.warn('Admin verification check failed:', e);
+          }
         }
 
         setIsAdminUser(passesAdminRule);
@@ -623,19 +629,6 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<AdminPortal />} />
-      <Route 
-        path="/client" 
-        element={
-          <ClientHub
-            T={T}
-            langKey={langKey}
-            theme={theme}
-            setTheme={setTheme}
-            setTab={setTab}
-            onEnterAdminSession={() => navigate('/')}
-          />
-        } 
-      />
     </Routes>
   );
 }
