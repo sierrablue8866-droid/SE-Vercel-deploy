@@ -36,6 +36,7 @@ import DBEditorPage from './components/DBEditorPage';
 import PageEditorPage from './components/PageEditorPage';
 import FollowupsPage from './components/FollowupsPage';
 import BotsControlPage from './components/BotsControlPage';
+import MegaDashboard from './components/MegaDashboard';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
 import AdminHealthMonitor from './components/AdminHealthMonitor';
@@ -488,36 +489,17 @@ export default function App() {
   }, []);
 
   const renderActiveProductPage = () => {
-    switch (tab) {
-      case 'overview':
-        return <OverviewPage T={T} />;
-      case 'leads':
-        return <LeadsPage T={T} isAr={isAr} searchQuery={searchQuery} />;
-      case 'listings':
-        return <ListingsHubPage T={T} searchQuery={searchQuery} />;
-      case 'agents':
-        return <AgentsPage T={T} searchQuery={searchQuery} />;
-      case 'workflows':
-        return <WorkflowsPage T={T} isAr={isAr} searchQuery={searchQuery} />;
-      case 'easyListing':
-        return <EasyListingPage />;
-      case 'automation':
-        return <AutomationToolsPage />;
-      case 'dataSync':
-        return <DataSyncHubPage />;
-      case 'searchInsights':
-        return <SearchInsightsPage T={T} isAr={isAr} />;
-      case 'followups':
-        return <FollowupsPage T={T} isAr={isAr} />;
-      case 'bots':
-        return <BotsControlPage T={T} isAr={isAr} />;
-      case 'pageEditor':
-        return <PageEditorPage T={T} isAr={isAr} />;
-      case 'dbEditor':
-        return <DBEditorPage T={T} isAr={isAr} />;
-      default:
-        return <OverviewPage T={T} />;
-    }
+    // These tabs are heavily customized full-screen tools, they remain separate.
+    if (tab === 'easyListing') return <EasyListingPage />;
+    if (tab === 'automation') return <AutomationToolsPage />;
+    if (tab === 'dataSync') return <DataSyncHubPage />;
+    if (tab === 'pageEditor') return <PageEditorPage T={T} isAr={isAr} />;
+    if (tab === 'dbEditor') return <DBEditorPage T={T} isAr={isAr} />;
+    if (tab === 'agents') return <AgentsPage T={T} searchQuery={searchQuery} />;
+
+    // All core operations (Overview, Leads, Listings, Bots, Workflows, Search Insights, Followups)
+    // are now unified into the MegaDashboard. The Sidebar will handle scrolling to them.
+    return <MegaDashboard T={T} isAr={isAr} searchQuery={searchQuery} />;
   };
 
   // NAV_ITEMS is now a static array (Lucide icons + bilingual labels baked in)
@@ -647,7 +629,7 @@ export default function App() {
           <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 custom-scrollbar bg-slate-50 dark:bg-slate-950">
             <AnimatePresence mode="wait">
               <motion.div
-                key={tab}
+                key={['overview', 'leads', 'listings', 'bots', 'workflows', 'searchInsights', 'followups'].includes(tab) ? 'mega-dashboard' : tab}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}

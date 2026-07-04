@@ -90,6 +90,14 @@ export default function Sidebar({
 
   const handleItemClick = (id: string) => {
     setTab(id);
+    
+    // If it's a mega-dashboard section, scroll to it smoothly
+    if (['overview', 'leads', 'listings', 'bots', 'workflows', 'searchInsights', 'followups'].includes(id)) {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+
     if (onClose) onClose();
   };
 

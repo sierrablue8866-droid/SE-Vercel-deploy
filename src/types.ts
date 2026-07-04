@@ -27,6 +27,7 @@ export interface Listing {
   ai: number;
   status: "Active" | "Review" | "Sold";
   img: number;
+  publishToClient?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -263,6 +263,16 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
     }
   };
 
+  const handleTogglePublish = async (id: string, currentStatus: boolean = false) => {
+    try {
+      await api.patch(`/api/admin/listings/${id}`, { publishToClient: !currentStatus });
+      await refreshListings();
+    } catch (err) {
+      console.error('Failed to toggle publish status:', err);
+      alert('Failed to update publish status.');
+    }
+  };
+
   const renderSortIndicator = (col: typeof sortCol) => {
     if (sortCol !== col) return <span className="text-white/20 select-none ml-1">⇅</span>;
     return <span className="text-cyan-400 select-none ml-1">{sortDir === 'asc' ? '▲' : '▼'}</span>;
@@ -503,6 +513,7 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
                   <th className="p-4 cursor-pointer" onClick={() => handleSort('ai')}>
                     AI ▸ {renderSortIndicator('ai')}
                   </th>
+                  <th className="p-4 text-center">Client Portal</th>
                   <th className="p-4">Status</th>
                   <th className="p-4 text-right">Actions</th>
                 </tr>
@@ -577,6 +588,18 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
                       >
                         {l.ai.toFixed(1)}
                       </span>
+                    </td>
+                    <td className="p-4 text-center" onClick={(e) => e.stopPropagation()}>
+                       <button
+                         onClick={() => handleTogglePublish(l.id, l.publishToClient)}
+                         className={`px-3 py-1 text-[10px] font-mono rounded transition-colors uppercase tracking-widest font-bold ${
+                           l.publishToClient 
+                             ? 'bg-[#C9A24D]/10 text-[#C9A24D] border border-[#C9A24D]/40 shadow-[0_0_10px_rgba(201,162,77,0.15)] hover:bg-[#C9A24D]/20' 
+                             : 'bg-white/5 text-slate-500 border border-slate-800 hover:bg-white/10 hover:text-slate-300'
+                         }`}
+                       >
+                         {l.publishToClient ? 'Published' : 'Hidden'}
+                       </button>
                     </td>
                     <td className="p-4">
                       <span
