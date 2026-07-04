@@ -9,7 +9,9 @@ const app = initializeApp(firebaseConfig);
 // Initialize Auth
 export const auth = getAuth(app);
 
-// Initialize Firestore — use named database only when explicitly set and not the default
+// Initialize Firestore — uses the (default) database or explicitly set firestoreDatabaseId.
+// Shared with the Sierra-Estates-Final backend (apps/sierra-estates-realty),
+// so admin writes (notifications, etc.) land in the same Firestore the backend reads from.
 const _dbId = (firebaseConfig as any).firestoreDatabaseId;
 export const db = (_dbId && _dbId !== '(default)')
   ? getFirestore(app, _dbId)
