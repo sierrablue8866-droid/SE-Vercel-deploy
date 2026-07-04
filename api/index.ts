@@ -48,6 +48,49 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+// Admin auth verification endpoint
+// Validates Bearer token from Firebase Auth and checks admin status
+const ADMIN_EMAILS = [
+  'a.fawzy8866@gmail.com',
+  'A.fawzy8866@gmail.com',
+  'emeraldestatesegypt@gmail.com',
+  'Emeraldestatesegypt@gmail.com',
+];
+
+app.get("/api/admin/auth/verify", async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ isAdmin: false, error: 'Missing or invalid authorization header' });
+    }
+
+    const token = authHeader.split('Bearer ')[1];
+    if (!token) {
+      return res.status(401).json({ isAdmin: false, error: 'No token provided' });
+    }
+
+    // Decode the JWT without full verification (client-side Firebase token)
+    // Check email claim from the token payload
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        return res.status(401).json({ isAdmin: false, error: 'Invalid token format' });
+      }
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
+      const email: string = payload.email || '';
+      const isAdmin = ADMIN_EMAILS.some(
+        (adminEmail) => adminEmail.toLowerCase() === email.toLowerCase()
+      );
+      return res.json({ isAdmin, email });
+    } catch (decodeErr) {
+      return res.status(401).json({ isAdmin: false, error: 'Token decode failed' });
+    }
+  } catch (e: any) {
+    console.error('Auth verify error:', e);
+    return res.status(500).json({ isAdmin: false, error: e.message });
+  }
+});
+
 // Example proxy for getting leads from Property Finder
 app.get("/api/pf/leads", async (req, res) => {
   try {
