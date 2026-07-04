@@ -31,7 +31,6 @@ import NotificationCenter from './components/NotificationCenter';
 import AutomationToolsPage from './components/AutomationToolsPage';
 import EasyListingPage from './components/EasyListingPage';
 import DataSyncHubPage from './components/DataSyncHubPage';
-import ClientHub from './components/ClientHub';
 import SearchInsightsPage from './components/SearchInsightsPage';
 import DBEditorPage from './components/DBEditorPage';
 import PageEditorPage from './components/PageEditorPage';
@@ -444,11 +443,21 @@ export default function App() {
       setCurrentUser(user);
       if (user) {
         let passesAdminRule = false;
-        try {
-          const result = await api.get<{ isAdmin: boolean }>('/api/admin/auth/verify');
-          passesAdminRule = !!result.isAdmin;
-        } catch (e) {
-          console.warn('Admin verification check failed:', e);
+        
+        // Hardcoded admin emails — case-insensitive match
+        const adminEmails = ['a.fawzy8866@gmail.com', 'emeraldestatesegypt@gmail.com'];
+        const userEmail = (user.email || '').toLowerCase().trim();
+        if (userEmail && adminEmails.includes(userEmail)) {
+          passesAdminRule = true;
+        } else {
+          // Fallback: call the backend verify endpoint
+          try {
+            const result = await api.get<{ isAdmin: boolean }>('/api/admin/auth/verify');
+            passesAdminRule = !!result.isAdmin;
+          } catch (e) {
+            console.warn('Admin verification API unavailable, using email-only check:', e);
+            // If the API is unreachable, rely solely on the email check above
+          }
         }
 
         setIsAdminUser(passesAdminRule);

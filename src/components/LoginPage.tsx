@@ -79,12 +79,23 @@ export default function LoginPage({ onLoginSuccess, isAdminUser, currentUser, lo
     } catch (err: any) {
       console.error(err);
       let localizedError = err.message;
-      if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+      // Firebase v9+ uses 'auth/invalid-credential' for wrong email/password
+      if (
+        err.code === 'auth/wrong-password' ||
+        err.code === 'auth/user-not-found' ||
+        err.code === 'auth/invalid-credential'
+      ) {
         localizedError = "Invalid email or password combination.";
       } else if (err.code === 'auth/email-already-in-use') {
         localizedError = "This email is already registered in the registry.";
       } else if (err.code === 'auth/invalid-email') {
         localizedError = "Please enter a valid email address.";
+      } else if (err.code === 'auth/too-many-requests') {
+        localizedError = "Too many failed attempts. Please wait a moment and try again.";
+      } else if (err.code === 'auth/network-request-failed') {
+        localizedError = "Network error. Please check your internet connection.";
+      } else if (err.code === 'auth/unauthorized-domain') {
+        localizedError = "This domain is not authorized. Please contact the administrator.";
       }
       setErrorMsg(localizedError || "Authentication attempt failed.");
     } finally {
