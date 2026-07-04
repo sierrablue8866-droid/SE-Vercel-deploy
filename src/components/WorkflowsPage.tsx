@@ -131,7 +131,7 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
         return (
           w.name.toLowerCase().includes(qLower) ||
           (w.nameAr && w.nameAr.toLowerCase().includes(qLower)) ||
-          w.desc.toLowerCase().includes(qLower) ||
+          (w.desc && w.desc.toLowerCase().includes(qLower)) ||
           (w.descAr && w.descAr.toLowerCase().includes(qLower)) ||
           statusTranslated.toLowerCase().includes(qLower) ||
           w.status.toLowerCase().includes(qLower)
@@ -364,7 +364,7 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
                     animate={{ opacity: 1, scale: 1 }}
                     key={w.id}
                     draggable
-                    onDragStart={(e: React.DragEvent) => onDragStart(e, w.id)}
+                    onDragStart={(e: any) => onDragStart(e, w.id)}
                     onClick={() => {
                       recordAccess(w.id, 'workflows');
                       setSelectedWorkflow(w);

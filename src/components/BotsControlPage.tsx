@@ -34,6 +34,11 @@ const STATUS_CONFIG: Record<Bot['status'], { color: string; bg: string; ring: st
 };
 
 const BOT_DESCRIPTIONS: Record<string, { en: string; ar: string; icon: LucideIcon }> = {
+  'liela-bot': {
+    en: 'Liela Bot (OpenClaw Plugin active)',
+    ar: 'روبوت ليلى (مزود بـ OpenClaw)',
+    icon: MessageSquare,
+  },
   'whatsapp-scraper': {
     en: 'Live broker-group lead ingestion bot',
     ar: 'بوت استخراج العملاء من مجموعات الوسطاء',

@@ -375,6 +375,7 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
         <select
           value={cmpF}
           onChange={(e) => setCmpF(e.target.value)}
+          title="Filter by Compound"
           className="bg-[#0a0f1d] border border-slate-800 rounded px-3 py-2 text-xs text-white outline-none focus:border-cyan-500/50 shrink-0 cursor-pointer"
         >
           {compounds.map((c) => (
@@ -387,6 +388,7 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
         <select
           value={statusF}
           onChange={(e) => setStatusF(e.target.value)}
+          title="Filter by Status"
           className="bg-[#0a0f1d] border border-slate-800 rounded px-3 py-2 text-xs text-white outline-none focus:border-cyan-500/50 shrink-0 cursor-pointer"
         >
           {['All', 'Active', 'Sold', 'Archived'].map((s) => (
@@ -446,6 +448,7 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
           </div>
           <div className="flex gap-2 mt-3 md:mt-0">
             <select
+              title="Update Status"
               onChange={(e) => {
                 if (e.target.value) {
                   handleBulkUpdateStatus(e.target.value);

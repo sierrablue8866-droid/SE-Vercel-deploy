@@ -3,7 +3,7 @@ import { createServer as createViteServer } from 'vite';
 import app from './api/index.js';
 
 async function startServer() {
-  const PORT = process.env.PORT || 3001;
+  const PORT = parseInt(process.env.PORT || '3001', 10);
 
   // Vite development middleware OR static serving
   if (process.env.NODE_ENV !== "production") {

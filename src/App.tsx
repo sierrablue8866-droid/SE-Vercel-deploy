@@ -649,19 +649,6 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<AdminPortal />} />
-        <Route 
-          path="/client" 
-          element={
-            <ClientHub
-              T={T}
-              langKey={langKey}
-              theme={theme}
-              setTheme={setTheme}
-              setTab={setTab}
-              onEnterAdminSession={() => navigate('/')}
-            />
-          } 
-        />
       </Routes>
       <SpeedInsights />
     </>
