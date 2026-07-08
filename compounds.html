@@ -693,6 +693,24 @@
   }
 
   render();
+
+  // ═══ Auto-open units sheet if ?cpd=<name> is in the URL ═══
+  // Called from the home page map — clicking a compound marker navigates
+  // here with the compound name, and we auto-open its units sheet.
+  try {
+    var params = new URLSearchParams(location.search);
+    var cpdName = params.get('cpd');
+    if (cpdName) {
+      var c = D.compounds.find(function (x) { return x.n === cpdName; });
+      if (c) {
+        setTimeout(function () {
+          showIntel(c);
+          map.setView(c.c, 13, { animate: true });
+          openSheet(c);
+        }, 600);
+      }
+    }
+  } catch (e) {}
 })();
 </script>
 </body>

@@ -96,6 +96,8 @@ window.HZDATA = {
     { n: 'Layan Residence (MNHD)', c: [30.01, 31.655], g: '+14%', ai: 8.7, z: 'Mostakbal', priceM: 7.5, rent: 1500 },
     { n: 'Jayd (IWAN)', c: [30.045, 31.665], g: '+15%', ai: 8.8, z: 'Mostakbal', priceM: 8, rent: 1600 }
   ],
+  // ═══ Featured compounds — these pulse/glow on the home page map ═══
+  featured: ['Mivida', 'Hyde Park New Cairo', 'Mountain View iCity', 'Villette (SODIC)', 'Madinaty District 1', 'Taj City'],
   compoundImgs: {
     'Hyde Park New Cairo': 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
     'Mivida': 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',

@@ -285,11 +285,20 @@
 }
 
 /* ─── Home page map markers ─── */
-.cpd-marker{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--pri);color:var(--navy);font-family:var(--mono);font-weight:700;font-size:12px;padding:0 6px;box-shadow:0 3px 10px rgba(13,33,54,.15);cursor:pointer;transition:.2s var(--silk);}
-.cpd-marker:hover{transform:scale(1.12);box-shadow:0 5px 16px rgba(0,174,255,.3);}
+.cpd-marker{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:14px;background:#fff;border:2px solid var(--pri);color:var(--navy);font-family:var(--font);font-weight:700;font-size:11px;padding:0 10px;box-shadow:0 3px 10px rgba(13,33,54,.15);cursor:pointer;transition:.2s var(--silk);white-space:nowrap;}
+.cpd-marker:hover{transform:scale(1.08);box-shadow:0 5px 16px rgba(0,174,255,.3);z-index:999;}
 .cpd-marker.hot{background:linear-gradient(135deg,var(--pri),#0098e0);color:#fff;border-color:var(--pri);}
 [data-theme="dark"] .cpd-marker{background:#17181b;border-color:#c8961a;color:#e9c176;}
 [data-theme="dark"] .cpd-marker.hot{background:linear-gradient(135deg,#e9c176,#c8961a);color:#0d0d0f;}
+
+/* ═══ Featured compound markers — pulsing glow ═══ */
+.cpd-marker.pulse{background:linear-gradient(135deg,#00aeff,#0098e0);color:#fff;border-color:#00aeff;font-weight:800;position:relative;}
+[data-theme="dark"] .cpd-marker.pulse{background:linear-gradient(135deg,#e9c176,#c8961a);color:#0d0d0f;border-color:#e9c176;}
+.cpd-marker.pulse::before{content:'';position:absolute;inset:-4px;border-radius:inherit;background:rgba(0,174,255,.4);animation:cpdPulse 2s ease-out infinite;z-index:-1;}
+[data-theme="dark"] .cpd-marker.pulse::before{background:rgba(200,150,26,.4);}
+@keyframes cpdPulse{0%{transform:scale(1);opacity:.7;}100%{transform:scale(2.2);opacity:0;}}
+@media(prefers-reduced-motion:reduce){.cpd-marker.pulse::before{animation:none;opacity:.3;}}
+
 .leaflet-container{font-family:var(--font);}
 .leaflet-control-attribution{font-size:9px !important;opacity:.6;}
 .btn-navy{background:var(--navy);color:#fff;border:none;border-radius:var(--r-btn);padding:10px 22px;font-family:var(--font);font-weight:700;font-size:14px;cursor:pointer;transition:.25s var(--silk);}
@@ -781,14 +790,17 @@
 </script>
 
 <!-- ═══ HOME PAGE MAP — Leaflet init ════════════════════════════════════════
-     Shows all compounds on an interactive map with unit-count badges.
-     Clicking a marker navigates to compounds.html for the full experience. -->
+     Shows all compounds on an interactive map. Featured compounds (Mivida,
+     Hyde Park, Mountain View, Villette, Madinaty, Taj City) pulse with a
+     glow animation. Clicking any marker → compounds.html?cpd=<name> which
+     auto-opens the units sheet for that compound. -->
 <script>
 (function () {
   'use strict';
   var D = window.HZDATA;
   if (!D || !window.L) return;
 
+  var featured = D.featured || [];
   var theme = (window.HZ && HZ.theme) ? HZ.theme() : 'light';
   var map = L.map('home-map', { scrollWheelZoom: false, zoomControl: true }).setView([30.03, 31.57], 11);
   var tiles = {
@@ -797,36 +809,36 @@
   };
   var layer = L.tileLayer(tiles[theme], { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
 
-  // Update tiles on theme change
   document.addEventListener('hzp:theme', function (e) {
     layer.setUrl(tiles[e.detail]);
   });
 
-  // Add compound markers with unit counts
-  function markerIcon(c, count) {
+  // Marker icon: featured compounds get the 'pulse' class for the glow animation
+  function markerIcon(c, isFeatured) {
     var hot = c.ai >= 9.2;
+    var cls = 'cpd-marker' + (hot ? ' hot' : '') + (isFeatured ? ' pulse' : '');
     return L.divIcon({
       className: '',
-      html: '<span class="cpd-marker' + (hot ? ' hot' : '') + '" title="' + c.n + '">' + count + '</span>',
+      html: '<span class="' + cls + '" title="' + c.n + '">' + c.n + '</span>',
       iconSize: null
     });
   }
 
   var pts = [];
   D.compounds.forEach(function (c) {
-    var count = D.unitsFor(c.n).length;
-    L.marker(c.c, { icon: markerIcon(c, count), title: c.n }).on('click', function () {
-      location.href = 'compounds.html';
+    var isFeatured = featured.indexOf(c.n) >= 0;
+    L.marker(c.c, { icon: markerIcon(c, isFeatured), title: c.n }).on('click', function () {
+      // Navigate to compounds.html with the compound name in the URL
+      // compounds.html reads ?cpd=<name> and auto-opens the units sheet
+      location.href = 'compounds.html?cpd=' + encodeURIComponent(c.n);
     }).addTo(map);
     pts.push(c.c);
   });
 
-  // Fit bounds to show all compounds
   if (pts.length) {
     try { map.fitBounds(pts, { padding: [40, 40], maxZoom: 13 }); } catch (e) {}
   }
 
-  // Fix tile rendering after layout settles
   setTimeout(function () { map.invalidateSize(); }, 200);
   setTimeout(function () { map.invalidateSize(); }, 800);
   window.addEventListener('resize', function () { map.invalidateSize(); });
