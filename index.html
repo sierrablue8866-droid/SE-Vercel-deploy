@@ -214,27 +214,29 @@
 .ticker .row span::after{content:"";width:5px;height:5px;border-radius:50%;background:#c8961a;opacity:.7;}
 
 /* ── AI hub (always dark band) ── */
-.ai-hub{background:#07121e;position:relative;overflow:hidden;padding:74px 0;}
-.ai-hub::before{content:"";position:absolute;top:-160px;left:50%;width:520px;height:520px;margin-left:-260px;border-radius:50%;background:radial-gradient(circle,rgba(200,150,26,.13),transparent 62%);pointer-events:none;}
+.ai-hub{background:linear-gradient(180deg,#07121e 0%,#0d1f30 50%,#07121e 100%);position:relative;overflow:hidden;padding:74px 0;}
+.ai-hub::before{content:"";position:absolute;top:-160px;left:50%;width:520px;height:520px;margin-left:-260px;border-radius:50%;background:radial-gradient(circle,rgba(0,174,255,.1),rgba(200,150,26,.06),transparent 62%);pointer-events:none;}
 .ai-hub .wrap{position:relative;z-index:2;}
-.ai-hub .ai-eye{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#c8961a;opacity:.75;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.ai-hub .ai-eye{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#00aeff;opacity:.85;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
 [dir="rtl"] .ai-hub .ai-eye{letter-spacing:.04em;font-family:var(--font);}
-.ai-hub .ai-eye .live{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;}
+.ai-hub .ai-eye .live{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;box-shadow:0 0 8px #4ade80;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .ai-hub h2{color:#fff;font-size:34px;max-width:640px;letter-spacing:-.02em;}
-.ai-hub .ai-lead{color:rgba(255,255,255,.42);font-size:15px;margin-top:10px;max-width:520px;}
-.ai-hub .ai-scan{margin:26px 0;height:1px;background:linear-gradient(90deg,transparent,#c8961a,transparent);position:relative;}
-.ai-hub .ai-scan::after{content:"";position:absolute;top:-3px;left:0;right:0;height:7px;background:linear-gradient(90deg,transparent,rgba(200,150,26,.25),transparent);animation:scanLine 3s linear infinite;}
+.ai-hub .ai-lead{color:rgba(255,255,255,.5);font-size:15px;margin-top:10px;max-width:520px;}
+.ai-hub .ai-scan{margin:26px 0;height:1px;background:linear-gradient(90deg,transparent,#00aeff,#c8961a,transparent);position:relative;}
+.ai-hub .ai-scan::after{content:"";position:absolute;top:-3px;left:0;right:0;height:7px;background:linear-gradient(90deg,transparent,rgba(0,174,255,.2),rgba(200,150,26,.2),transparent);animation:scanLine 3s linear infinite;}
 @keyframes scanLine{0%{transform:translateX(-30%)}100%{transform:translateX(30%)}}
 .ai-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
-.ai-card{padding:22px 18px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.3s var(--silk);text-align:start;position:relative;overflow:hidden;display:block;}
-.ai-card:hover{transform:translateY(-5px);border-color:rgba(200,150,26,.4);background:rgba(255,255,255,.06);}
+.ai-card{padding:22px 18px;border-radius:16px;background:rgba(0,174,255,.04);border:1px solid rgba(0,174,255,.12);cursor:pointer;transition:.3s var(--silk);text-align:start;position:relative;overflow:hidden;display:block;text-decoration:none;}
+.ai-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00aeff,#c8961a);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--silk);}
+.ai-card:hover{transform:translateY(-5px);border-color:rgba(0,174,255,.5);background:rgba(0,174,255,.08);box-shadow:0 8px 24px rgba(0,174,255,.12);}
+.ai-card:hover::after{transform:scaleX(1);}
 .ai-card .ai-ic{width:46px;height:46px;margin-bottom:13px;display:inline-flex;}
 .ai-card .ai-ic svg{width:46px;height:46px;}
 .ai-card h4{color:#fff;font-size:15px;margin-bottom:5px;}
-.ai-card p{color:rgba(255,255,255,.44);font-size:12.5px;line-height:1.55;}
+.ai-card p{color:rgba(255,255,255,.5);font-size:12.5px;line-height:1.55;}
 .ai-card .live-tag{margin-top:11px;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4ade80;display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);}
-.ai-card .live-tag::before{content:"";width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;}
+.ai-card .live-tag::before{content:"";width:5px;height:5px;border-radius:50%;background:#4ade80;animation:blink 2s infinite;box-shadow:0 0 6px #4ade80;}
 
 /* ── tour launch ── */
 .tour-launch{display:flex;align-items:center;gap:16px;width:100%;padding:20px 24px;border-radius:16px;background:linear-gradient(135deg,var(--navy),#0a3a63);border:1px solid rgba(200,150,26,.35);cursor:pointer;text-align:start;transition:.25s var(--silk);}
@@ -414,6 +416,37 @@
   </div>
 </section>
 
+<!-- WHY SIERRA (moved here — right after units/properties) -->
+<section class="block" id="agents" data-screen-label="Why Sierra">
+  <div class="wrap">
+    <div class="sec-head rv" style="flex-direction:column;align-items:center;text-align:center;">
+      <div>
+        <div class="eyebrow" style="justify-content:center;" data-i18n="eyeWhy"></div>
+        <h2 data-i18n="whyTit"></h2>
+        <p data-i18n="whySub" style="margin-inline:auto;"></p>
+      </div>
+    </div>
+    <div class="net-banner rv">
+      <div class="nb-left">
+        <div class="eyebrow" data-i18n="netEye"></div>
+        <h3 data-i18n="netTit"></h3>
+        <p data-i18n="netBody"></p>
+      </div>
+      <div class="nb-stats">
+        <div class="nb-stat"><b data-count="1500" data-suffix="+">0</b><span data-i18n="netS1L"></span></div>
+        <div class="nb-stat"><b data-count="240" data-suffix="+">0</b><span data-i18n="netS2L"></span></div>
+        <div class="nb-stat"><b data-count="100" data-suffix="%">0</b><span data-i18n="netS3L"></span></div>
+      </div>
+    </div>
+    <div class="grid-feat">
+      <div class="feat rv"><div class="ic"><i data-lucide="radar" class="i"></i></div><h4 data-i18n="w1t"></h4><p data-i18n="w1s"></p></div>
+      <div class="feat rv d1"><div class="ic"><i data-lucide="trending-up" class="i"></i></div><h4 data-i18n="w2t"></h4><p data-i18n="w2s"></p></div>
+      <div class="feat rv d2"><div class="ic"><i data-lucide="heart-handshake" class="i"></i></div><h4 data-i18n="w3t"></h4><p data-i18n="w3s"></p></div>
+      <div class="feat rv d3"><div class="ic"><i data-lucide="badge-check" class="i"></i></div><h4 data-i18n="w4t"></h4><p data-i18n="w4s"></p></div>
+    </div>
+  </div>
+</section>
+
 <!-- COMPOUNDS -->
 <section class="block well" id="compounds" data-screen-label="Compounds preview">
   <div class="wrap">
@@ -540,37 +573,6 @@
     <div class="stat rv d1"><b data-count="53">0</b><span data-i18n="stat2"></span></div>
     <div class="stat rv d2"><b data-count="68">0</b><span data-i18n="stat3"></span></div>
     <div class="stat rv d3"><b data-count="4.2" data-prefix="EGP " data-suffix="B">0</b><span data-i18n="stat4"></span></div>
-  </div>
-</section>
-
-<!-- WHY -->
-<section class="block" id="agents" data-screen-label="Why Sierra">
-  <div class="wrap">
-    <div class="sec-head rv" style="flex-direction:column;align-items:center;text-align:center;">
-      <div>
-        <div class="eyebrow" style="justify-content:center;" data-i18n="eyeWhy"></div>
-        <h2 data-i18n="whyTit"></h2>
-        <p data-i18n="whySub" style="margin-inline:auto;"></p>
-      </div>
-    </div>
-    <div class="net-banner rv">
-      <div class="nb-left">
-        <div class="eyebrow" data-i18n="netEye"></div>
-        <h3 data-i18n="netTit"></h3>
-        <p data-i18n="netBody"></p>
-      </div>
-      <div class="nb-stats">
-        <div class="nb-stat"><b data-count="1500" data-suffix="+">0</b><span data-i18n="netS1L"></span></div>
-        <div class="nb-stat"><b data-count="240" data-suffix="+">0</b><span data-i18n="netS2L"></span></div>
-        <div class="nb-stat"><b data-count="100" data-suffix="%">0</b><span data-i18n="netS3L"></span></div>
-      </div>
-    </div>
-    <div class="grid-feat">
-      <div class="feat rv"><div class="ic"><i data-lucide="radar" class="i"></i></div><h4 data-i18n="w1t"></h4><p data-i18n="w1s"></p></div>
-      <div class="feat rv d1"><div class="ic"><i data-lucide="trending-up" class="i"></i></div><h4 data-i18n="w2t"></h4><p data-i18n="w2s"></p></div>
-      <div class="feat rv d2"><div class="ic"><i data-lucide="heart-handshake" class="i"></i></div><h4 data-i18n="w3t"></h4><p data-i18n="w3s"></p></div>
-      <div class="feat rv d3"><div class="ic"><i data-lucide="badge-check" class="i"></i></div><h4 data-i18n="w4t"></h4><p data-i18n="w4s"></p></div>
-    </div>
   </div>
 </section>
 
