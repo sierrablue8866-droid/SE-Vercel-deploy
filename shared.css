@@ -65,6 +65,29 @@ h1,h2,h3,h4{color:var(--ink);font-weight:700;line-height:1.2;letter-spacing:-.01
 .mono{font-family:var(--mono);}
 .i{width:18px;height:18px;stroke-width:2;vertical-align:middle;}
 
+/* ── RTL: flip directional icons so arrows point the correct way in Arabic ── */
+[dir="rtl"] [data-lucide="arrow-right"],
+[dir="rtl"] [data-lucide="chevron-right"],
+[dir="rtl"] [data-lucide="arrow-left"],
+[dir="rtl"] [data-lucide="chevron-left"],
+[dir="rtl"] [data-lucide="arrow-right-circle"],
+[dir="rtl"] [data-lucide="chevron-right-circle"],
+[dir="rtl"] [data-lucide="move-right"],
+[dir="rtl"] [data-lucide="move-left"]{transform:scaleX(-1);}
+/* Don't flip non-directional icons */
+[dir="rtl"] [data-lucide="map-pin"],
+[dir="rtl"] [data-lucide="map"],
+[dir="rtl"] [data-lucide="search"],
+[dir="rtl"] [data-lucide="play"],
+[dir="rtl"] [data-lucide="maximize-2"],
+[dir="rtl"] [data-lucide="external-link"],
+[dir="rtl"] [data-lucide="loader-2"]{transform:none;}
+/* Also flip the scroll-cue laser line to the left side in RTL */
+[dir="rtl"] .scroll-cue{right:auto;left:36px;}
+@media(max-width:680px){[dir="rtl"] .scroll-cue{right:auto;left:20px;}}
+/* And flip the scroll-cue label direction */
+[dir="rtl"] .scroll-cue-label{writing-mode:vertical-rl;}
+
 /* ── motion ─────────────────────────────── */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--silk),transform .8s var(--silk);will-change:transform;}
 .rv.in{opacity:1;transform:none;}
