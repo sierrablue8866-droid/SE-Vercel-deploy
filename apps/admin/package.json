@@ -12,6 +12,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@sierra-estates/types": "workspace:*",
     "@google/genai": "^2.4.0",
     "@tailwindcss/vite": "^4.3.2",
     "@vercel/speed-insights": "^2.0.0",

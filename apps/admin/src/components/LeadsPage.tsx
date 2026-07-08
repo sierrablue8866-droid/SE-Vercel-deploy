@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { createSierraNotification } from '../firebase';
 import { api } from '../lib/apiClient';
-import { Lead } from '../types';
+import { Lead } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 import HighlightText from './HighlightText';
 import { recordAccess, getRelevanceScore } from '../utils/relevance';

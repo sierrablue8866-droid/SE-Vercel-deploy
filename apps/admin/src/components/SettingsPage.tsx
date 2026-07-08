@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createSierraNotification } from '../firebase';
 import { api } from '../lib/apiClient';
-import { AdminUser } from '../types';
+import { AdminUser } from '@sierra-estates/types';
 
 const ROLE_TO_BACKEND: Record<'Admin' | 'Superadmin', string> = { Admin: 'admin', Superadmin: 'superadmin' };
 const BACKEND_TO_ROLE: Record<string, 'Admin' | 'Superadmin'> = { admin: 'Admin', superadmin: 'Superadmin' };

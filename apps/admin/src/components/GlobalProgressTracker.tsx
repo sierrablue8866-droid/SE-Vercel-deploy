@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Workflow } from '../types';
+import { Workflow } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function GlobalProgressTracker() {

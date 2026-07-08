@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, onSnapshot, doc, writeBatch } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType, createSierraNotification } from '../firebase';
-import { Listing } from '../types';
+import { Listing } from '@sierra-estates/types';
 
 interface CuratorPageProps {
   T: (key: string) => string;

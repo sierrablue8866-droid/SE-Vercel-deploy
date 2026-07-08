@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { api } from '../lib/apiClient';
-import { Lead, Agent } from '../types';
+import { Lead, Agent } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 import PriceHeatmapWidget from './PriceHeatmapWidget';
 

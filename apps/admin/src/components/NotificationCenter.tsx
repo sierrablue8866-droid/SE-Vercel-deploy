@@ -11,7 +11,7 @@ import {
   writeBatch
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../firebase';
-import { SierraNotification } from '../types';
+import { SierraNotification } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NotificationCenterProps {

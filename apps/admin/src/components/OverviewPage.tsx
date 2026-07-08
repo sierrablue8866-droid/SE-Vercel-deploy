@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { api } from '../lib/apiClient';
-import { Lead, Agent, SearchLog } from '../types';
+import { Lead, Agent, SearchLog } from '@sierra-estates/types';
 import { ComposedChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
 import DashboardWidgets from './DashboardWidgets';
 import AgentLeaderboard from './AgentLeaderboard';

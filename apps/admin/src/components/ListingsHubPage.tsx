@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, FormEvent } from 'react';
 import { api } from '../lib/apiClient';
-import { Listing } from '../types';
+import { Listing } from '@sierra-estates/types';
 import HighlightText from './HighlightText';
 import { motion } from 'motion/react';
 import { recordAccess, getRelevanceScore } from '../utils/relevance';

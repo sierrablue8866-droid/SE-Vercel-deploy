@@ -40,5 +40,14 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "core-js",
+      "protobufjs",
+      "@firebase/util",
+      "@google/genai"
+    ]
   }
 }
