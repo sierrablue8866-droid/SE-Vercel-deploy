@@ -283,84 +283,24 @@
 }
 </style>
 
-<!-- ═══ NOOMO-STYLE IMMERSIVE EFFECTS ════════════════════════════════════════
-     1. Preloader (loading % + Enter button)
-     2. Custom blend-mode cursor + magnetic buttons (desktop only)
-     3. Smooth scroll (Lenis) + scroll-triggered text reveals
-     All effects respect prefers-reduced-motion. Cursor + magnetic disabled on touch. -->
-
-<!-- ─── 1. PRELOADER ─────────────────────────────────────────────────────── -->
-<div id="se-preloader" class="se-preloader">
-  <div class="se-pre-bg"></div>
-  <div class="se-pre-center">
-    <div class="se-pre-logo">
-      <img src="logo-gold.png" alt="Sierra Estates" />
-    </div>
-    <div class="se-pre-title">SIERRA ESTATES</div>
-    <div class="se-pre-sub">Future of Real Estate</div>
-    <div class="se-pre-bar-wrap">
-      <div class="se-pre-bar-fill" id="se-pre-fill"></div>
-    </div>
-    <div class="se-pre-pct" id="se-pre-pct">0%</div>
-    <button class="se-pre-enter" id="se-pre-enter" type="button" disabled>
-      <span>Enter Site</span>
-      <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-    </button>
-  </div>
-</div>
-
-<!-- ─── 2. CUSTOM CURSOR (desktop only, injected by JS) ──────────────────── -->
-<div class="se-cursor" id="se-cursor" aria-hidden="true"></div>
-<div class="se-cursor-dot" id="se-cursor-dot" aria-hidden="true"></div>
+<!-- ═══ PERCIPIO-STYLE SCROLL MOTION ═════════════════════════════════════════
+     Inspired by noomoagency.com/work/percipio-health
+     Clean, editorial, scroll-driven. No preloader, no custom cursor.
+     Just smooth scroll + subtle fade-up reveals on scroll.
+     All effects respect prefers-reduced-motion. -->
 
 <style>
-/* ─── Preloader ─── */
-.se-preloader{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#0a1622;transition:opacity .8s cubic-bezier(.16,1,.3,1),visibility .8s;}
-.se-preloader.se-pre-done{opacity:0;visibility:hidden;pointer-events:none;}
-.se-pre-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,174,255,.08) 0%,transparent 60%);}
-.se-pre-center{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
-.se-pre-logo{width:64px;height:64px;border-radius:14px;overflow:hidden;margin-bottom:6px;animation:sePreFloat 3s ease-in-out infinite;}
-.se-pre-logo img{width:100%;height:100%;object-fit:contain;}
-.se-pre-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:.18em;color:#fff;text-transform:uppercase;}
-.se-pre-sub{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.22em;color:#8fe1ff;text-transform:uppercase;margin-bottom:18px;}
-.se-pre-bar-wrap{width:180px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;}
-.se-pre-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#00aeff,#8fe1ff);border-radius:2px;transition:width .3s ease;}
-.se-pre-pct{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:rgba(255,255,255,.6);margin-bottom:8px;}
-.se-pre-enter{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:999px;border:1.5px solid rgba(0,174,255,.4);background:rgba(0,174,255,.08);color:#8fe1ff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease,background .25s ease,border-color .25s ease;text-transform:uppercase;}
-.se-pre-enter:not(:disabled){opacity:1;transform:none;}
-.se-pre-enter:not(:disabled):hover{background:rgba(0,174,255,.18);border-color:rgba(0,174,255,.7);color:#fff;}
-.se-pre-enter:disabled{cursor:default;}
-@keyframes sePreFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+/* ─── Percipio-style fade-up reveal (no clipping mask, no overlap) ─── */
+.se-fade{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.se-fade.se-fade-in{opacity:1;transform:none;}
 
-/* ─── Custom cursor (desktop only) ─── */
-.se-cursor{position:fixed;top:0;left:0;width:32px;height:32px;border-radius:50%;border:1.5px solid rgba(0,174,255,.6);pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .2s ease,height .2s ease,opacity .2s ease,background .2s ease;mix-blend-mode:difference;opacity:0;}
-.se-cursor.se-cursor-active{opacity:1;}
-.se-cursor.se-cursor-hover{width:48px;height:48px;background:rgba(0,174,255,.15);border-color:rgba(0,174,255,.9);}
-.se-cursor-dot{position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;background:#00aeff;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);opacity:0;transition:opacity .2s ease;mix-blend-mode:difference;}
-.se-cursor-dot.se-cursor-active{opacity:1;}
-@media(hover:none),(pointer:coarse){.se-cursor,.se-cursor-dot{display:none !important;}}
-
-/* ─── Text reveal (scroll-triggered) ─── */
-.se-reveal{overflow:hidden;padding-bottom:0.15em;margin-bottom:-0.15em;}
-.se-reveal .se-reveal-inner{display:inline-block;transform:translateY(120%);transition:transform .8s cubic-bezier(.16,1,.3,1);}
-.se-reveal.se-reveal-in .se-reveal-inner{transform:translateY(0);}
-/* Don't apply reveal to multi-line hero h1 (causes clipping) */
-.hero h1.se-reveal{overflow:visible;padding-bottom:0;margin-bottom:0;}
-.hero h1.se-reveal .se-reveal-inner{transform:none;}
-
-/* ─── Body lock during preloader ─── */
-body.se-pre-loading{overflow:hidden;height:100vh;}
-
-/* ─── Reduced motion ─── */
+/* ─── Reduced motion: show everything immediately ─── */
 @media(prefers-reduced-motion:reduce){
-  .se-preloader{transition:opacity .01ms !important;}
-  .se-pre-logo{animation:none !important;}
-  .se-cursor,.se-cursor-dot{display:none !important;}
-  .se-reveal .se-reveal-inner{transform:none !important;transition:none !important;}
+  .se-fade{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 </style>
 </head>
-<body class="se-pre-loading">
+<body>
 
 <div id="site-chrome"></div>
 
@@ -802,197 +742,99 @@ body.se-pre-loading{overflow:hidden;height:100vh;}
 })();
 </script>
 
-<!-- ═══ NOOMO-STYLE IMMERSIVE EFFECTS — JS ═══════════════════════════════════ -->
+<!-- ═══ PERCIPIO-STYLE SCROLL MOTION — JS ════════════════════════════════════
+     Clean scroll-triggered fade-ups. No preloader, no cursor, no magnetic.
+     Just elegant content reveals as you scroll. Works on all devices. -->
 <script>
 (function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
-  // ─── 1. PRELOADER ──────────────────────────────────────────────────────────
-  var pre = document.getElementById('se-preloader');
-  var fill = document.getElementById('se-pre-fill');
-  var pct = document.getElementById('se-pre-pct');
-  var enterBtn = document.getElementById('se-pre-enter');
-
-  function startPreloader() {
-    if (reduced) { finishPreloader(); return; }
-    var p = 0;
-    var iv = setInterval(function () {
-      p += Math.random() * 8 + 2;
-      if (p >= 100) { p = 100; clearInterval(iv); finishPreloader(); }
-      fill.style.width = p + '%';
-      pct.textContent = Math.floor(p) + '%';
-    }, 80);
-  }
-
-  function finishPreloader() {
-    fill.style.width = '100%';
-    pct.textContent = '100%';
-    enterBtn.disabled = false;
-    // Auto-enter after a short delay if user doesn't click
-    setTimeout(function () { if (!pre.classList.contains('se-pre-done')) enterSite(); }, 2500);
-  }
-
-  function enterSite() {
-    pre.classList.add('se-pre-done');
-    document.body.classList.remove('se-pre-loading');
-    // Refresh icons (the enter button has a lucide icon)
-    if (window.lucide) window.lucide.createIcons();
-    // Trigger initial text reveals
-    setTimeout(revealScrollCheck, 300);
-  }
-
-  enterBtn.addEventListener('click', enterSite);
-  startPreloader();
-
-  // ─── 2. CUSTOM CURSOR + MAGNETIC BUTTONS (desktop only) ────────────────────
-  if (!isTouch && !reduced) {
-    var cursor = document.getElementById('se-cursor');
-    var dot = document.getElementById('se-cursor-dot');
-    var mx = 0, my = 0, cx = 0, cy = 0;
-
-    document.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY;
-      cursor.classList.add('se-cursor-active');
-      dot.classList.add('se-cursor-active');
-      dot.style.left = mx + 'px';
-      dot.style.top = my + 'px';
-    });
-
-    document.addEventListener('mouseleave', function () {
-      cursor.classList.remove('se-cursor-active');
-      dot.classList.remove('se-cursor-active');
-    });
-
-    // Smooth follow with lerp
-    function animateCursor() {
-      cx += (mx - cx) * 0.18;
-      cy += (my - cy) * 0.18;
-      cursor.style.left = cx + 'px';
-      cursor.style.top = cy + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Hover effect on interactive elements
-    var hoverSel = 'a, button, .hz-pcard, .hz-comp, .hz-room, .chip, .map-cta, .se-pre-enter';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest(hoverSel)) cursor.classList.add('se-cursor-hover');
-    });
-    document.addEventListener('mouseout', function (e) {
-      if (e.target.closest(hoverSel)) cursor.classList.remove('se-cursor-hover');
-    });
-
-    // Magnetic buttons — subtle pull toward cursor (desktop: mouse, mobile: touch)
-    var magneticSel = '.btn-pri, .map-cta, .se-pre-enter, .hz-btn-pri, .hz-cta .btn';
-    document.querySelectorAll(magneticSel).forEach(function (el) {
-      el.style.transition = 'transform 0.3s cubic-bezier(.16,1,.3,1)';
-      // Desktop: mousemove
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        var x = e.clientX - r.left - r.width / 2;
-        var y = e.clientY - r.top - r.height / 2;
-        el.style.transform = 'translate(' + (x * 0.15) + 'px, ' + (y * 0.15) + 'px)';
-      });
-      el.addEventListener('mouseleave', function () { el.style.transform = ''; });
-      // Mobile: touchstart gives a subtle press-in effect
-      el.addEventListener('touchstart', function (e) {
-        if (e.touches.length === 0) return;
-        var r = el.getBoundingClientRect();
-        var x = e.touches[0].clientX - r.left - r.width / 2;
-        var y = e.touches[0].clientY - r.top - r.height / 2;
-        el.style.transform = 'translate(' + (x * 0.08) + 'px, ' + (y * 0.08) + 'px) scale(0.96)';
-      }, { passive: true });
-      el.addEventListener('touchend', function () { el.style.transform = ''; });
-      el.addEventListener('touchcancel', function () { el.style.transform = ''; });
+  // ─── Apply .se-fade to key content blocks ───────────────────────────────
+  function setupFades() {
+    var selectors = [
+      '.sec-head', '.sec-head h2', '.sec-head .eyebrow',
+      '.hz-sec-head', '.hz-sec-head h2',
+      '.hz-block h2', '.hz-cta h3',
+      '.search-card', '.hz-search-card',
+      '.hz-comp', '.hz-room', '.hz-pcard',
+      '.hz-stats .stat', '.hz-cta',
+      '.block .wrap > p', '.cpd-card',
+      '.testi-card', '.ai-tile',
+      '#tour .wrap > div'
+    ];
+    var els = document.querySelectorAll(selectors.join(','));
+    els.forEach(function (el) {
+      if (el.dataset.seFade) return;
+      el.classList.add('se-fade');
+      el.dataset.seFade = '1';
     });
   }
 
-  // ─── 3. SMOOTH SCROLL (lightweight lerp, no external dep) ──────────────────
-  if (!reduced && !isTouch) {
-    var smoothTarget = 0;
-    var smoothCurrent = 0;
-    var smoothRunning = false;
-
-    function smoothScrollLoop() {
-      smoothCurrent += (smoothTarget - smoothCurrent) * 0.08;
-      if (Math.abs(smoothTarget - smoothCurrent) < 0.5) {
-        smoothCurrent = smoothTarget;
-        smoothRunning = false;
+  // ─── Check which elements are in viewport + reveal them ─────────────────
+  function checkFades() {
+    var fades = document.querySelectorAll('.se-fade:not(.se-fade-in)');
+    fades.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.88 && r.bottom > 0) {
+        el.classList.add('se-fade-in');
       }
-      window.scrollTo(0, smoothCurrent);
-      if (smoothRunning) requestAnimationFrame(smoothScrollLoop);
-    }
+    });
+  }
 
-    // Intercept wheel events for smooth scrolling
-    var isAnimating = false;
+  // ─── Stagger: add delay to grid children for cascade effect ────────────
+  function setupStagger() {
+    var grids = document.querySelectorAll('.grid-comp, .hz-grid-comp, .hz-rooms, .grid-props, .hz-grid-props, .stats .grid, .hz-stats .grid');
+    grids.forEach(function (grid) {
+      var children = grid.children;
+      for (var i = 0; i < children.length && i < 8; i++) {
+        children[i].style.transitionDelay = (i * 0.08) + 's';
+      }
+    });
+  }
+
+  // ─── Smooth scroll (desktop only — native touch scroll is better) ───────
+  if (!reduced && !window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+    var target = 0, current = 0, running = false;
+    function loop() {
+      current += (target - current) * 0.075;
+      if (Math.abs(target - current) < 0.5) { current = target; running = false; }
+      window.scrollTo(0, current);
+      if (running) requestAnimationFrame(loop);
+    }
     document.addEventListener('wheel', function (e) {
-      // Only intercept on the main page (not in modals/sheets)
-      if (e.target.closest('.sheet, .sheet-overlay')) return;
-      smoothTarget = window.pageYOffset + e.deltaY;
-      smoothTarget = Math.max(0, Math.min(smoothTarget, document.body.scrollHeight - window.innerHeight));
-      if (!smoothRunning) {
-        smoothCurrent = window.pageYOffset;
-        smoothRunning = true;
-        smoothScrollLoop();
-      }
+      if (e.target.closest('.sheet, .sheet-overlay, .hz-rooms')) return;
+      target = window.pageYOffset + e.deltaY;
+      target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
+      if (!running) { current = window.pageYOffset; running = true; loop(); }
       e.preventDefault();
     }, { passive: false });
   }
 
-  // ─── TEXT REVEALS (scroll-triggered, works on all devices) ────────────────
-  // Wrap key headings in reveal masks (skip hero h1 — it's multi-line + visible on load)
-  function setupReveals() {
-    var headings = document.querySelectorAll('.sec-head h2, .hz-sec-head h2, .hz-cta h3, .hz-block h2');
-    headings.forEach(function (h) {
-      if (h.closest('.se-reveal') || h.dataset.seReveal) return;
-      // Skip if heading is taller than 2 lines (overflow:hidden would clip)
-      var lineHeight = parseFloat(getComputedStyle(h).lineHeight) || 24;
-      if (h.offsetHeight > lineHeight * 2.5) return;
-      var inner = document.createElement('span');
-      inner.className = 'se-reveal-inner';
-      inner.innerHTML = h.innerHTML;
-      h.classList.add('se-reveal');
-      h.innerHTML = '';
-      h.appendChild(inner);
-      h.dataset.seReveal = '1';
-    });
-  }
-
-  function revealScrollCheck() {
-    var reveals = document.querySelectorAll('.se-reveal:not(.se-reveal-in)');
-    reveals.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.85 && r.bottom > 0) {
-        el.classList.add('se-reveal-in');
-      }
-    });
-  }
-
-  // Run after portal JS has rendered content
-  setTimeout(function () {
-    setupReveals();
-    if (!reduced) {
-      revealScrollCheck();
-      window.addEventListener('scroll', revealScrollCheck, { passive: true });
-      window.addEventListener('resize', revealScrollCheck, { passive: true });
-    } else {
-      // In reduced-motion mode, just show everything immediately
-      document.querySelectorAll('.se-reveal').forEach(function (el) {
-        el.classList.add('se-reveal-in');
+  // ─── Init ────────────────────────────────────────────────────────────────
+  if (reduced) {
+    // Show everything immediately
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.se-fade').forEach(function (el) {
+        el.classList.add('se-fade-in');
       });
-    }
-  }, 500);
+    });
+  } else {
+    // Setup after portal JS renders content
+    setTimeout(function () {
+      setupFades();
+      setupStagger();
+      checkFades();
+      window.addEventListener('scroll', checkFades, { passive: true });
+      window.addEventListener('resize', checkFades, { passive: true });
+    }, 500);
 
-  // Also re-setup reveals after the portal's own JS runs (content is dynamic)
-  if (window.MutationObserver) {
+    // Re-check after dynamic content loads (portal JS renders async)
     var obs = new MutationObserver(function () {
-      setupReveals();
-      revealScrollCheck();
+      setupFades();
+      checkFades();
     });
     obs.observe(document.body, { childList: true, subtree: true });
-    // Stop observing after 5s to avoid infinite loop
     setTimeout(function () { obs.disconnect(); }, 5000);
   }
 })();
