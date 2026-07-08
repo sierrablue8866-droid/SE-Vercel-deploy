@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="shared.css"/>
 <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <style>
@@ -281,6 +283,19 @@
   .perfect .pf-left,.inq{padding:32px 26px;}
   .cta{padding:36px 28px;}
 }
+
+/* ─── Home page map markers ─── */
+.cpd-marker{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--pri);color:var(--navy);font-family:var(--mono);font-weight:700;font-size:12px;padding:0 6px;box-shadow:0 3px 10px rgba(13,33,54,.15);cursor:pointer;transition:.2s var(--silk);}
+.cpd-marker:hover{transform:scale(1.12);box-shadow:0 5px 16px rgba(0,174,255,.3);}
+.cpd-marker.hot{background:linear-gradient(135deg,var(--pri),#0098e0);color:#fff;border-color:var(--pri);}
+[data-theme="dark"] .cpd-marker{background:#17181b;border-color:#c8961a;color:#e9c176;}
+[data-theme="dark"] .cpd-marker.hot{background:linear-gradient(135deg,#e9c176,#c8961a);color:#0d0d0f;}
+.leaflet-container{font-family:var(--font);}
+.leaflet-control-attribution{font-size:9px !important;opacity:.6;}
+.btn-navy{background:var(--navy);color:#fff;border:none;border-radius:var(--r-btn);padding:10px 22px;font-family:var(--font);font-weight:700;font-size:14px;cursor:pointer;transition:.25s var(--silk);}
+.btn-navy:hover{background:#001f38;transform:translateY(-1px);}
+[data-theme="dark"] .btn-navy{background:#c8961a;color:#0d0d0f;}
+[data-theme="dark"] .btn-navy:hover{background:#e9c176;}
 </style>
 
 <!-- ═══ PERCIPIO-STYLE SCROLL MOTION ═════════════════════════════════════════
@@ -392,6 +407,29 @@
       <a href="compounds.html" class="sec-link"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
     </div>
     <div class="grid-comp" id="comp-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ LIVE MAP ═══════════════════════════════════════════════════════════
+     Interactive Leaflet map showing all New Cairo compounds with live
+     unit-count badges. Clicking a marker navigates to compounds.html. -->
+<section class="block" id="map-section" data-screen-label="Live map">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <div class="eyebrow" data-i18n="eyeCpd"></div>
+        <h2 data-i18n="mapTit">Live Compound Map</h2>
+        <p data-i18n="mapSub">Explore all New Cairo compounds on the map — click any badge for details.</p>
+      </div>
+      <a href="compounds.html" class="sec-link"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
+    </div>
+    <div id="home-map" style="height:480px;border-radius:var(--r-card);border:1px solid var(--line);z-index:1;background:var(--bg);margin-bottom:8px;"></div>
+    <div style="text-align:center;margin-top:12px;">
+      <a href="compounds.html" class="btn btn-navy" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
+        <i data-lucide="map" class="i" style="width:16px;height:16px;"></i>
+        <span>Open Full Map</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -739,6 +777,59 @@
   dots.forEach(function (d, i) { d.addEventListener('click', function () { setSlide(i); arm(); }); });
   setSlide(0);
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) arm();
+})();
+</script>
+
+<!-- ═══ HOME PAGE MAP — Leaflet init ════════════════════════════════════════
+     Shows all compounds on an interactive map with unit-count badges.
+     Clicking a marker navigates to compounds.html for the full experience. -->
+<script>
+(function () {
+  'use strict';
+  var D = window.HZDATA;
+  if (!D || !window.L) return;
+
+  var theme = (window.HZ && HZ.theme) ? HZ.theme() : 'light';
+  var map = L.map('home-map', { scrollWheelZoom: false, zoomControl: true }).setView([30.03, 31.57], 11);
+  var tiles = {
+    light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+  };
+  var layer = L.tileLayer(tiles[theme], { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
+
+  // Update tiles on theme change
+  document.addEventListener('hzp:theme', function (e) {
+    layer.setUrl(tiles[e.detail]);
+  });
+
+  // Add compound markers with unit counts
+  function markerIcon(c, count) {
+    var hot = c.ai >= 9.2;
+    return L.divIcon({
+      className: '',
+      html: '<span class="cpd-marker' + (hot ? ' hot' : '') + '" title="' + c.n + '">' + count + '</span>',
+      iconSize: null
+    });
+  }
+
+  var pts = [];
+  D.compounds.forEach(function (c) {
+    var count = D.unitsFor(c.n).length;
+    L.marker(c.c, { icon: markerIcon(c, count), title: c.n }).on('click', function () {
+      location.href = 'compounds.html';
+    }).addTo(map);
+    pts.push(c.c);
+  });
+
+  // Fit bounds to show all compounds
+  if (pts.length) {
+    try { map.fitBounds(pts, { padding: [40, 40], maxZoom: 13 }); } catch (e) {}
+  }
+
+  // Fix tile rendering after layout settles
+  setTimeout(function () { map.invalidateSize(); }, 200);
+  setTimeout(function () { map.invalidateSize(); }, 800);
+  window.addEventListener('resize', function () { map.invalidateSize(); });
 })();
 </script>
 
