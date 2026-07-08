@@ -46,6 +46,16 @@
 .hero .map-cta .i{width:17px;height:17px;}
 @media(max-width:680px){.hero .map-cta{bottom:96px;font-size:13px;padding:11px 18px;}}
 
+/* ── scroll-down indicator (laser line) ── */
+.scroll-cue{position:absolute;bottom:28px;right:36px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none;}
+.scroll-cue-line{position:relative;width:2px;height:54px;background:rgba(255,255,255,.22);border-radius:2px;overflow:hidden;}
+.scroll-cue-line::after{content:"";position:absolute;top:0;left:0;width:100%;height:18px;background:linear-gradient(180deg,transparent,#00aeff,#00aeff,transparent);border-radius:2px;animation:scrollLaser 1.8s var(--silk) infinite;}
+[data-theme="dark"] .scroll-cue-line::after{background:linear-gradient(180deg,transparent,#e9c176,#e9c176,transparent);}
+.scroll-cue-label{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.28em;color:rgba(255,255,255,.55);text-transform:uppercase;writing-mode:vertical-rl;text-orientation:mixed;}
+@keyframes scrollLaser{0%{transform:translateY(-18px);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateY(54px);opacity:0;}}
+@media(max-width:680px){.scroll-cue{bottom:18px;right:20px;}.scroll-cue-line{height:40px;}.scroll-cue-line::after{height:14px;}@keyframes scrollLaser{0%{transform:translateY(-14px);opacity:0;}15%{opacity:1;}85%{opacity:1;}100%{transform:translateY(40px);opacity:0;}}}
+@media(prefers-reduced-motion:reduce){.scroll-cue-line::after{animation:none;opacity:.6;}}
+
 /* ── search card ── */
 .searchbar{position:relative;z-index:5;margin-top:-76px;}
 .search-card{background:var(--surface);border-radius:14px;box-shadow:var(--shadow-m);border:1px solid var(--line);overflow:hidden;}
@@ -296,6 +306,11 @@
     <span data-i18n="exploreMapBtn"></span>
   </a>
   <div class="dots wrap" id="hero-dots" style="left:auto;"></div>
+  <!-- Scroll-down indicator (animated laser line) -->
+  <div class="scroll-cue" aria-hidden="true">
+    <span class="scroll-cue-line"></span>
+    <span class="scroll-cue-label">SCROLL</span>
+  </div>
 </header>
 
 <!-- SEARCH CARD -->
