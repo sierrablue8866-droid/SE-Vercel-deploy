@@ -1,5 +1,9 @@
 packages:
   - '.'
+  - 'apps/*'
+  - 'apps/agents/*'
+  - 'packages/*'
+  - 'functions'
 
 allowBuilds:
   '@firebase/util': false
