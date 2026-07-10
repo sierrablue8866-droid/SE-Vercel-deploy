@@ -3,7 +3,7 @@ import {
   LogOut, Languages, PanelLeftClose, PanelLeftOpen, X,
   LayoutDashboard, Users, Building2, CalendarCheck, BarChart3,
   FileText, Bot, Workflow, Zap, Settings, RefreshCw, Database,
-  Sun, Moon,
+  Sun, Moon, MessageSquare, ClipboardList,
   type LucideIcon,
 } from 'lucide-react';
 import { auth } from '../firebase';
@@ -52,6 +52,9 @@ export const NAV_ITEMS: NavItem[] = [
   { id: 'easyListing',    label: 'Easy Listing',      labelAr: 'إدراج سريع',            icon: Zap,             section: 'integrations' },
   { id: 'automation',     label: 'Automation Portal', labelAr: 'بوابة الأتمتة',         icon: Settings,        section: 'integrations' },
   { id: 'dataSync',       label: 'Data Sync',         labelAr: 'مزامنة البيانات',       icon: RefreshCw,       section: 'integrations' },
+  // ── Phase 3: Typed CRUD pages ──────────────────────────────────────
+  { id: 'listingsManager', label: 'Listings Manager',  labelAr: 'إدارة العقارات',        icon: ClipboardList,   section: 'integrations' },
+  { id: 'requestsTickets', label: 'Request Tickets',   labelAr: 'تذاكر الطلبات',         icon: MessageSquare,   section: 'integrations' },
   // ── System ─────────────────────────────────────────────────────────
   { id: 'dbEditor',       label: 'DB Editor',         labelAr: 'محرر قاعدة البيانات',   icon: Database,        section: 'system' },
 ];

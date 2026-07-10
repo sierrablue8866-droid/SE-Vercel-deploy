@@ -36,6 +36,9 @@ import DBEditorPage from './components/DBEditorPage';
 import PageEditorPage from './components/PageEditorPage';
 import FollowupsPage from './components/FollowupsPage';
 import BotsControlPage from './components/BotsControlPage';
+// Phase 3: New typed pages using firebaseUtils + strict types
+import ListingsManagerPage from './components/ListingsManagerPage';
+import RequestsTicketPage from './components/RequestsTicketPage';
 import MegaDashboard from './components/MegaDashboard';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
@@ -496,6 +499,9 @@ export default function App() {
     if (tab === 'pageEditor') return <PageEditorPage T={T} isAr={isAr} />;
     if (tab === 'dbEditor') return <DBEditorPage T={T} isAr={isAr} />;
     if (tab === 'agents') return <AgentsPage T={T} searchQuery={searchQuery} />;
+    // New typed pages (Phase 3) — use firebaseUtils + strict types
+    if (tab === 'listingsManager') return <ListingsManagerPage />;
+    if (tab === 'requestsTickets') return <RequestsTicketPage />;
 
     // All core operations (Overview, Leads, Listings, Bots, Workflows, Search Insights, Followups)
     // are now unified into the MegaDashboard. The Sidebar will handle scrolling to them.
