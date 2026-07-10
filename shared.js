@@ -82,7 +82,14 @@
       thCode: 'Code', thType: 'Type', thBeds: 'Beds', thBath: 'Baths', thArea: 'Area', thFloor: 'Floor', thPrice: 'Price', thAI: 'AI', thStatus: 'Status',
       stAvail: 'Available', stReserved: 'Reserved', closeWord: 'Close', unitsWord: 'units',
       shCompound: 'Compound', shBeds: 'Bedrooms', shAnyBeds: 'Any', shShowing: 'Showing', shOf: 'of', shNoUnits: 'No units match these filters.',
-      nearHint: 'Or tap anywhere on the map — we\u2019ll find the compounds nearest to that spot.', nearTit: 'Nearest compounds', nearSub: 'Closest to the point you tapped', kmAway: 'km away', viewUnitsBtn: 'View units', clearPin: 'Clear'
+      nearHint: 'Or tap anywhere on the map — we\u2019ll find the compounds nearest to that spot.', nearTit: 'Nearest compounds', nearSub: 'Closest to the point you tapped', kmAway: 'km away', viewUnitsBtn: 'View units', clearPin: 'Clear',
+      skipToContent: 'Skip to content',
+      mapTit: 'Live Compound Map', mapSub: 'Explore all New Cairo compounds on the map — click any badge for details.', openFullMap: 'Open full map',
+      aiHubTit: 'Intelligence Engine',
+      tourOpenFull: 'Open full page', tourNewTab: 'Open tour in a new tab', tourLoading: 'Loading 3D tour…', tourExplore: 'Explore in 3D', tourBadge: '3D virtual tour',
+      tourPosterTit: 'Signature villa walkthrough', tourDemo: 'Sample walkthrough — every Sierra listing can be toured like this, room by room.',
+      inqDone: 'Thank you — your inquiry was received. An advisor will contact you within 2 hours.',
+      favLabel: 'Save to favourites', compareLabel: 'Compare', shareLabel: 'Share', closeLabel: 'Close'
     },
     ar: {
       dir: 'rtl',
@@ -162,7 +169,14 @@
       thCode: 'الكود', thType: 'النوع', thBeds: 'غرف', thBath: 'حمامات', thArea: 'المساحة', thFloor: 'الدور', thPrice: 'السعر', thAI: 'ذكاء', thStatus: 'الحالة',
       stAvail: 'متاحة', stReserved: 'محجوزة', closeWord: 'إغلاق', unitsWord: 'وحدة',
       shCompound: 'الكمبوند', shBeds: 'غرف النوم', shAnyBeds: 'الكل', shShowing: 'عرض', shOf: 'من', shNoUnits: 'لا توجد وحدات مطابقة.',
-      nearHint: 'أو اضغط في أي مكان على الخريطة — وسنجد أقرب الكمبوندات لتلك النقطة.', nearTit: 'أقرب الكمبوندات', nearSub: 'الأقرب إلى النقطة التي حددتها', kmAway: 'كم', viewUnitsBtn: 'عرض الوحدات', clearPin: 'مسح'
+      nearHint: 'أو اضغط في أي مكان على الخريطة — وسنجد أقرب الكمبوندات لتلك النقطة.', nearTit: 'أقرب الكمبوندات', nearSub: 'الأقرب إلى النقطة التي حددتها', kmAway: 'كم', viewUnitsBtn: 'عرض الوحدات', clearPin: 'مسح',
+      skipToContent: 'تخطَّ إلى المحتوى',
+      mapTit: 'خريطة الكمبوندات المباشرة', mapSub: 'استكشف كل كمبوندات القاهرة الجديدة على الخريطة — اضغط أي علامة للتفاصيل.', openFullMap: 'افتح الخريطة كاملة',
+      aiHubTit: 'محرك الذكاء العقاري',
+      tourOpenFull: 'افتح الصفحة كاملة', tourNewTab: 'افتح الجولة في نافذة جديدة', tourLoading: 'جارٍ تحميل الجولة الثلاثية الأبعاد…', tourExplore: 'استكشف بتقنية 3D', tourBadge: 'جولة افتراضية 3D',
+      tourPosterTit: 'جولة داخل فيلا مميزة', tourDemo: 'جولة تجريبية — يمكن استكشاف أي وحدة لدى سيرا بهذه الطريقة، غرفة بغرفة.',
+      inqDone: 'شكراً لك — استلمنا طلبك وسيتواصل معك مستشار خلال ساعتين.',
+      favLabel: 'أضف إلى المفضلة', compareLabel: 'قارن', shareLabel: 'شارك', closeLabel: 'إغلاق'
     }
   };
 
@@ -242,7 +256,7 @@
       '<div class="photo">' +
         '<a href="property.html?id=' + p.id + '"><img src="' + p.img + '" alt="' + p.type + ' in ' + p.cmp + '" loading="lazy"/></a>' +
         '<div class="badges">' + extra + modeTag + '</div>' +
-        '<div class="heart" onclick="this.classList.toggle(\'on\')"><i data-lucide="heart" class="i" style="width:18px;height:18px"></i></div>' +
+        '<button type="button" class="heart" aria-label="' + t('favLabel') + '" aria-pressed="false" onclick="this.classList.toggle(\'on\');this.setAttribute(\'aria-pressed\',this.classList.contains(\'on\'))"><i data-lucide="heart" class="i" style="width:18px;height:18px"></i></button>' +
         '<div class="price-float">' + D.price(p) + '</div>' +
         '<div class="ai-score">AI ' + p.ai.toFixed(1) + '</div>' +
       '</div>' +
@@ -259,8 +273,8 @@
       '<div class="foot">' +
         '<div class="agent"><span class="av">' + initials + '</span><small><b>' + p.agent + '</b>' + p.ago + '</small></div>' +
         '<div class="foot-icons">' +
-          '<a href="#"><i data-lucide="git-compare" class="i"></i></a>' +
-          '<a href="#"><i data-lucide="share-2" class="i"></i></a>' +
+          '<a href="#" aria-label="' + t('compareLabel') + '"><i data-lucide="git-compare" class="i"></i></a>' +
+          '<a href="#" aria-label="' + t('shareLabel') + '"><i data-lucide="share-2" class="i"></i></a>' +
         '</div>' +
       '</div>' +
     '</article>';
