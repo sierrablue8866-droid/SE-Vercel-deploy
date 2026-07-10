@@ -333,7 +333,7 @@
     var iframe = document.getElementById('vtv-iframe');
     var loading = document.getElementById('vtv-loading');
     var fsBtn = document.getElementById('vtv-fs');
-    var frame = document.getElementById('vtv-frame');
+    var frame = document.getElementById('vtv-frame') || document.getElementById('vtv-banner');
     var loaded = false;
     if (poster && iframe && loading && fsBtn && frame) {
       poster.addEventListener('click', function () {
@@ -925,19 +925,8 @@
     }, 8000);
   })();
 
-  /* ═══ Move AI Hub / Intelligence Engine to right after Why Sierra ═══ */
-  var aiHub = document.getElementById('ai');
-  var whySierra = document.getElementById('agents');
-  if (aiHub && whySierra && whySierra.nextElementSibling !== aiHub) {
-    whySierra.parentNode.insertBefore(aiHub, whySierra.nextElementSibling);
-  }
-
-  /* ═══ Move 3D Tour to right after Featured Properties (before Why Sierra) ═══ */
-  var tour = document.getElementById('tour');
-  var props = document.getElementById('properties');
-  if (tour && props && props.nextElementSibling !== tour) {
-    props.parentNode.insertBefore(tour, props.nextElementSibling);
-  }
+  /* Section order (tour after properties, AI hub after Why Sierra) is now
+     baked into the HTML — the old JS reordering caused layout shift. */
 
   /* icons for content rendered after mount */
   HZ.refreshIcons();
