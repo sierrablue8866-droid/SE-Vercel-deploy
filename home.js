@@ -4,6 +4,7 @@
   'use strict';
   var D = window.HZDATA;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isAr = HZ.lang() === 'ar';
 
   /* ═══ render dynamic content (before HZ.mount so i18n/icons/reveal apply) ═══ */
 
@@ -43,7 +44,7 @@
   }).join('');
 
   /* market ticker (decorative, duplicated for the loop) */
-  var tickItems = HZ.lang() === 'ar'
+  var tickItems = isAr
     ? ['ماونتن فيو +24%', 'أب تاون كايرو +31%', 'ميفيدا إيجار من $1,700/شهر', 'هايد بارك AI 9.8', 'الرحاب عائد 8.1%', 'مدينتي طلب متزايد']
     : ['Mountain View iCity +24%', 'Uptown Cairo +31%', 'Mivida rentals from $1,700/mo', 'Hyde Park AI score 9.8', 'Villette yield 8.1%', 'Taj City demand rising'];
   document.getElementById('ticker-row').innerHTML = tickItems.concat(tickItems).map(function (s) { return '<span>' + s + '</span>'; }).join('');
@@ -94,32 +95,127 @@
   document.getElementById('inq-zone').innerHTML = ['z1', 'z2', 'z3', 'z4'].map(function (k) { return '<option data-i18n="' + k + '"></option>'; }).join('');
   document.getElementById('inq-type').innerHTML = ['lVilla', 'lApt', 'lTwin', 'lPent'].map(function (k) { return '<option data-i18n="' + k + '"></option>'; }).join('');
 
+  /* Insights — top 3 AI-ranked listings */
+  var topListings = D.listings.slice().sort(function (a, b) { return b.ai - a.ai; }).slice(0, 3);
+  document.getElementById('insights-grid').innerHTML = topListings.map(function (p, i) {
+    var rank = i + 1;
+    return '<a href="property.html?id=' + p.id + '" style="display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s var(--silk);position:relative;">' +
+      '<div style="position:relative;height:200px;overflow:hidden;">' +
+        '<img src="' + p.img + '" alt="' + p.code + '" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>' +
+        '<div style="position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#34d399,#22c55e);color:#fff;font-family:var(--mono);font-weight:800;font-size:12px;padding:5px 12px;border-radius:8px;box-shadow:0 4px 12px rgba(52,211,153,.4);">#' + rank + ' AI ' + p.ai.toFixed(1) + '</div>' +
+        (p.tag ? '<div style="position:absolute;top:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:10px;padding:4px 9px;border-radius:5px;text-transform:uppercase;">' + p.tag + '</div>' : '') +
+        '<div style="position:absolute;bottom:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:13px;padding:6px 12px;border-radius:6px;">' + (p.mode === 'sale' ? p.egpM + 'M EGP' : '$' + p.usd + '/mo') + '</div>' +
+      '</div>' +
+      '<div style="padding:18px;">' +
+        '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--pri);margin-bottom:6px;">' + p.code + ' · ' + p.type + '</div>' +
+        '<div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;">' + p.cmp + '</div>' +
+        '<div style="font-size:13px;color:var(--muted);margin-bottom:12px;">' + p.zone + '</div>' +
+        '<div style="display:flex;gap:14px;font-size:13px;color:var(--text);font-weight:600;">' +
+          '<span>🛏 ' + p.beds + '</span>' +
+          '<span>🚿 ' + p.bath + '</span>' +
+          '<span>📐 ' + p.area + ' m²</span>' +
+        '</div>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+
   /* mount shared chrome — applies i18n, icons, reveal-on-scroll, counters */
   HZ.mount('home');
 
   /* ═══ hero slider ═══ */
-  var isAr = HZ.lang() === 'ar';
   var slides = document.querySelectorAll('.hero .slide');
   var dots = document.querySelectorAll('.hero .dots button');
   var cur = 0, timer;
   function setSlide(n) {
+    if (!slides.length || !dots.length) return;
     slides[cur].classList.remove('on'); dots[cur].classList.remove('on');
     cur = ((n % D.slides.length) + D.slides.length) % D.slides.length;
     slides[cur].classList.add('on'); dots[cur].classList.add('on');
     var s = D.slides[cur];
-    document.getElementById('hero-pre').textContent = isAr ? s.preAr : s.pre;
-    var words = (isAr ? s.mainAr : s.main).split(' ');
-    var hl = words.splice(-Math.min(3, Math.max(1, words.length - 1))).join(' ');
-    document.getElementById('hero-main').innerHTML = words.join(' ') + ' <span class="hl">' + hl + '</span>';
+    var pre = document.getElementById('hero-pre');
+    var main = document.getElementById('hero-main');
+    if (pre && main) {
+      pre.style.opacity = '0'; main.style.opacity = '0';
+      pre.style.transform = 'translateY(15px)'; main.style.transform = 'translateY(15px)';
+      setTimeout(function () {
+        pre.textContent = isAr ? s.preAr : s.pre;
+        var txt = isAr ? s.mainAr : s.main;
+        var words = txt.split(' ');
+        var hl = words.splice(-3).join(' ');
+        main.innerHTML = words.join(' ') + ' <span class="hl">' + hl + '</span>';
+        pre.style.transition = 'opacity .6s var(--silk), transform .6s var(--silk)';
+        main.style.transition = 'opacity .6s var(--silk), transform .6s var(--silk)';
+        pre.style.opacity = '1'; main.style.opacity = '1';
+        pre.style.transform = 'translateY(0)'; main.style.transform = 'translateY(0)';
+      }, 400);
+    }
   }
-  function arm() { clearInterval(timer); timer = setInterval(function () { setSlide(cur + 1); }, 6500); }
+  function arm() { clearInterval(timer); timer = setInterval(function () { setSlide(cur + 1); }, 7000); }
   dots.forEach(function (d, i) { d.addEventListener('click', function () { setSlide(i); arm(); }); });
   setSlide(0);
   if (!reduced) {
     arm();
-    // don't advance slides while the tab is hidden
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) clearInterval(timer); else arm();
+    });
+  }
+
+  /* ═══ hero search compound autocomplete + filters ═══ */
+  var heroSearchInput = document.getElementById('hero-compound-search');
+  var heroResults = document.getElementById('hero-compound-results');
+  var heroSearchBtn = document.getElementById('hero-search-btn');
+
+  if (heroSearchInput && heroResults) {
+    heroSearchInput.addEventListener('input', function () {
+      var q = this.value.trim().toLowerCase();
+      if (!q) { heroResults.style.display = 'none'; return; }
+      var matches = D.compounds.filter(function (c) {
+        return c.n.toLowerCase().indexOf(q) >= 0 || (c.z && c.z.toLowerCase().indexOf(q) >= 0);
+      }).slice(0, 8);
+      if (matches.length === 0) {
+        heroResults.innerHTML = '<div style="padding:12px 16px;color:var(--muted);font-size:13px;">No compounds found</div>';
+        heroResults.style.display = 'block';
+        return;
+      }
+      heroResults.innerHTML = matches.map(function (c) {
+        return '<div class="compound-option" data-cpd="' + c.n + '" style="padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink);transition:.15s;">' +
+          '<b>' + c.n + '</b> <span style="color:var(--muted);font-size:11px;">&middot; ' + c.z + ' &middot; ' + D.unitsFor(c.n).length + ' units</span>' +
+          '</div>';
+      }).join('');
+      heroResults.style.display = 'block';
+      heroResults.querySelectorAll('.compound-option').forEach(function (opt) {
+        opt.addEventListener('mouseenter', function () { this.style.background = 'var(--bg)'; });
+        opt.addEventListener('mouseleave', function () { this.style.background = 'none'; });
+        opt.addEventListener('click', function () {
+          heroSearchInput.value = this.getAttribute('data-cpd');
+          heroResults.style.display = 'none';
+        });
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.search-compound-wrap')) {
+        heroResults.style.display = 'none';
+      }
+    });
+  }
+
+  if (heroSearchBtn) {
+    heroSearchBtn.addEventListener('click', function () {
+      var cpd = heroSearchInput ? heroSearchInput.value.trim() : '';
+      var type = document.getElementById('hero-type') ? document.getElementById('hero-type').value : '';
+      var beds = document.getElementById('hero-beds') ? document.getElementById('hero-beds').value : '0';
+      var price = document.getElementById('hero-price') ? document.getElementById('hero-price').value : '0';
+      var params = new URLSearchParams();
+      if (cpd) params.set('cpd', cpd);
+      if (type) params.set('type', type);
+      if (beds && beds !== '0') params.set('beds', beds);
+      if (price && price !== '0') params.set('maxPrice', price);
+      var qs = params.toString();
+      if (cpd) {
+        location.href = 'compounds.html' + (qs ? '?' + qs : '');
+      } else {
+        location.href = 'properties.html' + (qs ? '?' + qs : '');
+      }
     });
   }
 
@@ -133,28 +229,102 @@
 
   /* ═══ inquiry form ═══ */
   var segButtons = document.querySelectorAll('#inq-seg button');
+  var inqMode = 'buy';
   segButtons.forEach(function (b) {
     b.addEventListener('click', function () {
       segButtons.forEach(function (x) { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
       b.classList.add('on'); b.setAttribute('aria-pressed', 'true');
+      inqMode = b.dataset.i18n === 'inqBuy' ? 'buy' : b.dataset.i18n === 'inqRent' ? 'rent' : 'sell';
     });
   });
+
   var inqForm = document.getElementById('inq-form');
-  inqForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    // No backend yet — acknowledge locally so the form isn't a dead end.
-    document.getElementById('inq-done').classList.add('on');
-    inqForm.querySelector('button[type="submit"]').disabled = true;
-  });
+  if (inqForm) {
+    inqForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = {
+        timestamp: new Date().toISOString(),
+        mode: inqMode,
+        name: document.getElementById('inq-name').value.trim(),
+        phone: document.getElementById('inq-phone').value.trim(),
+        email: document.getElementById('inq-email').value.trim(),
+        zone: document.getElementById('inq-zone').value,
+        type: document.getElementById('inq-type').value,
+        budget: document.getElementById('inq-budget').value.trim()
+      };
+
+      var submitBtn = inqForm.querySelector('button[type="submit"]');
+      var originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader-2" class="i" style="animation:vtv-spin 1s linear infinite;"></i> <span>Sending…</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+
+      function showSuccess() {
+        var doneEl = document.getElementById('inq-done');
+        if (doneEl) {
+          doneEl.classList.add('on');
+          doneEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(function () { doneEl.classList.remove('on'); }, 6000);
+        }
+        inqForm.reset();
+        segButtons.forEach(function (x, i) { x.classList.toggle('on', i === 0); x.setAttribute('aria-pressed', i === 0 ? 'true' : 'false'); });
+        inqMode = 'buy';
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+
+      function csvFallback() {
+        try {
+          var csvRow = [data.timestamp, data.mode, data.name, data.phone, data.email, data.zone, data.type, data.budget]
+            .map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(',');
+          var csvHeader = 'Timestamp,Mode,Name,Phone,Email,Zone,Type,Budget\n';
+          var log = JSON.parse(localStorage.getItem('sierra_inquiries') || '[]');
+          log.push(data);
+          localStorage.setItem('sierra_inquiries', JSON.stringify(log));
+          var blob = new Blob([csvHeader + csvRow], { type: 'text/csv;charset=utf-8;' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'sierra-inquiry-' + Date.now() + '.csv';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        } catch (err) {}
+      }
+
+      if (window.SIERRA_DB && window.SIERRA_DB.isReady()) {
+        window.SIERRA_DB.addInquiry(data).then(function (result) {
+          if (result.fallback) csvFallback();
+          showSuccess();
+        }).catch(function () {
+          csvFallback();
+          showSuccess();
+        });
+      } else {
+        csvFallback();
+        showSuccess();
+      }
+    });
+  }
 
   /* CTA "List your property" → inquiry form with "Sell" preselected */
-  document.getElementById('cta-list').addEventListener('click', function () {
-    var sell = segButtons[2];
-    if (sell) sell.click();
-    document.getElementById('inquiry').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-    var name = document.getElementById('inq-name');
-    if (name) setTimeout(function () { name.focus({ preventScroll: true }); }, reduced ? 0 : 600);
-  });
+  var ctaListBtn = document.getElementById('cta-list');
+  if (ctaListBtn) {
+    ctaListBtn.addEventListener('click', function () {
+      var sell = segButtons[2];
+      if (sell) sell.click();
+      var inqSec = document.getElementById('inquiry');
+      if (inqSec) inqSec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      var name = document.getElementById('inq-name');
+      if (name) setTimeout(function () { name.focus({ preventScroll: true }); }, reduced ? 0 : 600);
+    });
+  }
 
   /* ═══ 3D tour embed — poster first, iframe only on demand ═══ */
   (function () {
@@ -165,18 +335,24 @@
     var fsBtn = document.getElementById('vtv-fs');
     var frame = document.getElementById('vtv-frame');
     var loaded = false;
-    poster.addEventListener('click', function () {
-      if (loaded) return;
-      loaded = true;
-      loading.style.display = 'flex';
-      poster.style.display = 'none';
-      iframe.src = TOUR_SRC;
-      iframe.onload = function () { loading.style.display = 'none'; iframe.style.opacity = '1'; fsBtn.style.display = 'grid'; };
-    });
-    fsBtn.addEventListener('click', function () {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else if (frame.requestFullscreen) frame.requestFullscreen();
-    });
+    if (poster && iframe && loading && fsBtn && frame) {
+      poster.addEventListener('click', function () {
+        if (loaded) return;
+        loaded = true;
+        loading.style.display = 'flex';
+        poster.style.display = 'none';
+        iframe.src = TOUR_SRC;
+        iframe.onload = function () {
+          loading.style.display = 'none';
+          iframe.style.opacity = '1';
+          fsBtn.style.display = 'grid';
+        };
+      });
+      fsBtn.addEventListener('click', function () {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (frame.requestFullscreen) frame.requestFullscreen();
+      });
+    }
   })();
 
   /* ═══ virtual tour modal (Three.js page in an iframe) ═══ */
@@ -184,9 +360,10 @@
     var modal = document.getElementById('tour-modal');
     var closeBtn = document.getElementById('tour-close');
     var lastFocus = null;
+    if (!modal || !closeBtn) return;
     function openTour() {
       var f = document.getElementById('tour-frame');
-      if (!f.src) f.src = 'virtual-tour.html';
+      if (f && !f.src) f.src = 'virtual-tour.html';
       lastFocus = document.activeElement;
       modal.classList.add('on');
       document.body.style.overflow = 'hidden';
@@ -197,7 +374,8 @@
       document.body.style.overflow = '';
       if (lastFocus) lastFocus.focus();
     }
-    document.getElementById('tour-open').addEventListener('click', openTour);
+    var openBtn = document.getElementById('tour-open');
+    if (openBtn) openBtn.addEventListener('click', openTour);
     var tourCard = document.getElementById('ai-tour-card');
     if (tourCard) tourCard.addEventListener('click', openTour);
     closeBtn.addEventListener('click', closeTour);
@@ -244,12 +422,26 @@
         dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
       };
       var layer = L.tileLayer(tiles[theme], { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
+
       document.addEventListener('hzp:theme', function (e) { layer.setUrl(tiles[e.detail]); });
 
       function markerIcon(c, isFeatured) {
-        var cls = 'cpd-marker' + (c.ai >= 9.2 ? ' hot' : '') + (isFeatured ? ' pulse' : '');
-        return L.divIcon({ className: '', html: '<span class="' + cls + '" title="' + c.n + '">' + c.n + '</span>', iconSize: null });
+        var hot = c.ai >= 9.2;
+        var cls = 'cpd-marker' + (hot ? ' hot' : '') + (isFeatured ? ' pulse' : '');
+        var curLang = HZ.lang();
+        var displayName = D.compoundName ? D.compoundName(c.n, curLang) : c.n;
+        var unitCount = 0;
+        if (typeof D.unitsFor === 'function') {
+          try { unitCount = D.unitsFor(c.n).length; } catch (e) {}
+        }
+        var unitBadge = unitCount > 0 ? '<span class="unit-count">' + unitCount + '</span>' : '';
+        return L.divIcon({
+          className: '',
+          html: '<span class="' + cls + '" title="' + displayName + ' (' + unitCount + ' units)">' + displayName + unitBadge + '</span>',
+          iconSize: null
+        });
       }
+
       var clusterGroup = L.markerClusterGroup({
         showCoverageOnHover: false,
         maxClusterRadius: 50,
@@ -257,24 +449,290 @@
         iconCreateFunction: function (cluster) {
           var count = cluster.getChildCount();
           var size = count >= 10 ? 'large' : count >= 5 ? 'medium' : 'small';
-          return L.divIcon({ className: 'cpd-cluster cpd-cluster-' + size, html: '<span>' + count + '</span>', iconSize: [40, 40] });
+          return L.divIcon({
+            className: 'cpd-cluster cpd-cluster-' + size,
+            html: '<span>' + count + '</span>',
+            iconSize: [40, 40]
+          });
         }
       });
+
       D.compounds.forEach(function (c) {
-        var marker = L.marker(c.c, { icon: markerIcon(c, featured.indexOf(c.n) >= 0), title: c.n });
-        marker.on('click', function () { location.href = 'compounds.html?cpd=' + encodeURIComponent(c.n); });
+        var isFeatured = featured.indexOf(c.n) >= 0;
+        var marker = L.marker(c.c, { icon: markerIcon(c, isFeatured), title: c.n });
+        marker.on('click', function () {
+          location.href = 'compounds.html?cpd=' + encodeURIComponent(c.n);
+        });
+        marker._compound = c;
         clusterGroup.addLayer(marker);
       });
       map.addLayer(clusterGroup);
+
       try { map.fitBounds(clusterGroup.getBounds(), { padding: [40, 40], maxZoom: 13 }); } catch (e) {}
       requestAnimationFrame(function () { map.invalidateSize(); });
+
+      // ═══ Map filters ═══
+      var allMarkers = clusterGroup.getLayers();
+      var compoundInput = document.getElementById('home-map-compound');
+      var compoundDropdown = document.getElementById('hmf-compound-dropdown');
+      var compoundChevron = document.getElementById('hmf-compound-chevron');
+      var compoundChips = document.getElementById('hmf-compound-chips');
+      var bedsWrap = document.getElementById('home-map-beds');
+      var countEl = document.getElementById('home-map-count');
+
+      var filterState = { compounds: [], beds: 0 };
+
+      function renderCompoundDropdown(query) {
+        var q = (query || '').trim().toLowerCase();
+        var items = D.compounds.filter(function (c) {
+          if (!q) return true;
+          return c.n.toLowerCase().indexOf(q) >= 0;
+        });
+        if (!items.length) {
+          compoundDropdown.innerHTML = '<div style="padding:12px;color:var(--muted);font-size:13px;text-align:center;">No compounds found</div>';
+          return;
+        }
+        compoundDropdown.innerHTML = items.map(function (c) {
+          var isSelected = filterState.compounds.indexOf(c.n) >= 0;
+          var unitCount = (typeof D.unitsFor === 'function') ? D.unitsFor(c.n).length : 0;
+          return '<div class="hmf-cpd-item' + (isSelected ? ' selected' : '') + '" data-cpd="' + c.n + '" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:.15s;' + (isSelected ? 'background:rgba(0,174,255,.08);' : '') + '">' +
+            '<span style="width:18px;height:18px;border-radius:5px;border:2px solid ' + (isSelected ? 'var(--pri)' : 'var(--line-2)') + ';background:' + (isSelected ? 'var(--pri)' : 'transparent') + ';display:grid;place-items:center;flex:none;">' + (isSelected ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '') + '</span>' +
+            '<span style="flex:1;font-size:13.5px;font-weight:600;color:var(--ink);">' + c.n + '</span>' +
+            '<span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:999px;">' + unitCount + '</span>' +
+          '</div>';
+        }).join('');
+
+        compoundDropdown.querySelectorAll('.hmf-cpd-item').forEach(function (item) {
+          item.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var name = this.getAttribute('data-cpd');
+            var idx = filterState.compounds.indexOf(name);
+            if (idx >= 0) {
+              filterState.compounds.splice(idx, 1);
+            } else {
+              filterState.compounds.push(name);
+            }
+            renderCompoundDropdown(compoundInput.value);
+            renderChips();
+            applyFilter();
+            updateActiveBadge();
+          });
+          item.addEventListener('mouseenter', function () {
+            if (!this.classList.contains('selected')) this.style.background = 'var(--bg)';
+          });
+          item.addEventListener('mouseleave', function () {
+            if (!this.classList.contains('selected')) this.style.background = 'transparent';
+          });
+        });
+      }
+
+      function renderChips() {
+        if (!compoundChips) return;
+        if (!filterState.compounds.length) {
+          compoundChips.innerHTML = '';
+          compoundChips.style.minHeight = '0';
+          return;
+        }
+        compoundChips.style.minHeight = '32px';
+        compoundChips.innerHTML = filterState.compounds.map(function (name) {
+          return '<span class="hmf-chip" data-cpd="' + name + '" style="display:inline-flex;align-items:center;gap:6px;background:var(--pri);color:#fff;font-family:var(--font);font-size:12px;font-weight:700;padding:5px 10px 5px 12px;border-radius:999px;gap:6px;">' +
+            '<span>' + name + '</span>' +
+            '<button type="button" data-remove="' + name + '" style="border:none;background:rgba(255,255,255,.25);color:#fff;width:16px;height:16px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;display:grid;place-items:center;padding:0;" aria-label="Remove ' + name + '">×</button>' +
+          '</span>';
+        }).join('');
+        compoundChips.querySelectorAll('[data-remove]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var name = this.getAttribute('data-remove');
+            var idx = filterState.compounds.indexOf(name);
+            if (idx >= 0) filterState.compounds.splice(idx, 1);
+            renderCompoundDropdown(compoundInput.value);
+            renderChips();
+            applyFilter();
+            updateActiveBadge();
+          });
+        });
+      }
+
+      function applyFilter() {
+        var selectedCompounds = filterState.compounds;
+        var exactBeds = filterState.beds;
+        var visible = [];
+
+        allMarkers.forEach(function (m) {
+          var c = m._compound;
+          if (!c) return;
+          var matchCompound = !selectedCompounds.length || selectedCompounds.indexOf(c.n) >= 0;
+          var matchBeds = true;
+          if (exactBeds > 0 && typeof D.unitsFor === 'function') {
+            var units = D.unitsFor(c.n);
+            matchBeds = units.some(function (u) { return u.beds === exactBeds; });
+          }
+          var visible_now = matchCompound && matchBeds;
+          if (clusterGroup.hasLayer(m) && !visible_now) {
+            clusterGroup.removeLayer(m);
+          } else if (!clusterGroup.hasLayer(m) && visible_now) {
+            clusterGroup.addLayer(m);
+          }
+          if (visible_now) visible.push(m);
+        });
+
+        if (countEl) {
+          var isArabic = HZ.lang() === 'ar';
+          countEl.textContent = visible.length + ' ' + (isArabic ? 'كمبوند' : (visible.length === 1 ? 'compound' : 'compounds'));
+        }
+
+        if (visible.length > 0) {
+          try {
+            var group = L.featureGroup(visible);
+            map.fitBounds(group.getBounds(), { padding: [40, 40], maxZoom: 13 });
+          } catch (e) {}
+        }
+        setTimeout(function () { map.invalidateSize(); }, 100);
+      }
+
+      if (compoundInput) {
+        compoundInput.addEventListener('focus', function () {
+          compoundDropdown.style.display = 'block';
+          if (compoundChevron) compoundChevron.style.transform = 'rotate(180deg)';
+          renderCompoundDropdown(compoundInput.value);
+        });
+        compoundInput.addEventListener('input', function (e) {
+          compoundDropdown.style.display = 'block';
+          if (compoundChevron) compoundChevron.style.transform = 'rotate(180deg)';
+          renderCompoundDropdown(e.target.value);
+        });
+        compoundInput.addEventListener('click', function (e) { e.stopPropagation(); });
+      }
+      document.addEventListener('click', function (e) {
+        if (compoundDropdown && !e.target.closest('#hmf-compound-dropdown') && !e.target.closest('#home-map-compound') && !e.target.closest('#hmf-compound-chevron')) {
+          compoundDropdown.style.display = 'none';
+          if (compoundChevron) compoundChevron.style.transform = 'rotate(0)';
+        }
+      });
+      if (compoundChevron) {
+        compoundChevron.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = compoundDropdown.style.display === 'block';
+          if (isOpen) {
+            compoundDropdown.style.display = 'none';
+            compoundChevron.style.transform = 'rotate(0)';
+          } else {
+            compoundDropdown.style.display = 'block';
+            compoundChevron.style.transform = 'rotate(180deg)';
+            renderCompoundDropdown(compoundInput.value);
+            compoundInput.focus();
+          }
+        });
+      }
+
+      if (bedsWrap) {
+        bedsWrap.querySelectorAll('button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            bedsWrap.querySelectorAll('button').forEach(function (x) { x.classList.remove('on'); });
+            b.classList.add('on');
+            filterState.beds = +b.dataset.b;
+            applyFilter();
+            updateActiveBadge();
+          });
+        });
+      }
+
+      var hmfTrigger = document.getElementById('hmf-trigger');
+      var hmfPanel = document.getElementById('hmf-panel');
+      var hmfReset = document.getElementById('hmf-reset');
+      var activeBadge = document.getElementById('hmf-active-badge');
+
+      function updateActiveBadge() {
+        if (!activeBadge) return;
+        var count = 0;
+        if (filterState.compounds.length) count++;
+        if (filterState.beds > 0) count++;
+        if (count > 0) {
+          activeBadge.style.display = 'inline-flex';
+          activeBadge.textContent = count;
+        } else {
+          activeBadge.style.display = 'none';
+        }
+      }
+
+      if (hmfTrigger && hmfPanel) {
+        hmfTrigger.addEventListener('click', function () {
+          var isOpen = hmfPanel.style.display !== 'none';
+          if (isOpen) {
+            hmfPanel.style.display = 'none';
+            hmfTrigger.setAttribute('aria-expanded', 'false');
+          } else {
+            hmfPanel.style.display = 'block';
+            hmfTrigger.setAttribute('aria-expanded', 'true');
+          }
+          if (window.lucide) lucide.createIcons();
+        });
+      }
+      if (hmfReset) {
+        hmfReset.addEventListener('click', function () {
+          if (compoundInput) compoundInput.value = '';
+          filterState.compounds = [];
+          filterState.beds = 0;
+          if (compoundDropdown) {
+            compoundDropdown.style.display = 'none';
+            if (compoundChevron) compoundChevron.style.transform = 'rotate(0)';
+          }
+          renderChips();
+          if (bedsWrap) {
+            bedsWrap.querySelectorAll('button').forEach(function (x, i) { x.classList.toggle('on', i === 0); });
+          }
+          applyFilter();
+          updateActiveBadge();
+        });
+      }
+
+      if (countEl) {
+        var isArabic = HZ.lang() === 'ar';
+        countEl.textContent = allMarkers.length + ' ' + (isArabic ? 'كمبوند' : 'compounds');
+      }
+
+      setTimeout(function () { map.invalidateSize(); }, 200);
       window.addEventListener('resize', function () { map.invalidateSize(); });
+
+      // Re-render markers on lang change
+      document.addEventListener('hzp:lang', function (e) {
+        var newLang = e.detail;
+        allMarkers.forEach(function (m) {
+          var c = m._compound;
+          if (!c) return;
+          m.setIcon(markerIcon(c, featured.indexOf(c.n) >= 0));
+        });
+        var visibleCount = clusterGroup.getLayers().length;
+        if (countEl) {
+          countEl.textContent = visibleCount + ' ' + (newLang === 'ar' ? 'كمبوند' : (visibleCount === 1 ? 'compound' : 'compounds'));
+        }
+      });
+
+      // Sticky map behaviour
+      var mapWrap = document.getElementById('map-sticky-wrap');
+      var mapSection = document.getElementById('map-section');
+      if (mapWrap && mapSection) {
+        var stickyActive = false;
+        window.addEventListener('scroll', function () {
+          var secRect = mapSection.getBoundingClientRect();
+          var wrapRect = mapWrap.getBoundingClientRect();
+          if (wrapRect.top < 64 && secRect.bottom > 300 && !stickyActive) {
+            mapWrap.classList.add('sticky');
+            stickyActive = true;
+            setTimeout(function () { map.invalidateSize(); }, 300);
+          } else if ((wrapRect.top >= 64 || secRect.bottom <= 300) && stickyActive) {
+            mapWrap.classList.remove('sticky');
+            stickyActive = false;
+            setTimeout(function () { map.invalidateSize(); }, 300);
+          }
+        }, { passive: true });
+      }
     }
 
     function start() {
       if (started) return;
       started = true;
-      loadAssets().then(initMap).catch(function () { /* map is progressive enhancement — page works without it */ });
+      loadAssets().then(initMap).catch(function () {});
     }
 
     if ('IntersectionObserver' in window) {
@@ -286,6 +744,200 @@
       start();
     }
   })();
+
+  /* ═══ customization tweaks panel logic ═══ */
+  (function () {
+    var trigger = document.getElementById('tweaks-trigger');
+    var overlay = document.getElementById('tweaks-overlay');
+    var closeBtn = document.getElementById('tweaks-close');
+    if (!trigger || !overlay) return;
+
+    var savedAccent = localStorage.getItem('se-accent') || '#00aeff';
+    var savedFont = localStorage.getItem('se-font-color') || '#0d2136';
+    var savedRadius = localStorage.getItem('se-radius') || '10';
+    applyAccent(savedAccent);
+    applyFont(savedFont);
+    applyRadius(savedRadius);
+
+    document.querySelectorAll('.tweaks-swatch').forEach(function (s) {
+      s.classList.toggle('on', s.getAttribute('data-color') === savedAccent);
+    });
+    document.querySelectorAll('.tweaks-font-btn').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-font') === savedFont);
+    });
+    document.querySelectorAll('.tweaks-corner-btn').forEach(function (b) {
+      b.classList.toggle('on', b.getAttribute('data-radius') === savedRadius);
+    });
+
+    trigger.addEventListener('click', function () { overlay.classList.add('on'); });
+    closeBtn.addEventListener('click', function () { overlay.classList.remove('on'); });
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.classList.remove('on'); });
+
+    document.querySelectorAll('.tweaks-swatch').forEach(function (sw) {
+      sw.addEventListener('click', function () {
+        var color = this.getAttribute('data-color');
+        document.querySelectorAll('.tweaks-swatch').forEach(function (s) { s.classList.remove('on'); });
+        this.classList.add('on');
+        applyAccent(color);
+        localStorage.setItem('se-accent', color);
+      });
+    });
+
+    document.querySelectorAll('.tweaks-font-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var color = this.getAttribute('data-font');
+        document.querySelectorAll('.tweaks-font-btn').forEach(function (b) { b.classList.remove('on'); });
+        this.classList.add('on');
+        applyFont(color);
+        localStorage.setItem('se-font-color', color);
+      });
+    });
+
+    document.querySelectorAll('.tweaks-corner-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var r = this.getAttribute('data-radius');
+        document.querySelectorAll('.tweaks-corner-btn').forEach(function (b) { b.classList.remove('on'); });
+        this.classList.add('on');
+        applyRadius(r);
+        localStorage.setItem('se-radius', r);
+      });
+    });
+
+    function applyAccent(color) {
+      document.documentElement.style.setProperty('--accent', color);
+      document.documentElement.style.setProperty('--pri', color);
+    }
+    function applyFont(color) {
+      document.documentElement.style.setProperty('--ink', color);
+      document.documentElement.style.setProperty('--text', color);
+    }
+    function applyRadius(r) {
+      document.documentElement.style.setProperty('--r-card', r + 'px');
+      document.documentElement.style.setProperty('--r-btn', Math.max(0, r - 2) + 'px');
+    }
+  })();
+
+  /* ═══ scroll-reveal animations (setupFades) ═══ */
+  (function () {
+    function setupFades() {
+      var fadeSelectors = [
+        '.sec-head .eyebrow', '.hz-sec-head h2',
+        '.hz-block h2', '.hz-cta h3',
+        '.search-card', '.hz-search-card',
+        '.hz-comp', '.hz-room', '.hz-stats .stat', '.hz-cta',
+        '.block .wrap > p', '.cpd-card',
+        '.testi-card', '.ai-tile',
+        '#tour .wrap > div'
+      ];
+      document.querySelectorAll(fadeSelectors.join(',')).forEach(function (el) {
+        if (el.dataset.seFade) return;
+        el.classList.add('se-fade');
+        el.dataset.seFade = '1';
+      });
+
+      document.querySelectorAll('.sec-head h2, .ai-hub h2').forEach(function (el) {
+        if (el.dataset.fmDone) return;
+        el.classList.add('fm-down');
+        el.dataset.fmDone = '1';
+      });
+
+      document.querySelectorAll('.grid-props .pcard, #prop-grid .pcard').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add('fm-spin', 'fm-d' + ((i % 6) + 1));
+        el.dataset.fmDone = '1';
+      });
+
+      document.querySelectorAll('.grid-feat .feat').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add(i % 2 === 0 ? 'fm-left' : 'fm-right', 'fm-d' + ((i % 4) + 1));
+        el.dataset.fmDone = '1';
+      });
+
+      var nb = document.querySelector('.net-banner');
+      if (nb && !nb.dataset.fmDone) { nb.classList.add('fm-left'); nb.dataset.fmDone = '1'; }
+
+      document.querySelectorAll('.ai-card').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add('fm-spin', 'fm-d' + ((i % 4) + 1));
+        el.dataset.fmDone = '1';
+      });
+
+      document.querySelectorAll('.grid-comp .comp, #comp-grid .comp').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add(i % 2 === 0 ? 'fm-left' : 'fm-right', 'fm-d' + ((i % 4) + 1));
+        el.dataset.fmDone = '1';
+      });
+
+      document.querySelectorAll('.stats .stat').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add('fm-write', 'fm-d' + ((i % 4) + 1));
+        el.dataset.fmDone = '1';
+      });
+
+      var tourSec = document.getElementById('tour');
+      if (tourSec && !tourSec.dataset.fmDone) { tourSec.classList.add('fm-blur'); tourSec.dataset.fmDone = '1'; }
+
+      var mapSec = document.getElementById('map-section');
+      if (mapSec && !mapSec.dataset.fmDone) { mapSec.classList.add('fm-clip'); mapSec.dataset.fmDone = '1'; }
+
+      document.querySelectorAll('#insights-grid > a').forEach(function (el, i) {
+        if (el.dataset.fmDone) return;
+        el.classList.add('fm-spin', 'fm-d' + ((i % 3) + 1));
+        el.dataset.fmDone = '1';
+      });
+    }
+
+    if (reduced) {
+      document.querySelectorAll('.se-fade, [class*="fm-"]').forEach(function (el) {
+        el.classList.add('se-fade-in', 'fm-in');
+      });
+      return;
+    }
+
+    setupFades();
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('se-fade-in', 'fm-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.se-fade, [class*="fm-"]').forEach(function (el) {
+      io.observe(el);
+    });
+
+    setTimeout(function () {
+      document.querySelectorAll('.se-fade, [class*="fm-"]').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('fm-in', 'se-fade-in');
+        }
+      });
+    }, 4000);
+
+    setTimeout(function () {
+      document.querySelectorAll('[class*="fm-"]:not(.fm-in), .se-fade:not(.se-fade-in)').forEach(function (el) {
+        el.classList.add('fm-in', 'se-fade-in');
+      });
+    }, 8000);
+  })();
+
+  /* ═══ Move AI Hub / Intelligence Engine to right after Why Sierra ═══ */
+  var aiHub = document.getElementById('ai');
+  var whySierra = document.getElementById('agents');
+  if (aiHub && whySierra && whySierra.nextElementSibling !== aiHub) {
+    whySierra.parentNode.insertBefore(aiHub, whySierra.nextElementSibling);
+  }
+
+  /* ═══ Move 3D Tour to right after Featured Properties (before Why Sierra) ═══ */
+  var tour = document.getElementById('tour');
+  var props = document.getElementById('properties');
+  if (tour && props && props.nextElementSibling !== tour) {
+    props.parentNode.insertBefore(tour, props.nextElementSibling);
+  }
 
   /* icons for content rendered after mount */
   HZ.refreshIcons();
