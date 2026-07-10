@@ -39,6 +39,9 @@ import BotsControlPage from './components/BotsControlPage';
 // Phase 3: New typed pages using firebaseUtils + strict types
 import ListingsManagerPage from './components/ListingsManagerPage';
 import RequestsTicketPage from './components/RequestsTicketPage';
+// Migrated from SEF repo (were missing)
+import PipelinePage from './components/PipelinePage';
+import TasksPage from './components/TasksPage';
 import MegaDashboard from './components/MegaDashboard';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
@@ -502,6 +505,16 @@ export default function App() {
     // New typed pages (Phase 3) — use firebaseUtils + strict types
     if (tab === 'listingsManager') return <ListingsManagerPage />;
     if (tab === 'requestsTickets') return <RequestsTicketPage />;
+    // Migrated from SEF repo
+    if (tab === 'pipeline') return <PipelinePage T={T} isAr={isAr} />;
+    if (tab === 'tasks') return <TasksPage T={T} isAr={isAr} />;
+    if (tab === 'nexus') return <NexusAIPage />;
+    if (tab === 'curator') return <CuratorPage T={T} />;
+    if (tab === 'scribe') return <ScribePage T={T} />;
+    if (tab === 'closer') return <Stage9CloserPage />;
+    if (tab === 'openclaw') return <OpenClawPage />;
+    if (tab === 'reports') return <ReportsPage T={T} isAr={isAr} />;
+    if (tab === 'settings') return <SettingsPage T={T} isAr={isAr} />;
 
     // All core operations (Overview, Leads, Listings, Bots, Workflows, Search Insights, Followups)
     // are now unified into the MegaDashboard. The Sidebar will handle scrolling to them.
