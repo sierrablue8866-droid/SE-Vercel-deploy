@@ -363,7 +363,7 @@
     if (!modal || !closeBtn) return;
     function openTour() {
       var f = document.getElementById('tour-frame');
-      if (f && !f.src) f.src = 'virtual-tour.html';
+      if (f && !f.src) f.src = 'https://listing3d.com/embed/r39d0bd4dde0a4fe693c7fe5fd230a896';
       lastFocus = document.activeElement;
       modal.classList.add('on');
       document.body.style.overflow = 'hidden';
