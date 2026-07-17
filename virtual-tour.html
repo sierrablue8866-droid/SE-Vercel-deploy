@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/framer-motion@10.18.0/dist/framer-motion.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 <!-- Firebase SDK (Firestore) -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
@@ -30,8 +29,6 @@ html,body{width:100%;height:100%;background:#07111E;overflow:hidden;}
 <script type="text/babel">
 const { useState, useRef, useEffect } = React;
 const G = '#C8961A', GL = '#E9C176', N = '#071422';
-const Mo = (window.Motion || {}).motion;
-const AP = (window.Motion || {}).AnimatePresence;
 
 // Pull room data from HZDATA (data.js) — falls back to demo rooms if missing
 var ROOMS = (window.HZDATA && window.HZDATA.rooms) ? window.HZDATA.rooms : [
@@ -44,34 +41,54 @@ var ROOMS = (window.HZDATA && window.HZDATA.rooms) ? window.HZDATA.rooms : [
 
 function Room(props) {
   var room = props.room;
-  var drag = useRef({ x: 0, active: false, startX: 0 });
+  var drag = useRef({ active: false, startX: 0, startPos: 50 });
   var st = useState({ x: 50 });
   var pos = st[0], setPos = st[1];
+  var containerRef = useRef(null);
 
   function onDown(e) {
-    var cx = e.touches ? e.touches[0].clientX : e.clientX;
+    var cx = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
     drag.current = { active: true, startX: cx, startPos: pos.x };
   }
   function onMove(e) {
     if (!drag.current.active) return;
-    var cx = e.touches ? e.touches[0].clientX : e.clientX;
+    var cx = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
     var dx = cx - drag.current.startX;
-    var np = Math.max(0, Math.min(100, drag.current.startPos - dx / 8));
+    // Scale divisor dynamically based on screen width (mobile: ~3, desktop: ~8-12)
+    var divisor = Math.max(2.5, window.innerWidth / 120);
+    var np = Math.max(0, Math.min(100, drag.current.startPos - dx / divisor));
     setPos({ x: np });
   }
   function onUp() { drag.current.active = false; }
 
+  useEffect(function () {
+    var el = containerRef.current;
+    if (!el) return;
+    function preventTouch(e) {
+      if (drag.current.active && e.cancelable) {
+        e.preventDefault();
+      }
+    }
+    el.addEventListener('touchmove', preventTouch, { passive: false });
+    return function () {
+      el.removeEventListener('touchmove', preventTouch);
+    };
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}
       onTouchStart={onDown} onTouchMove={onMove} onTouchEnd={onUp}
       style={{ position: 'absolute', inset: 0, overflow: 'hidden', cursor: 'grab', background: '#000' }}>
       <img src={room.img} alt={room.name} draggable="false"
         style={{
-          position: 'absolute', top: '50%', left: (50 - pos.x * 0.16) + '%',
-          transform: 'translate(-' + (40 + pos.x * 0.16) + '%,-50%) scale(1.18)',
-          width: '145%', height: '145%', objectFit: 'cover', transition: drag.current.active ? 'none' : 'left .3s ease-out',
-          userSelect: 'none', pointerEvents: 'none'
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate3d(-' + (40 + pos.x * 0.2703) + '%,-50%,0) scale(1.18)',
+          width: '145%', height: '100%', objectFit: 'cover',
+          transition: drag.current.active ? 'none' : 'transform .3s ease-out',
+          userSelect: 'none', pointerEvents: 'none',
+          willChange: 'transform'
         }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,10,18,.75) 0%,rgba(4,10,18,0) 32%,rgba(4,10,18,0) 78%,rgba(4,10,18,.55) 100%)', pointerEvents: 'none' }} />
     </div>
