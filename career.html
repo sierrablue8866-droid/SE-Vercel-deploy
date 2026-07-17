@@ -139,6 +139,47 @@ body{font-family:var(--font);color:var(--text);background:var(--surface);font-si
 
 <footer id="site-footer"></footer>
 
+<!-- Firebase SDK (Firestore) -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="firebase-data.js"></script>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function () {
+  'use strict';
+  HZ.mount('career');
+
+  var jobs = [
+    { title: 'Real Estate Agent', dept: 'Sales', type: 'Full-time', loc: 'New Cairo', desc: 'Join our elite sales team covering New Cairo compounds. AI-powered lead matching, competitive commission structure.' },
+    { title: 'AI/ML Engineer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Build and optimize our AVM pricing engine, smart match algorithms, and ROI forecaster. Python + TensorFlow.' },
+    { title: 'Frontend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Next.js + React + TypeScript. Build the portal, admin dashboard, and AI tool interfaces. Mobile-first, bilingual EN/AR.' },
+    { title: 'Backend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Firebase Cloud Functions, Firestore, Python FastAPI. Power our data pipeline and WhatsApp bot infrastructure.' },
+    { title: 'Marketing Specialist', dept: 'Marketing', type: 'Full-time', loc: 'New Cairo', desc: 'Digital marketing, social media, Property Finder campaigns, content creation for luxury real estate audience.' },
+    { title: 'Customer Success', dept: 'Operations', type: 'Full-time', loc: 'New Cairo', desc: 'Guide clients through their property journey — from first inquiry to handover. Bilingual EN/AR, WhatsApp-first.' }
+  ];
+
+  document.getElementById('jobs-list').innerHTML = jobs.map(function (j, i) {
+    return '<div class="job-card" data-job="' + j.title + '">' +
+      '<h3>' + j.title + '</h3>' +
+      '<div class="meta">' +
+        '<span><i data-lucide="briefcase" class="i"></i> ' + j.dept + '</span>' +
+        '<span><i data-lucide="clock" class="i"></i> ' + j.type + '</span>' +
+        '<span><i data-lucide="map-pin" class="i"></i> ' + j.loc + '</span>' +
+      '</div>' +
+      '<p>' + j.desc + '</p>' +
+      '<a href="#apply" class="apply-btn" onclick="document.getElementById(\'f-position\').value=\'' + j.title + '\'"><i data-lucide="arrow-right" style="width:14px;height:14px;"></i> Apply Now</a>' +
+    '</div>';
+  }).join('');
+
+  // Form submit → export to CSV (Excel-compatible)
+  document.getElementById('career-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {
+      name: document.getElementById('f-name').value,
+      phone: document.getElementById('f-phone').value,
+      email: document.getElementById('f-email').value,
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <script>
@@ -181,26 +222,41 @@ body{font-family:var(--font);color:var(--text);background:var(--surface);font-si
       date: new Date().toISOString()
     };
 
-    // Export to CSV (opens in Excel)
+    // Primary → write to Firestore via SIERRA_DB (Firebase)
+    // Fallback → download CSV (offline / Firebase unavailable)
+    if (window.SIERRA_DB && window.SIERRA_DB.isReady()) {
+      window.SIERRA_DB.addCareerApp(data).then(function (result) {
+        if (!result.fallback) {
+          document.getElementById('success-msg').classList.add('show');
+          document.getElementById('career-form').reset();
+          setTimeout(function () { document.getElementById('success-msg').classList.remove('show'); }, 5000);
+          return;
+        }
+        doCSVFallback(data);
+      });
+    } else {
+      doCSVFallback(data);
+    }
+  });
+
+  function doCSVFallback(data) {
     var csv = 'Name,Phone,Email,Position,Experience,Message,Date\n';
     csv += '"' + data.name + '","' + data.phone + '","' + data.email + '","' + data.position + '","' + data.experience + '","' + data.message.replace(/"/g, '""') + '","' + data.date + '"';
-
     var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'Sierra_Estates_Application_' + data.name.replace(/\s/g, '_') + '.csv';
+    a.download = 'Sierra_Estates_Application_' + (data.name || 'applicant').replace(/\s/g, '_') + '.csv';
     a.click();
     URL.revokeObjectURL(url);
-
-    // Show success
     document.getElementById('success-msg').classList.add('show');
-    this.reset();
+    document.getElementById('career-form').reset();
     setTimeout(function () { document.getElementById('success-msg').classList.remove('show'); }, 5000);
-  });
+  }
 
   if (window.lucide) lucide.createIcons();
 })();
 </script>
+
 </body>
 </html>

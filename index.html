@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Sierra Estates · New Cairo Properties — Rent & Resale</title>
 <meta name="description" content="Sierra Estates — AI-curated rent and resale properties across 50+ New Cairo compounds. Verified listings, live AVM pricing, licensed brokers."/>
-<link rel="canonical" href="https://ahmedfawzy8866.github.io/SE/"/>
+<link rel="canonical" href="https://sierra-estates.net/"/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Sierra Estates · New Cairo Properties"/>
 <meta property="og:description" content="AI-curated rent and resale properties across 50+ New Cairo compounds. Verified listings, live AVM pricing, licensed brokers."/>
-<meta property="og:url" content="https://ahmedfawzy8866.github.io/SE/"/>
+<meta property="og:url" content="https://sierra-estates.net/"/>
 <meta property="og:image" content="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" type="image/png" href="logo-gold.png"/>
@@ -36,10 +36,12 @@
 <link rel="stylesheet" href="shared.css"/>
 <link rel="stylesheet" href="home.css"/>
 
-<!-- Supabase JS SDK (PostgreSQL + Realtime + Auth) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
-<script src="supabase-config.js" defer></script>
-<script src="supabase.js" defer></script>
+<!-- Firebase JS SDK (Firestore + Auth) — same project as admin panel -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js" defer></script>
+<script src="firebase-config.js" defer></script>
+<script src="firebase-data.js" defer></script>
 
 <!-- Leaflet is NOT loaded here — home.js pulls it in only when the map section nears the viewport -->
 <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js" defer></script>
@@ -52,7 +54,7 @@
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   "name": "Sierra Estates",
-  "url": "https://ahmedfawzy8866.github.io/SE/",
+  "url": "https://sierra-estates.net/",
   "telephone": "+2 01092048333",
   "email": "Info@sierra-estates.net",
   "address": {
