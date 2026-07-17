@@ -4,259 +4,79 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Careers — Sierra Estates</title>
+<link rel="icon" type="image/png" href="logo-gold.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="shared.css"/>
-<script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--pri:#00aeff;--navy:#002b4b;--ink:#0d2136;--text:#5f7183;--muted:#9aa4ad;--line:#e7ebee;--bg:#f6f8fa;--surface:#fff;--surface-2:#fafbfc;--shadow-s:0 2px 10px rgba(13,33,54,.06);--shadow-m:0 12px 34px rgba(13,33,54,.10);--font:'Plus Jakarta Sans','Cairo',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--silk:cubic-bezier(.16,1,.3,1);--r-card:10px;--r-btn:8px;}
-[data-theme="dark"]{--pri:#c8961a;--pri-d:#e9c176;--navy:#09090f;--ink:#f2ede2;--text:#a8a294;--muted:#6d6858;--line:#1a1a26;--bg:#0f0f1a;--surface:#13131f;--surface-2:#0f0f1a;--shadow-s:0 2px 10px rgba(0,0,0,.5);--shadow-m:0 16px 44px rgba(0,0,0,.65);}
-[data-theme="dark"] body{background:#09090f;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
-body{font-family:var(--font);color:var(--text);background:var(--surface);font-size:15px;line-height:1.6;}
-.wrap{max-width:900px;margin:0 auto;padding:0 24px;}
-.hero-career{background:linear-gradient(135deg,#002b4b 0%,#0a1622 100%);color:#fff;padding:80px 0 60px;text-align:center;}
-.hero-career h1{font-size:42px;font-weight:800;letter-spacing:-.025em;color:#fff;margin-bottom:12px;}
-.hero-career p{font-size:17px;color:rgba(255,255,255,.7);max-width:560px;margin:0 auto;}
-.hero-career .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#34d399;margin-bottom:16px;display:inline-flex;align-items:center;gap:8px;}
-.hero-career .eyebrow::before{content:'';width:20px;height:2px;background:#34d399;}
-.section{padding:60px 0;}
-.section h2{font-size:28px;font-weight:800;color:var(--ink);margin-bottom:20px;letter-spacing:-.02em;}
-.job-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding:24px;margin-bottom:16px;transition:.3s var(--silk);cursor:pointer;}
-.job-card:hover{border-color:var(--pri);box-shadow:var(--shadow-m);transform:translateY(-2px);}
-.job-card h3{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px;}
-.job-card .meta{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:10px;}
-.job-card .meta span{display:inline-flex;align-items:center;gap:5px;}
-.job-card .meta .i{width:14px;height:14px;}
-.job-card p{font-size:14px;color:var(--text);line-height:1.6;}
-.job-card .apply-btn{margin-top:14px;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--r-btn);background:var(--pri);color:#fff;font-weight:700;font-size:13px;border:none;cursor:pointer;text-decoration:none;transition:.25s var(--silk);}
-.job-card .apply-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,174,255,.3);}
-[data-theme="dark"] .job-card .apply-btn{background:linear-gradient(135deg,#e9c176,#c8961a);color:#09090f;}
-.form-section{background:var(--bg);padding:60px 0;}
-.form-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:36px;box-shadow:var(--shadow-s);}
-.form-group{margin-bottom:20px;}
-.form-group label{display:block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:8px;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface-2);outline:none;transition:.2s;}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pri);}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-@media(max-width:680px){.form-row{grid-template-columns:1fr;}}
-.form-submit{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:var(--r-btn);background:var(--pri);color:#fff;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:.25s var(--silk);}
-.form-submit:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,174,255,.3);}
-[data-theme="dark"] .form-submit{background:linear-gradient(135deg,#e9c176,#c8961a);color:#09090f;}
-.contact-info{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-top:40px;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);}
-.contact-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);text-decoration:none;}
-.contact-item:hover{color:var(--pri);}
-.contact-item .i{width:18px;height:18px;color:var(--pri);}
-.export-note{text-align:center;margin-top:16px;font-size:12px;color:var(--muted);font-family:var(--mono);}
-.success-msg{display:none;text-align:center;padding:20px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:10px;color:#34d399;font-weight:600;margin-top:16px;}
-.success-msg.show{display:block;}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0A1628;color:#F4F0E8;min-height:100vh;}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:80px 24px 60px;background:linear-gradient(160deg,#0A1628 0%,#0d1e36 100%);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 300px at 50% 0%,rgba(201,162,77,.12),transparent 70%);pointer-events:none;}
+.logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:40px;text-decoration:none;}
+.logo img{width:32px;height:32px;object-fit:contain;}
+.logo span{font-size:18px;font-weight:700;color:#F4F0E8;letter-spacing:-.01em;}
+.eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#C9A24D;border:1px solid rgba(201,162,77,.3);border-radius:20px;padding:5px 14px;margin-bottom:20px;}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.1;color:#F4F0E8;margin-bottom:16px;}
+.hero h1 em{font-style:normal;color:#C9A24D;}
+.hero p{font-size:17px;color:rgba(244,240,232,.55);max-width:480px;margin:0 auto 40px;}
+
+/* ── Jobs ── */
+.jobs{max-width:680px;margin:0 auto;padding:0 24px 80px;}
+.job-card{background:rgba(255,255,255,.04);border:1px solid rgba(201,162,77,.18);border-radius:16px;padding:32px 28px;margin-bottom:20px;transition:.3s cubic-bezier(.16,1,.3,1);}
+.job-card:hover{border-color:rgba(201,162,77,.45);background:rgba(201,162,77,.05);transform:translateY(-2px);}
+.job-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#C9A24D;margin-bottom:12px;}
+.job-card h2{font-size:22px;font-weight:700;color:#F4F0E8;margin-bottom:8px;letter-spacing:-.015em;}
+.job-card p{font-size:14px;color:rgba(244,240,232,.5);line-height:1.65;margin-bottom:24px;}
+.apply-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;background:#C9A24D;color:#0A1628;font-weight:700;font-size:14px;text-decoration:none;transition:.2s;border:none;cursor:pointer;}
+.apply-btn:hover{background:#E9C176;transform:translateY(-1px);}
+.apply-btn svg{width:14px;height:14px;}
+
+/* ── Footer ── */
+footer{text-align:center;padding:24px;border-top:1px solid rgba(201,162,77,.1);font-size:13px;color:rgba(244,240,232,.3);}
+footer a{color:#C9A24D;text-decoration:none;}
 </style>
 </head>
 <body>
 
-<div id="site-chrome"></div>
-
-<header class="hero-career">
-  <div class="wrap">
-    <div class="eyebrow">WE'RE HIRING</div>
-    <h1>Build the Future of Real Estate</h1>
-    <p>Join Sierra Estates — where AI meets luxury property in New Cairo. We're looking for passionate people who want to shape the future of PropTech in Egypt.</p>
-  </div>
-</header>
-
-<section class="section">
-  <div class="wrap">
-    <h2>Open Positions</h2>
-    <div id="jobs-list"></div>
-  </div>
+<section class="hero">
+  <a class="logo" href="index.html">
+    <img src="logo-gold.png" alt="Sierra Estates"/>
+    <span>Sierra Estates</span>
+  </a>
+  <div class="eyebrow">We're Hiring</div>
+  <h1>Join the Team Behind<br/><em>New Cairo's #1</em> PropTech</h1>
+  <p>We're a fast-moving real estate company powered by AI. Two roles open now.</p>
 </section>
 
-<section class="form-section" id="apply">
-  <div class="wrap">
-    <h2 style="text-align:center;margin-bottom:30px;">Apply Now</h2>
-    <div class="form-card">
-      <form id="career-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="f-name" required placeholder="Ahmed Fawzy"/>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="tel" id="f-phone" required placeholder="+2 01XXXXXXXXX"/>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="f-email" required placeholder="you@example.com"/>
-          </div>
-          <div class="form-group">
-            <label>Position</label>
-            <select id="f-position" required>
-              <option value="">Select a position...</option>
-              <option>Real Estate Agent</option>
-              <option>AI/ML Engineer</option>
-              <option>Frontend Developer</option>
-              <option>Backend Developer</option>
-              <option>Marketing Specialist</option>
-              <option>Customer Success</option>
-              <option>Other</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Years of Experience</label>
-          <input type="number" id="f-experience" min="0" max="30" placeholder="3"/>
-        </div>
-        <div class="form-group">
-          <label>Why Sierra? (Brief motivation)</label>
-          <textarea id="f-message" rows="4" placeholder="Tell us why you want to join Sierra Estates..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>CV / Resume (PDF, DOCX)</label>
-          <input type="file" id="f-cv" accept=".pdf,.doc,.docx" style="padding:10px;"/>
-        </div>
-        <button type="submit" class="form-submit">
-          <i data-lucide="send" style="width:16px;height:16px;"></i>
-          Submit Application
-        </button>
-        <div class="success-msg" id="success-msg">
-          ✓ Application submitted successfully! We'll contact you within 48 hours.
-        </div>
-        <div class="export-note">
-          Applications are exported to Excel for HR review.
-        </div>
-      </form>
-    </div>
-    <div class="contact-info">
-      <a href="mailto:info@Sierra-Estates.net" class="contact-item"><i data-lucide="mail" class="i"></i> info@Sierra-Estates.net</a>
-      <a href="https://wa.me/201092048333" target="_blank" rel="noopener noreferrer" class="contact-item"><i data-lucide="phone" class="i"></i> +2 01092048333</a>
-    </div>
+<div class="jobs">
+
+  <div class="job-card">
+    <div class="job-tag">Sales</div>
+    <h2>Real Estate Sales Agent</h2>
+    <p>Work with serious buyers and investors across New Cairo compounds — Mivida, Hyde Park, Eastown & more. AI-matched leads, no cold calling. Commission-based with a strong support system.</p>
+    <a class="apply-btn" href="https://wa.me/201092048333?text=Hi%2C%20I%27d%20like%20to%20apply%20for%20the%20Sales%20Agent%20role%20at%20Sierra%20Estates." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+      Apply on WhatsApp
+    </a>
   </div>
-</section>
 
-<footer id="site-footer"></footer>
+  <div class="job-card">
+    <div class="job-tag">Admin</div>
+    <h2>Admin &amp; Operations</h2>
+    <p>Keep the engine running — manage listings, coordinate with agents, handle client paperwork, and support day-to-day operations. Based in New Cairo. Organized, sharp, bilingual EN/AR.</p>
+    <a class="apply-btn" href="https://wa.me/201092048333?text=Hi%2C%20I%27d%20like%20to%20apply%20for%20the%20Admin%20role%20at%20Sierra%20Estates." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+      Apply on WhatsApp
+    </a>
+  </div>
 
-<!-- Firebase SDK (Firestore) -->
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script src="firebase-data.js"></script>
-<script src="data.js"></script>
-<script src="shared.js"></script>
-<script>
-(function () {
-  'use strict';
-  HZ.mount('career');
+</div>
 
-  var jobs = [
-    { title: 'Real Estate Agent', dept: 'Sales', type: 'Full-time', loc: 'New Cairo', desc: 'Join our elite sales team covering New Cairo compounds. AI-powered lead matching, competitive commission structure.' },
-    { title: 'AI/ML Engineer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Build and optimize our AVM pricing engine, smart match algorithms, and ROI forecaster. Python + TensorFlow.' },
-    { title: 'Frontend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Next.js + React + TypeScript. Build the portal, admin dashboard, and AI tool interfaces. Mobile-first, bilingual EN/AR.' },
-    { title: 'Backend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Firebase Cloud Functions, Firestore, Python FastAPI. Power our data pipeline and WhatsApp bot infrastructure.' },
-    { title: 'Marketing Specialist', dept: 'Marketing', type: 'Full-time', loc: 'New Cairo', desc: 'Digital marketing, social media, Property Finder campaigns, content creation for luxury real estate audience.' },
-    { title: 'Customer Success', dept: 'Operations', type: 'Full-time', loc: 'New Cairo', desc: 'Guide clients through their property journey — from first inquiry to handover. Bilingual EN/AR, WhatsApp-first.' }
-  ];
-
-  document.getElementById('jobs-list').innerHTML = jobs.map(function (j, i) {
-    return '<div class="job-card" data-job="' + j.title + '">' +
-      '<h3>' + j.title + '</h3>' +
-      '<div class="meta">' +
-        '<span><i data-lucide="briefcase" class="i"></i> ' + j.dept + '</span>' +
-        '<span><i data-lucide="clock" class="i"></i> ' + j.type + '</span>' +
-        '<span><i data-lucide="map-pin" class="i"></i> ' + j.loc + '</span>' +
-      '</div>' +
-      '<p>' + j.desc + '</p>' +
-      '<a href="#apply" class="apply-btn" onclick="document.getElementById(\'f-position\').value=\'' + j.title + '\'"><i data-lucide="arrow-right" style="width:14px;height:14px;"></i> Apply Now</a>' +
-    '</div>';
-  }).join('');
-
-  // Form submit → export to CSV (Excel-compatible)
-  document.getElementById('career-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var data = {
-      name: document.getElementById('f-name').value,
-      phone: document.getElementById('f-phone').value,
-      email: document.getElementById('f-email').value,
-<script src="data.js"></script>
-<script src="shared.js"></script>
-<script>
-(function () {
-  'use strict';
-  HZ.mount('career');
-
-  var jobs = [
-    { title: 'Real Estate Agent', dept: 'Sales', type: 'Full-time', loc: 'New Cairo', desc: 'Join our elite sales team covering New Cairo compounds. AI-powered lead matching, competitive commission structure.' },
-    { title: 'AI/ML Engineer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Build and optimize our AVM pricing engine, smart match algorithms, and ROI forecaster. Python + TensorFlow.' },
-    { title: 'Frontend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Next.js + React + TypeScript. Build the portal, admin dashboard, and AI tool interfaces. Mobile-first, bilingual EN/AR.' },
-    { title: 'Backend Developer', dept: 'Technology', type: 'Full-time', loc: 'Remote / Hybrid', desc: 'Firebase Cloud Functions, Firestore, Python FastAPI. Power our data pipeline and WhatsApp bot infrastructure.' },
-    { title: 'Marketing Specialist', dept: 'Marketing', type: 'Full-time', loc: 'New Cairo', desc: 'Digital marketing, social media, Property Finder campaigns, content creation for luxury real estate audience.' },
-    { title: 'Customer Success', dept: 'Operations', type: 'Full-time', loc: 'New Cairo', desc: 'Guide clients through their property journey — from first inquiry to handover. Bilingual EN/AR, WhatsApp-first.' }
-  ];
-
-  document.getElementById('jobs-list').innerHTML = jobs.map(function (j, i) {
-    return '<div class="job-card" data-job="' + j.title + '">' +
-      '<h3>' + j.title + '</h3>' +
-      '<div class="meta">' +
-        '<span><i data-lucide="briefcase" class="i"></i> ' + j.dept + '</span>' +
-        '<span><i data-lucide="clock" class="i"></i> ' + j.type + '</span>' +
-        '<span><i data-lucide="map-pin" class="i"></i> ' + j.loc + '</span>' +
-      '</div>' +
-      '<p>' + j.desc + '</p>' +
-      '<a href="#apply" class="apply-btn" onclick="document.getElementById(\'f-position\').value=\'' + j.title + '\'"><i data-lucide="arrow-right" style="width:14px;height:14px;"></i> Apply Now</a>' +
-    '</div>';
-  }).join('');
-
-  // Form submit → export to CSV (Excel-compatible)
-  document.getElementById('career-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var data = {
-      name: document.getElementById('f-name').value,
-      phone: document.getElementById('f-phone').value,
-      email: document.getElementById('f-email').value,
-      position: document.getElementById('f-position').value,
-      experience: document.getElementById('f-experience').value,
-      message: document.getElementById('f-message').value,
-      date: new Date().toISOString()
-    };
-
-    // Primary → write to Firestore via SIERRA_DB (Firebase)
-    // Fallback → download CSV (offline / Firebase unavailable)
-    if (window.SIERRA_DB && window.SIERRA_DB.isReady()) {
-      window.SIERRA_DB.addCareerApp(data).then(function (result) {
-        if (!result.fallback) {
-          document.getElementById('success-msg').classList.add('show');
-          document.getElementById('career-form').reset();
-          setTimeout(function () { document.getElementById('success-msg').classList.remove('show'); }, 5000);
-          return;
-        }
-        doCSVFallback(data);
-      });
-    } else {
-      doCSVFallback(data);
-    }
-  });
-
-  function doCSVFallback(data) {
-    var csv = 'Name,Phone,Email,Position,Experience,Message,Date\n';
-    csv += '"' + data.name + '","' + data.phone + '","' + data.email + '","' + data.position + '","' + data.experience + '","' + data.message.replace(/"/g, '""') + '","' + data.date + '"';
-    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'Sierra_Estates_Application_' + (data.name || 'applicant').replace(/\s/g, '_') + '.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-    document.getElementById('success-msg').classList.add('show');
-    document.getElementById('career-form').reset();
-    setTimeout(function () { document.getElementById('success-msg').classList.remove('show'); }, 5000);
-  }
-
-  if (window.lucide) lucide.createIcons();
-})();
-</script>
+<footer>
+  © 2026 Sierra Estates · <a href="mailto:info@sierra-estates.net">info@sierra-estates.net</a>
+</footer>
 
 </body>
 </html>

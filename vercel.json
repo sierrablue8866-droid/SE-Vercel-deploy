@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "name": "sierra-estates",
+  "builds": [
+    { "src": "**/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/compounds", "dest": "/compounds.html" },
+    { "src": "/properties", "dest": "/properties.html" },
+    { "src": "/property", "dest": "/property.html" },
+    { "src": "/matches", "dest": "/matches.html" },
+    { "src": "/pricing", "dest": "/pricing.html" },
+    { "src": "/roi", "dest": "/roi.html" },
+    { "src": "/advice", "dest": "/advice.html" },
+    { "src": "/ai-engine", "dest": "/ai-engine.html" },
+    { "src": "/virtual-tour", "dest": "/virtual-tour.html" },
+    { "src": "/career", "dest": "/career.html" },
+    { "handle": "filesystem" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    },
+    {
+      "source": "/firebase-config.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
