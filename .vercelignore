@@ -1,0 +1,62 @@
+# ── Ignore everything by default, whitelist only portal files ──
+# Directories to ignore
+.agent
+.agents
+.archive
+.claude
+.codex
+.github
+.vercel
+6-7 design
+apps
+assets
+design
+design_handoff_client_portal
+docs
+firebase
+functions
+gh-pages-hero-update
+hooks
+infra
+lib
+packages
+portal
+public
+scripts
+sierra-estates-motion
+site
+src
+types
+ui_kits
+workflows
+_archived_repos
+node_modules
+.next
+
+# Non-portal files
+*.md
+*.patch
+*.apk
+*.sql
+*.sh
+*.yaml
+*.yml
+*.lock
+*.cjs
+*.mjs
+*.ts
+*.json
+!vercel.json
+*.log
+.env*
+.eslint*
+.npmrc
+.nvmrc
+.replit*
+LICENSE
+CONTRIBUTING*
+
+# Old Supabase files (replaced by Firebase)
+supabase.js
+supabase-config.js
+seed-supabase.html
