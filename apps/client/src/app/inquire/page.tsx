@@ -8,12 +8,12 @@
  * Pre-fills listing_id + compound if provided in URL params.
  */
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { submitInquiry } from '@/lib/publicData';
 import { Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 
-export default function InquirePage() {
+function InquireForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -234,5 +234,14 @@ export default function InquirePage() {
         </div>
       </section>
     </>
+  );
+}
+
+/** Page wrapper — useSearchParams() requires a Suspense boundary for prerender. */
+export default function InquirePage() {
+  return (
+    <Suspense fallback={null}>
+      <InquireForm />
+    </Suspense>
   );
 }
