@@ -19,6 +19,26 @@ service firebase.storage {
       return isAuthenticated() && getUserRole() == 'client';
     }
 
+    // ── Public property media (client portal displays these to everyone) ──
+    // Admin/server writes; anyone can read. Adjust the prefixes to match the
+    // paths the admin dashboard actually uploads to.
+    match /listings/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /houyez_listings/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /compounds/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // Admin uploads - Full access
     match /admin/{allPaths=**} {
       allow read, write: if isAdmin();

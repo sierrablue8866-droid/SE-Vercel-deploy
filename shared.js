@@ -3,6 +3,23 @@
   'use strict';
   var D = window.HZDATA;
 
+  /* ── favicon / touch icon (injected once, covers every page) ── */
+  (function injectIcons() {
+    if (document.querySelector('link[rel="icon"][data-se]')) return;
+    var icons = [
+      { rel: 'icon', href: 'favicon.ico', sizes: 'any' },
+      { rel: 'icon', type: 'image/png', href: 'favicon-32.png', sizes: '32x32' },
+      { rel: 'apple-touch-icon', href: 'apple-touch-icon.png', sizes: '180x180' }
+    ];
+    icons.forEach(function (i) {
+      var l = document.createElement('link');
+      l.rel = i.rel; l.href = i.href; l.setAttribute('data-se', '1');
+      if (i.type) l.type = i.type;
+      if (i.sizes) l.sizes = i.sizes;
+      document.head.appendChild(l);
+    });
+  })();
+
   /* ── i18n ── */
   var I18N = {
     en: {
@@ -207,7 +224,7 @@
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
       '<a href="index.html" class="brand">' +
-        '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
+        '<span class="mark logo"><img src="logo.svg" alt="Sierra Estates" width="40" height="44" loading="eager"/></span>' +
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
@@ -222,7 +239,12 @@
       '</div>' +
     '</div></nav>' +
     // ─── Mobile bottom navigation bar (5 buttons) ───
-      '<a href="index.html#ai" class="bn-item"><i data-lucide="sparkles" class="i"></i><span data-i18n="navAI">' + t('navAI') + '</span></a>' +
+    '<nav class="bottom-nav" id="mobile-nav" aria-label="Mobile navigation">' +
+      '<a href="index.html"' + act('home') + ' class="bn-item' + (active === 'home' ? ' active' : '') + '"><i data-lucide="home" class="i"></i><span data-i18n="navHome">' + t('navHome') + '</span></a>' +
+      '<a href="compounds.html" class="bn-item' + (active === 'cpds' ? ' active' : '') + '"><i data-lucide="map" class="i"></i><span data-i18n="navCpds">' + t('navCpds') + '</span></a>' +
+      '<a href="properties.html" class="bn-item' + (active === 'best' ? ' active' : '') + '"><i data-lucide="building-2" class="i"></i><span data-i18n="navBest">' + t('navBest') + '</span></a>' +
+      '<a href="index.html#ai" class="bn-item' + (active === 'ai' ? ' active' : '') + '"><i data-lucide="sparkles" class="i"></i><span data-i18n="navAI">' + t('navAI') + '</span></a>' +
+      '<a href="index.html#contact" class="bn-item' + (active === 'contact' ? ' active' : '') + '"><i data-lucide="phone" class="i"></i><span data-i18n="navContact">' + t('navContact') + '</span></a>' +
     '</nav>';
   }
 
@@ -232,7 +254,7 @@
       '<div class="foot-grid">' +
         '<div>' +
           '<a href="index.html" class="brand">' +
-            '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
+            '<span class="mark logo"><img src="logo.svg" alt="Sierra Estates" width="40" height="44" loading="lazy"/></span>' +
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
           '<p class="blurb" data-i18n="footBlurb">' + t('footBlurb') + '</p>' +
