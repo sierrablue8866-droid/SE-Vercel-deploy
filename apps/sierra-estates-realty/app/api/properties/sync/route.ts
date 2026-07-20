@@ -90,6 +90,19 @@ function mapProperty(property: PropertyFinderListing) {
     longitude,
     images: getImages(property),
     featured: false,
+    // Inventory Domain Service (additive, non-breaking): `syncSource` and
+    // `lastSyncAt` already exist on the canonical Unit schema (lib/models/schema.ts)
+    // but were never populated by this route. Filled in here without changing any
+    // existing field name or value this route already writes.
+    //
+    // `dupeCheckHash` is intentionally NOT set here: PropertyFinderListing has no
+    // `area`/size field anywhere in this route's source type, and the dedupe
+    // fingerprint requires area to be meaningful. Faking a value would produce a
+    // wrong/lossy dedupe key, which is worse than leaving it unset. Tracked in
+    // FUTURE_PLAN/04 as a follow-up once the Property Finder payload is confirmed
+    // to expose area (or a size field it should be mapped from).
+    syncSource: 'property-finder' as const,
+    lastSyncAt: Timestamp.now(),
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };

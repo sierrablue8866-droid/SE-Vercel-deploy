@@ -4,6 +4,7 @@ import { verifyAdminRequest } from '@/lib/server/auth-guard';
 import { adminDb } from '@/lib/server/firebase-admin';
 import { COLLECTIONS } from '@/lib/models/schema';
 import { mapListingToSpa, mapSpaToListingPatch } from '@/lib/server/admin-spa-mappers';
+import { fingerprint } from '@/lib/services/inventory/dedupe';
 import { Timestamp } from 'firebase-admin/firestore';
 import { logger } from '@/lib/logger';
 
@@ -62,8 +63,36 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'cmp and type are required' }, { status: 400 });
     }
 
+    // Inventory Domain Service (additive, non-breaking):
+    // `dupeCheckHash` and `syncSource` already exist on the canonical Unit schema
+    // (lib/models/schema.ts) but were never populated by this route. We fill them
+    // in without changing the SPA-facing shape — mapListingToSpa/mapSpaToListingPatch
+    // are untouched, so the admin frontend is unaffected.
+    //
+    // NOTE: the admin SPA form has no rent-vs-sale field today, so `offerType` is
+    // fixed to 'sale' for the fingerprint. This is a known approximation — nothing
+    // currently reads dupeCheckHash, so it carries zero live risk, but it should
+    // not be treated as authoritative for rent/sale dedupe until the SPA adds an
+    // explicit offer-type field. See FUTURE_PLAN/04 for the tracked follow-up.
+    const inventoryFields: Record<string, unknown> = { syncSource: 'manual' };
+    if (
+      typeof patch.bedrooms === 'number' &&
+      typeof patch.area === 'number' &&
+      typeof patch.price === 'number'
+    ) {
+      inventoryFields.dupeCheckHash = fingerprint({
+        compound: patch.compound,
+        propertyType: patch.propertyType,
+        offerType: 'sale',
+        bedrooms: patch.bedrooms,
+        area: patch.area,
+        price: patch.price,
+      });
+    }
+
     const ref = await adminDb.collection(COLLECTIONS.units).add({
       ...patch,
+      ...inventoryFields,
       status: patch.status || 'available',
       category: 'residential',
       ownerType: 'internal',
