@@ -1,0 +1,89 @@
+# ─── Security-sensitive files — NEVER commit these ──────────────────────────
+*.crt
+*.ca-bundle
+*.p7b
+*.key
+*.pem
+ssl/
+certs/
+
+# Twilio / API recovery codes
+*recovery_code*
+*twilio_2fa*
+
+# Firebase service accounts
+service-account.json
+*-firebase-adminsdk-*.json
+google-credentials.json
+
+# Environment files
+.env
+.env.local
+.env.production
+*.env
+!.env.example
+
+# Leaked / one-off credential helpers — never commit auth helper scripts
+askpass.bat
+askpass.sh
+
+# ─── Dependencies ───────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.venv/
+venv/
+
+# ─── Build outputs ───────────────────────────────────────────────────────────
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+.turbo/
+.vercel/
+.firebase/
+coverage/
+*.tsbuildinfo
+apps/admin-dashboard/api/server.js
+apps/admin-dashboard/api/server.js.map
+
+# ─── WhatsApp session / cache data — contains live auth tokens ─────────────
+.wwebjs_auth/
+whatsapp-auth/
+n8n-data/
+
+# ─── Legacy / archived / unused snapshots ───────────────────────────────────
+_unused_archive/
+_archived_repos/
+.vercel-old/
+temp3
+
+# ─── AI tooling scaffolding — not part of the deployable app ───────────────
+.agent/
+.agents/
+.claude/
+.codex/
+.replit
+.replitignore
+
+# ─── IDE ──────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── OS ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Secrets ────────────────────────────────────────────────────────────────
+secrets/
+!package.json
+!tsconfig.json
+
+# ─── Logs ─────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+eslint-results.json
+*.apk
