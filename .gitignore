@@ -87,3 +87,4 @@ secrets/
 npm-debug.log*
 eslint-results.json
 *.apk
+.codebuddy
