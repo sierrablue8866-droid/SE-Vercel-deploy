@@ -27,24 +27,7 @@ import { getAdminDb } from '@/lib/firebase-admin';
 import { requireRole } from '@/lib/auth';
 import type { Listing } from '@/lib/types';
 
-// Firebase Firestore integration
-const getListingsFromFirebase = async () => {
-  try {
-    const db = await getAdminDb();
-    if (!db) return null;
 
-    const snap = await db.collection('houyez_listings').limit(1000).get();
-    if (snap.empty) return null;
-
-    return snap.docs.map((doc: any) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  } catch (err) {
-    console.warn('[Firebase] Firestore read failed:', err);
-    return null;
-  }
-};
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';

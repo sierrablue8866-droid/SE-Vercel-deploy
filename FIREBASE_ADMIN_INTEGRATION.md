@@ -295,6 +295,7 @@ export async function POST(request: Request) {
 Four core managers for agent workflows:
 
 #### AgentSessionManager
+
 ```typescript
 const sessionManager = new AgentSessionManager();
 
@@ -318,6 +319,7 @@ await sessionManager.updateStatus(session.id, 'completed');
 ```
 
 #### PropertyDataManager
+
 ```typescript
 const propertyMgr = new PropertyDataManager();
 
@@ -337,6 +339,7 @@ const newListing = await propertyMgr.createListing({
 ```
 
 #### UserAuthManager
+
 ```typescript
 const authMgr = new UserAuthManager();
 
@@ -356,6 +359,7 @@ const token = await authMgr.createAgentToken(agentUid);
 ```
 
 #### AnalyticsManager
+
 ```typescript
 const analyticsMgr = new AnalyticsManager();
 
