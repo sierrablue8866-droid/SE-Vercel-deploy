@@ -12,10 +12,12 @@ export default [
       'extract_styles.js',
       'extract_all_styles.js',
       'eslint.config.mjs',
+      'next.config.mjs',
       'scripts/**',
       'push_env.js',
       'merge_and_push_env.js',
       '*.js',
+      '*.mjs',
       // Sub-apps / packages / infra have their own tsconfigs and ESLint configs
       'apps/**',
       'packages/**',
