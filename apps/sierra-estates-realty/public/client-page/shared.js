@@ -8,7 +8,7 @@
     en: {
       dir: 'ltr',
       brandSub: 'Future of Real Estate',
-      navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds & Map', navBest: 'Best Listings', navCareer: 'Career', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools',
+      navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds & Map', navBest: 'Best Listings', navCareer: 'Career', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools', navAdmin: 'Staff Portal',
       addListing: 'Add Listing', signIn: 'Sign In', langBtn: 'العربية',
       themeLight: 'Light', themeDark: 'Dark',
       addr: 'Banafseg 2, Villa 402, New Cairo',
@@ -102,7 +102,7 @@
     ar: {
       dir: 'rtl',
       brandSub: 'مستقبل العقارات',
-      navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات والخريطة', navBest: 'أفضل العقارات', navCareer: 'وظائف', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء',
+      navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات والخريطة', navBest: 'أفضل العقارات', navCareer: 'وظائف', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء', navAdmin: 'بوابة الموظفين',
       addListing: 'أضف عقارك', signIn: 'دخول', langBtn: 'English',
       themeLight: 'فاتح', themeDark: 'غامق',
       addr: 'البنفسج 2، فيلا 402، القاهرة الجديدة',
@@ -245,6 +245,7 @@
         '<div class="fcol"><h5 data-i18n="fCompany">' + t('fCompany') + '</h5>' +
           '<a href="#" data-i18n="fAbout">' + t('fAbout') + '</a><a href="#" data-i18n="fBrokers">' + t('fBrokers') + '</a>' +
           '<a href="#" data-i18n="fJournal">' + t('fJournal') + '</a><a href="career.html" data-i18n="fCareers">' + t('fCareers') + '</a>' +
+          '<a href="/admin" data-i18n="navAdmin">' + t('navAdmin') + '</a>' +
           '<a href="#" data-i18n="fContact">' + t('fContact') + '</a></div>' +
         '<div class="fcol"><h5 data-i18n="fDiscover">' + t('fDiscover') + '</h5>' +
           '<a href="compounds.html" data-i18n="z1">' + t('z1') + '</a><a href="compounds.html" data-i18n="z2">' + t('z2') + '</a>' +
