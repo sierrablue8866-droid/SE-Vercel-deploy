@@ -200,7 +200,8 @@ select:focus, .num:focus{border-color:var(--pri);}
   function calc() {
     clearTimeout(calcTimer);
     calcTimer = setTimeout(function() {
-      var zone = sel.options[sel.selectedIndex].dataset.zone;
+      var opt = sel.options[sel.selectedIndex];
+      var zone = opt && opt.dataset ? opt.dataset.zone : 'New Cairo';
       var area = Math.max(50, +document.getElementById('area').value || 0);
       
       document.getElementById('estVal').innerHTML = '<i data-lucide="loader-2" style="width:24px;height:24px;animation:vtv-spin 1s linear infinite;"></i>';

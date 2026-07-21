@@ -80,7 +80,7 @@
 
 /* ── Stats strip (infographic) ── */
 .match-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px;}
-.match-bar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-s);position:sticky;top:80px;z-index:90;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+.match-stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow-s);position:relative;overflow:hidden;}
 .match-stat::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pri),#34d399);}
 .match-stat .v{font-family:var(--mono);font-size:32px;font-weight:800;color:var(--pri);line-height:1;}
 [data-theme="dark"] .match-stat .v{color:#e9c176;}
