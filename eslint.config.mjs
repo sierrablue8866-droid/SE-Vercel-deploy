@@ -13,6 +13,7 @@ export default [
       'extract_all_styles.js',
       'eslint.config.mjs',
       'next.config.mjs',
+      'vitest.config.ts',
       'scripts/**',
       'push_env.js',
       'merge_and_push_env.js',
