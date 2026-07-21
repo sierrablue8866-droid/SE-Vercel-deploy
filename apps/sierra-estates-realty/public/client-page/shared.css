@@ -50,8 +50,8 @@
 [data-theme="dark"] .btn-pri:hover{background:linear-gradient(135deg,#ecfccb,#d9f99d);}
 [data-theme="dark"] .tag.featured{background:#bef264;color:#020617;}
 [data-theme="dark"] .tag.sale{background:#1a2e05;color:#d9f99d;}
-[data-theme="dark"] .pcard .price-float{background:rgba(2,6,23,.88);color:#d9f99d;backdrop-filter:blur(8px);}
-[data-theme="dark"] .pcard .ai-score{background:rgba(15,23,42,.94);color:#d9f99d;backdrop-filter:blur(8px);}
+[data-theme="dark"] .pcard .price-float{background:rgba(2,6,23,.88);color:#d9f99d;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+[data-theme="dark"] .pcard .ai-score{background:rgba(15,23,42,.94);color:#d9f99d;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
 [data-theme="dark"] .nav-icon .dot{color:#020617;}
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
