@@ -42,6 +42,7 @@ packages:
   # skipped automatically by pnpm.
   - "packages/*"
   - "functions"
+  - "infra/*"
   - "lib/*"
   - "lib/integrations/*"
   - "scripts"

@@ -8,7 +8,7 @@
     en: {
       dir: 'ltr',
       brandSub: 'Future of Real Estate',
-      navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds & Map', navBest: 'Best Listings', navCareer: 'Career', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools',
+      navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds & Map', navBest: 'Best Listings', navCareer: 'Career', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools', navAdmin: 'Staff Portal',
       addListing: 'Add Listing', signIn: 'Sign In', langBtn: 'العربية',
       themeLight: 'Light', themeDark: 'Dark',
       addr: 'Banafseg 2, Villa 402, New Cairo',
@@ -102,7 +102,7 @@
     ar: {
       dir: 'rtl',
       brandSub: 'مستقبل العقارات',
-      navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات والخريطة', navBest: 'أفضل العقارات', navCareer: 'وظائف', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء',
+      navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات والخريطة', navBest: 'أفضل العقارات', navCareer: 'وظائف', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء', navAdmin: 'بوابة الموظفين',
       addListing: 'أضف عقارك', signIn: 'دخول', langBtn: 'English',
       themeLight: 'فاتح', themeDark: 'غامق',
       addr: 'البنفسج 2، فيلا 402، القاهرة الجديدة',
@@ -206,15 +206,15 @@
     // Header: brand + nav items (no Career — moved to footer) + Request Now + toggles
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
-      '<a href="index.html" class="brand">' +
+      '<a href="/" class="brand">' +
         '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
-        '<a href="index.html"' + act('home') + ' data-i18n="navHome">' + t('navHome') + '</a>' +
-        '<a href="compounds.html"' + act('cpds') + ' data-i18n="navCpds">' + t('navCpds') + '</a>' +
-        '<a href="properties.html"' + act('best') + ' data-i18n="navBest">' + t('navBest') + '</a>' +
-        '<a href="index.html#contact"' + act('contact') + ' data-i18n="navContact">' + t('navContact') + '</a>' +
+        '<a href="/"' + act('home') + ' data-i18n="navHome">' + t('navHome') + '</a>' +
+        '<a href="/compounds"' + act('cpds') + ' data-i18n="navCpds">' + t('navCpds') + '</a>' +
+        '<a href="/properties"' + act('best') + ' data-i18n="navBest">' + t('navBest') + '</a>' +
+        '<a href="/#contact"' + act('contact') + ' data-i18n="navContact">' + t('navContact') + '</a>' +
       '</div>' +
       '<div class="nav-right">' +
         '<button class="tb-toggle" id="theme-toggle" type="button"><i data-lucide="' + (theme === 'dark' ? 'sun' : 'moon') + '" class="i"></i></button>' +
@@ -222,7 +222,7 @@
       '</div>' +
     '</div></nav>' +
     // ─── Mobile bottom navigation bar (5 buttons) ───
-      '<a href="index.html#ai" class="bn-item"><i data-lucide="sparkles" class="i"></i><span data-i18n="navAI">' + t('navAI') + '</span></a>' +
+      '<a href="/#ai" class="bn-item"><i data-lucide="sparkles" class="i"></i><span data-i18n="navAI">' + t('navAI') + '</span></a>' +
     '</nav>';
   }
 
@@ -231,7 +231,7 @@
     '<div class="wrap">' +
       '<div class="foot-grid">' +
         '<div>' +
-          '<a href="index.html" class="brand">' +
+          '<a href="/" class="brand">' +
             '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
@@ -239,16 +239,17 @@
           '<div class="news"><input data-i18n-ph="footNews" placeholder="' + t('footNews') + '"/><button type="button"><i data-lucide="arrow-right" class="i"></i></button></div>' +
         '</div>' +
         '<div class="fcol"><h5 data-i18n="fExplore">' + t('fExplore') + '</h5>' +
-          '<a href="properties.html" data-i18n="fBuy">' + t('fBuy') + '</a><a href="properties.html" data-i18n="fRent">' + t('fRent') + '</a>' +
-          '<a href="properties.html" data-i18n="fNew">' + t('fNew') + '</a><a href="compounds.html" data-i18n="fCpds">' + t('fCpds') + '</a>' +
+          '<a href="/properties" data-i18n="fBuy">' + t('fBuy') + '</a><a href="/properties" data-i18n="fRent">' + t('fRent') + '</a>' +
+          '<a href="/properties" data-i18n="fNew">' + t('fNew') + '</a><a href="/compounds" data-i18n="fCpds">' + t('fCpds') + '</a>' +
           '<a href="#" data-i18n="fAgent">' + t('fAgent') + '</a></div>' +
         '<div class="fcol"><h5 data-i18n="fCompany">' + t('fCompany') + '</h5>' +
           '<a href="#" data-i18n="fAbout">' + t('fAbout') + '</a><a href="#" data-i18n="fBrokers">' + t('fBrokers') + '</a>' +
-          '<a href="#" data-i18n="fJournal">' + t('fJournal') + '</a><a href="career.html" data-i18n="fCareers">' + t('fCareers') + '</a>' +
+          '<a href="#" data-i18n="fJournal">' + t('fJournal') + '</a><a href="/career" data-i18n="fCareers">' + t('fCareers') + '</a>' +
+          '<a href="/admin" data-i18n="navAdmin">' + t('navAdmin') + '</a>' +
           '<a href="#" data-i18n="fContact">' + t('fContact') + '</a></div>' +
         '<div class="fcol"><h5 data-i18n="fDiscover">' + t('fDiscover') + '</h5>' +
-          '<a href="compounds.html" data-i18n="z1">' + t('z1') + '</a><a href="compounds.html" data-i18n="z2">' + t('z2') + '</a>' +
-          '<a href="compounds.html" data-i18n="z3">' + t('z3') + '</a><a href="compounds.html" data-i18n="z4">' + t('z4') + '</a></div>' +
+          '<a href="/compounds" data-i18n="z1">' + t('z1') + '</a><a href="/compounds" data-i18n="z2">' + t('z2') + '</a>' +
+          '<a href="/compounds" data-i18n="z3">' + t('z3') + '</a><a href="/compounds" data-i18n="z4">' + t('z4') + '</a></div>' +
         '<div class="fcol"><h5 data-i18n="fTouch">' + t('fTouch') + '</h5>' +
           '<div class="contact-line"><i data-lucide="map-pin" class="i"></i><span data-i18n="fAddr">' + t('fAddr') + '</span></div>' +
           '<div class="contact-line"><i data-lucide="phone" class="i"></i><span>+2 01092048333</span></div>' +
@@ -272,7 +273,7 @@
     var extra = p.tag ? '<span class="tag featured">' + p.tag + '</span>' : '';
     return '<article class="pcard rv d' + ((i % 3) + 1) + '" data-type="' + p.type + '" data-mode="' + p.mode + '">' +
       '<div class="photo">' +
-        '<a href="property.html?id=' + p.id + '"><img src="' + p.img + '" alt="' + p.type + ' in ' + p.cmp + '" loading="lazy"/></a>' +
+        '<a href="/property?id=' + p.id + '"><img src="' + p.img + '" alt="' + p.type + ' in ' + p.cmp + '" loading="lazy"/></a>' +
         '<div class="badges">' + extra + modeTag + '</div>' +
         '<button type="button" class="heart" aria-label="' + t('favLabel') + '" aria-pressed="false" onclick="this.classList.toggle(\'on\');this.setAttribute(\'aria-pressed\',this.classList.contains(\'on\'))"><i data-lucide="heart" class="i" style="width:18px;height:18px"></i></button>' +
         '<div class="price-float">' + D.price(p) + '</div>' +
@@ -280,7 +281,7 @@
       '</div>' +
       '<div class="body">' +
         '<div class="ptype">' + p.code + ' · ' + p.type + '</div>' +
-        '<h3><a href="property.html?id=' + p.id + '">' + p.type + ' in ' + p.cmp + '</a></h3>' +
+        '<h3><a href="/property?id=' + p.id + '">' + p.type + ' in ' + p.cmp + '</a></h3>' +
         '<div class="addr"><i data-lucide="map-pin" class="i"></i> ' + p.cmp + ', ' + p.zone + '</div>' +
         '<div class="specs">' +
           '<div><i data-lucide="bed-double" class="i"></i><b>' + p.beds + '</b><span data-i18n="beds">' + t('beds') + '</span></div>' +
@@ -383,7 +384,7 @@
         if (mapEl) {
           mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
-          location.href = 'compounds.html';
+          location.href = '/compounds';
         }
       });
     }
