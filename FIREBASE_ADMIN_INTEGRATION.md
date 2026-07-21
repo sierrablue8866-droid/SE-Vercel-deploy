@@ -1,4 +1,5 @@
 # Firebase Admin & Backend Integration
+
 ## SIERRA ESTATES 3.0 — Intelligence OS
 
 Complete guide for Firebase integration across the admin dashboard, backend services, and agents.
