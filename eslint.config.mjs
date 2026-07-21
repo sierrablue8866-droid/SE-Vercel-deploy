@@ -16,9 +16,10 @@ export default [
       'push_env.js',
       'merge_and_push_env.js',
       '*.js',
-      // Sub-apps / packages have their own tsconfigs and ESLint configs
+      // Sub-apps / packages / infra have their own tsconfigs and ESLint configs
       'apps/**',
       'packages/**',
+      'infra/**',
     ],
   },
   ...tseslint.configs.recommended,
