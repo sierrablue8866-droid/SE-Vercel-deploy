@@ -140,7 +140,7 @@ select:focus, .num:focus{border-color:var(--pri);}
           <div class="br-row" style="padding:0;"><span style="color:rgba(239,248,247,.62);font-size:13.5px;">Model confidence</span><span style="color:#e9c176;font-weight:800;font-family:var(--mono);">88%</span></div>
           <div class="conf-bar"><div class="conf-fill"></div></div>
         </div>
-        <a class="cta-btn" href="index.html#inquiry"><i data-lucide="phone-call" style="width:16px;height:16px;"></i> Request a valuation call</a>
+        <a class="cta-btn" href="/#inquiry"><i data-lucide="phone-call" style="width:16px;height:16px;"></i> Request a valuation call</a>
       </div>
     </div>
 
@@ -187,18 +187,33 @@ select:focus, .num:focus{border-color:var(--pri);}
   function egp(v) {
     return 'EGP ' + (v >= 1000000 ? (v / 1000000).toFixed(2) + 'M' : Math.round(v).toLocaleString());
   }
+
+  var calcTimer = null;
   function calc() {
-    var zone = sel.options[sel.selectedIndex].dataset.zone;
-    var rate = ZONE_RATE[zone] || 50000;
-    var area = Math.max(50, +document.getElementById('area').value || 0);
-    var bedPrem = 1 + (beds - 3) * 0.04;
-    var val = rate * area * fin * furn * bedPrem;
-    document.getElementById('estVal').textContent = egp(val);
-    document.getElementById('estRange').textContent = egp(val * 0.93) + ' – ' + egp(val * 1.07) + ' fair range';
-    document.getElementById('brRate').textContent = 'EGP ' + rate.toLocaleString();
-    document.getElementById('brArea').textContent = area + ' m²';
-    document.getElementById('brFin').textContent = '×' + fin.toFixed(2);
-    document.getElementById('brBed').textContent = '×' + bedPrem.toFixed(2);
+    clearTimeout(calcTimer);
+    calcTimer = setTimeout(function() {
+      var zone = sel.options[sel.selectedIndex].dataset.zone;
+      var area = Math.max(50, +document.getElementById('area').value || 0);
+      
+      document.getElementById('estVal').innerHTML = '<i data-lucide="loader-2" style="width:24px;height:24px;animation:vtv-spin 1s linear infinite;"></i>';
+      if (window.lucide) lucide.createIcons();
+
+      fetch('/api/pricing/evaluate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ zone: zone, area: area, beds: beds, fin: fin, furn: furn })
+      }).then(function(res) { return res.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('estVal').textContent = egp(data.value);
+        document.getElementById('estRange').textContent = egp(data.rangeLow) + ' – ' + egp(data.rangeHigh) + ' fair range';
+        document.getElementById('brRate').textContent = 'EGP ' + (data.breakdown.rate).toLocaleString();
+        document.getElementById('brArea').textContent = data.breakdown.area + ' m²';
+        document.getElementById('brFin').textContent = '×' + data.breakdown.fin;
+        document.getElementById('brBed').textContent = '×' + data.breakdown.bedPrem;
+      }).catch(function(err) {
+        document.getElementById('estVal').textContent = 'Error';
+      });
+    }, 300);
   }
   calc();
 

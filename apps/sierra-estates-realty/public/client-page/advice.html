@@ -314,7 +314,7 @@
       '<div class="result-sub">Based on your answers, here are the 3 New Cairo compounds that best fit your lifestyle, budget, and family size. Tap any to explore available units.</div>' +
       '<div class="match-cards">' +
         scored.map(function (m, i) {
-          return '<a class="match-card" href="compounds.html?cpd=' + encodeURIComponent(m.c.n) + '">' +
+          return '<a class="match-card" href="/compounds?cpd=' + encodeURIComponent(m.c.n) + '">' +
             '<div class="mc-rank-num">#' + (i + 1) + '</div>' +
             '<div class="mc-name">' + m.c.n + '</div>' +
             '<div class="mc-zone">' + (m.c.z || 'New Cairo') + '</div>' +
@@ -323,7 +323,7 @@
           '</a>';
         }).join('') +
       '</div>' +
-      '<a class="result-cta" href="compounds.html?cpd=' + encodeURIComponent(top.c.n) + '"><i data-lucide="map-pin"></i> Explore ' + top.c.n + ' on the map</a>' +
+      '<a class="result-cta" href="/compounds?cpd=' + encodeURIComponent(top.c.n) + '"><i data-lucide="map-pin"></i> Explore ' + top.c.n + ' on the map</a>' +
       '<a class="btn-restart" href="#" id="restart"><i data-lucide="rotate-ccw" style="width:14px;height:14px;"></i> Retake quiz</a>' +
     '</div>';
     resultEl.outerHTML = html;

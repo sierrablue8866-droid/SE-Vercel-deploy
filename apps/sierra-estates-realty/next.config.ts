@@ -48,6 +48,31 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      { source: '/pricing', destination: '/client-page/pricing.html' },
+      { source: '/pricing.html', destination: '/client-page/pricing.html' },
+      { source: '/roi', destination: '/client-page/roi.html' },
+      { source: '/roi.html', destination: '/client-page/roi.html' },
+      { source: '/compounds', destination: '/client-page/compounds.html' },
+      { source: '/compounds.html', destination: '/client-page/compounds.html' },
+      { source: '/properties', destination: '/client-page/properties.html' },
+      { source: '/properties.html', destination: '/client-page/properties.html' },
+      { source: '/property', destination: '/client-page/property.html' },
+      { source: '/property.html', destination: '/client-page/property.html' },
+      { source: '/matches', destination: '/client-page/matches.html' },
+      { source: '/matches.html', destination: '/client-page/matches.html' },
+      { source: '/ai-engine', destination: '/client-page/ai-engine.html' },
+      { source: '/ai-engine.html', destination: '/client-page/ai-engine.html' },
+      { source: '/advice', destination: '/client-page/advice.html' },
+      { source: '/advice.html', destination: '/client-page/advice.html' },
+      { source: '/virtual-tour', destination: '/client-page/virtual-tour.html' },
+      { source: '/virtual-tour.html', destination: '/client-page/virtual-tour.html' },
+      { source: '/career', destination: '/client-page/career.html' },
+      { source: '/career.html', destination: '/client-page/career.html' },
+      { source: '/client-page', destination: '/client-page/index.html' },
+    ];
+  },
   turbopack: {
     // Pin the monorepo root so Turbopack never infers a different checkout's
     // lockfile as the workspace root (breaks module resolution in git worktrees)

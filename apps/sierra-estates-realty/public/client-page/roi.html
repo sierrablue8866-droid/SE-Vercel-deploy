@@ -178,17 +178,32 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
     return 'EGP ' + (v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : Math.round(v / 1000).toLocaleString() + 'K');
   }
   var price = document.getElementById('price'), rent = document.getElementById('rent'), appr = document.getElementById('appr');
+  var calcTimer = null;
   function calc() {
-    var P = +price.value, R = +rent.value * 12, A = +appr.value / 100;
-    document.getElementById('lp').textContent = fmtM(P);
-    document.getElementById('lr').textContent = 'EGP ' + (+rent.value).toLocaleString();
-    document.getElementById('la').textContent = appr.value + '%';
-    var gross = R / P * 100, net = gross * 0.82;
-    var fiveYr = ((R * 5 * 0.82) + P * (Math.pow(1 + A, 5) - 1)) / P * 100;
-    document.getElementById('rGross').textContent = gross.toFixed(1) + '%';
-    document.getElementById('rNet').textContent = net.toFixed(1) + '%';
-    document.getElementById('r5y').textContent = fiveYr.toFixed(0) + '%';
-    document.getElementById('rPay').textContent = (100 / Math.max(net, 0.1)).toFixed(0);
+    clearTimeout(calcTimer);
+    calcTimer = setTimeout(function() {
+      var P = +price.value, R = +rent.value, A = +appr.value;
+      document.getElementById('lp').textContent = fmtM(P);
+      document.getElementById('lr').textContent = 'EGP ' + R.toLocaleString();
+      document.getElementById('la').textContent = A + '%';
+
+      document.getElementById('rGross').innerHTML = '<i data-lucide="loader-2" style="width:24px;height:24px;animation:vtv-spin 1s linear infinite;"></i>';
+      if (window.lucide) lucide.createIcons();
+
+      fetch('/api/roi/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ price: P, rent: R, appreciation: A })
+      }).then(function(res) { return res.json(); }).then(function(data) {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('rGross').textContent = data.gross.toFixed(1) + '%';
+        document.getElementById('rNet').textContent = data.net.toFixed(1) + '%';
+        document.getElementById('r5y').textContent = data.fiveYr.toFixed(0) + '%';
+        document.getElementById('rPay').textContent = data.payback.toFixed(0);
+      }).catch(function() {
+        document.getElementById('rGross').textContent = 'Error';
+      });
+    }, 300);
   }
   [price, rent, appr].forEach(function (el) { el.addEventListener('input', calc); });
   calc();

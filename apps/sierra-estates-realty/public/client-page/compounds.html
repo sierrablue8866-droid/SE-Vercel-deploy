@@ -180,7 +180,7 @@
 
 <header class="page-hero" data-screen-label="Compounds hero">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navCpds"></span></div>
+    <div class="crumbs"><a href="/" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navCpds"></span></div>
     <h1 data-i18n="cpdsTit"></h1>
     <p class="sub" data-i18n="cpdsSub"></p>
   </div>
@@ -390,7 +390,7 @@
     document.getElementById('sh-empty').style.display = units.length ? 'none' : 'block';
     document.getElementById('sh-tbody').querySelectorAll('tr:not(.reserved)').forEach(function (tr) {
       tr.addEventListener('click', function () {
-        location.href = 'property.html?cpd=' + encodeURIComponent(c.n) + '&u=' + encodeURIComponent(tr.getAttribute('data-u'));
+        location.href = '/property?cpd=' + encodeURIComponent(c.n) + '&u=' + encodeURIComponent(tr.getAttribute('data-u'));
       });
     });
     HZ.refreshIcons();

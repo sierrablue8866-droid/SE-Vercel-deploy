@@ -217,7 +217,7 @@
     }
     emptyEl.style.display = 'none';
     grid.innerHTML = rows.map(function (l, i) {
-      return '<a class="mc" href="property.html?id=' + (i + 1) + '" style="animation-delay:' + (i * 70) + 'ms;">' +
+      return '<a class="mc" href="/property?id=' + (i + 1) + '" style="animation-delay:' + (i * 70) + 'ms;">' +
         '<div class="mc-img">' +
           '<img src="' + l.img + '" alt="' + l.name + '" loading="lazy"/>' +
           '<span class="mc-rank"><i data-lucide="trophy"></i> #' + (i + 1) + '</span>' +
