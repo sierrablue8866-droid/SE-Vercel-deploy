@@ -26,9 +26,11 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Trigger dispatch endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
           code=$(curl -s -o /tmp/body -w '%{http_code}' \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Authorization: Bearer $CRON_SECRET" \
             "https://sierra-estates.net/api/cron/whatsapp-dispatch")
           echo "HTTP $code"
           cat /tmp/body
