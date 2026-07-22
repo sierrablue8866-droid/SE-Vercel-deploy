@@ -91,7 +91,7 @@ export const InventoryQueryService = {
         .limit(300)
         .get();
 
-      let units: InventoryUnit[] = snapshot.docs.map((doc) => ({
+      let units: InventoryUnit[] = snapshot.docs.map((doc: FirebaseFirestore.QueryDocumentSnapshot) => ({
         id: doc.id,
         ...(doc.data() as object),
       })) as InventoryUnit[];
