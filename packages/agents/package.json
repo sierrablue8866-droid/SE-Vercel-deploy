@@ -9,7 +9,7 @@
     "firebase": "^12.11",
     "zod": "^3.22",
     "pino": "^8.17",
-    "react": "19.2.4"
+    "react": "19.2.8"
   },
   "devDependencies": {
     "@types/node": "^20",
