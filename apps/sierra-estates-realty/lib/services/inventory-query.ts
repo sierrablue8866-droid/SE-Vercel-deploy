@@ -200,7 +200,7 @@ export const InventoryQueryService = {
   }> {
     try {
       const snapshot = await adminDb.collection(COLLECTIONS.units).limit(500).get();
-      const units = snapshot.docs.map((d) => d.data() as InventoryUnit);
+      const units = snapshot.docs.map((d: FirebaseFirestore.QueryDocumentSnapshot) => d.data() as InventoryUnit);
       return {
         total: units.length,
         available: units.filter((u) => u.status === 'available').length,
