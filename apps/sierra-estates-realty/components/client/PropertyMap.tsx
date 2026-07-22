@@ -67,7 +67,12 @@ export default function PropertyMap({
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    map.current = L.map(mapContainer.current).setView([CAIRO_CENTER.lat, CAIRO_CENTER.lng], 13);
+    map.current = L.map(mapContainer.current, {
+      scrollWheelZoom: false,
+      zoomControl: true,
+      touchZoom: true,
+      dragging: true,
+    }).setView([CAIRO_CENTER.lat, CAIRO_CENTER.lng], 13);
 
     // Add tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

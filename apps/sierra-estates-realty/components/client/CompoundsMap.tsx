@@ -55,7 +55,12 @@ export function CompoundsMap() {
     if (!leafletReady || !mapRef.current || mapInst.current) return;
     const L = window.L;
     const map = L.map(mapRef.current, {
-      center: [30.04, 31.6], zoom: 11, scrollWheelZoom: false,
+      center: [30.04, 31.6],
+      zoom: 11,
+      scrollWheelZoom: false,
+      zoomControl: true,
+      touchZoom: true,
+      dragging: true,
     });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
       attribution: "© OpenStreetMap · CARTO",
