@@ -149,7 +149,7 @@ export default function ClientHomePage() {
               المتاحة في التجمع الخامس <b>AI Driven</b> · قدم طلبك الآن
             </span>
             <span className="bell-badge">خصم 25%</span>
-            <a href="#contact" className="bell-btn">
+            <a href="/clients" className="bell-btn">
               اطلب الآن <i data-lucide="arrow-right" className="i i-sm" />
             </a>
           </div>

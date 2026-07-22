@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n-client';
 import { ToastProvider } from '@/components/client/Toast';
+import { AuthProvider } from '@/components/client/AuthModal';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_CLIENT_URL || 'https://sierra-estates.net';
@@ -54,7 +55,9 @@ export default function RootLayout({
       <body>
         <I18nProvider>
           <ToastProvider>
-            {children}
+            <AuthProvider>
+              {children}
+            </AuthProvider>
           </ToastProvider>
         </I18nProvider>
         <SpeedInsights />
