@@ -16,7 +16,6 @@ import { EgyptListingValidator } from './property-finder/validation';
 
 export type { PFListing, PFListingRequest, PFLead, PFLocation, PFTranslation, PFUser };
 
-
 class PropertyFinderClient {
   private static instance: PropertyFinderClient;
   private baseUrl: string;
@@ -105,10 +104,8 @@ class PropertyFinderClient {
   }
 
   public async updateListing(id: string | number, updates: Partial<PFListingRequest>): Promise<PFListing> {
-    // Note: partial validation for updates is tricky, usually we validate the merged result
     return this.request(`/listings/${id}`, { method: 'PUT', body: JSON.stringify(updates) });
   }
-
 
   public async deleteListing(id: string | number): Promise<void> {
     return this.request(`/listings/${id}`, { method: 'DELETE' });

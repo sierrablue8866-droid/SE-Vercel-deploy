@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { applyRateLimit, publicEndpointLimiter } from '@/lib/server/rate-limit';
+import { closerAgent } from '@sierra-estates/agents/src/closer-agent-enhanced';
+
 
 /**
  * API: INITIATE CLOSING (STAGE 9)
@@ -76,10 +78,22 @@ Sierra Estates Intelligence OS
       `
     };
 
+    // 5. Generate AI Proposal via Closer Agent
+    const proposalText = await closerAgent.generateIntelligentProposal({
+      dealId: `deal_${Date.now()}`,
+      leadPhone: visitorPhone,
+      propertyCode,
+      buyerProfile: { name: visitorName, email: visitorEmail },
+      propertyData: { code: propertyCode, entity: listingEntity },
+      previousOffers: [],
+      negotiationHistory: [],
+    });
+
     return NextResponse.json({
       success: true,
       dealId: `deal_${Date.now()}`,
-      introMessage: `No human agent responded in time (6-hour window). AI Closer Autopilot has engaged. Viewing scheduled successfully on Google Calendar for ${viewingDate.toLocaleDateString()} at 4:00 PM. A detailed coordination report has been sent to a.fawzy8866@gmail.com with co-broker outreach templates!`,
+      proposal: proposalText,
+      introMessage: `AI Closer Autopilot engaged for ${propertyCode}. Proposal generated and viewing scheduled for ${viewingDate.toLocaleDateString()} at 4:00 PM. Coordination report sent to a.fawzy8866@gmail.com.`,
       meta: {
         listingEntity,
         contactName,
