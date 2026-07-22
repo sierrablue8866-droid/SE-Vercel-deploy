@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { MapPin, Search, ChevronDown, MapIcon, Menu, X, Home, Sun, Moon, Sparkles } from 'lucide-react';
+import { MapPin, Search, ChevronDown, MapIcon, Menu, X, Home, Sun, Moon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Leaflet map to avoid SSR issues

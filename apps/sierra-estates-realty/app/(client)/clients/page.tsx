@@ -48,7 +48,7 @@ const POPULAR_COMPOUNDS = [
 ];
 
 export default function ClientRequestPage() {
-  const { t, locale } = useI18n();
+  const { locale } = useI18n();
   const isAr = locale === 'ar';
 
   const [loading, setLoading] = useState(false);
