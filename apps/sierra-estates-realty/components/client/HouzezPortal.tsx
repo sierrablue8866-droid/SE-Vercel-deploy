@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { MapPin, Search, ChevronDown, MapIcon, Menu, X, Home } from 'lucide-react';
+import { MapPin, Search, ChevronDown, MapIcon, Menu, X, Home, Sun, Moon, Sparkles } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import Leaflet map to avoid SSR issues
 const LeafletMap = dynamic(() => import('./PropertyMap'), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-gray-900 flex items-center justify-center"><span className="text-gray-400">Loading map...</span></div>
+  loading: () => <div className="w-full h-full bg-slate-950 flex items-center justify-center"><span className="text-slate-400">Loading map...</span></div>
 });
 
 interface Property {
@@ -151,35 +151,38 @@ export default function HouzezPortal() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const bgColor = isDarkMode ? 'bg-slate-950' : 'bg-white';
+  const bgColor = isDarkMode ? 'bg-[#090d16]' : 'bg-slate-50';
   const textColor = isDarkMode ? 'text-white' : 'text-slate-900';
-  const borderColor = isDarkMode ? 'border-slate-800' : 'border-gray-200';
-  const surfaceColor = isDarkMode ? 'bg-slate-900' : 'bg-gray-50';
-  const hoverColor = isDarkMode ? 'hover:bg-slate-800' : 'hover:bg-gray-100';
+  const borderColor = isDarkMode ? 'border-slate-800/80' : 'border-slate-200';
+  const surfaceColor = isDarkMode ? 'bg-slate-900/80' : 'bg-white';
+  const hoverColor = isDarkMode ? 'hover:bg-slate-800' : 'hover:bg-slate-100';
 
   return (
     <div className={`${bgColor} ${textColor} min-h-screen transition-colors duration-300`}>
       {/* Header */}
-      <header className={`border-b ${borderColor} sticky top-0 z-40 backdrop-blur`}>
+      <header className={`border-b ${borderColor} sticky top-0 z-40 backdrop-blur-md bg-[#090d16]/80`}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Home className="w-6 h-6 text-amber-500" />
-            <span className="text-xl font-serif font-bold">Sierra Estates</span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg gold-gradient flex items-center justify-center font-bold text-slate-950 text-sm gold-glow">
+              S
+            </div>
+            <span className="text-xl font-display font-bold gold-gradient-text">Sierra Estates</span>
           </div>
 
           <div className="flex items-center gap-4 ml-auto">
             {/* Theme toggle */}
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className={`p-2 rounded-lg ${surfaceColor} ${hoverColor} transition`}
+              className={`p-2 rounded-xl ${surfaceColor} border ${borderColor} ${hoverColor} transition btn-tactile text-amber-400`}
               title="Toggle theme"
+              aria-label="Toggle theme"
             >
-              {isDarkMode ? '☀️' : '🌙'}
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700" />}
             </button>
 
             {/* Mobile menu button */}
-            <button className={`md:hidden p-2 rounded-lg ${surfaceColor}`}>
-              <Menu className="w-5 h-5" />
+            <button className={`md:hidden p-2 rounded-xl ${surfaceColor} border ${borderColor} btn-tactile`}>
+              <Menu className="w-5 h-5 text-slate-300" />
             </button>
           </div>
         </div>

@@ -29,31 +29,31 @@ export function Navbar() {
     { href: "#listings", label: t("nav.listings"), icon: Building2 },
     { href: "#compounds", label: t("nav.compounds"), icon: Map },
     { href: "#match", label: t("nav.match"), icon: Sparkles },
+    { href: "/clients", label: locale === "ar" ? "طلب عقار" : "Request Sourcing", icon: ConciergeBell },
     { href: "#roi", label: t("nav.roi"), icon: Calculator },
-    { href: "#concierge", label: t("nav.concierge"), icon: ConciergeBell },
   ];
 
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-card py-2" : "bg-transparent py-3"
+        scrolled ? "glass-panel shadow-2xl py-2.5" : "bg-transparent py-4"
       }`}
     >
       <nav className="container-page flex items-center justify-between gap-4">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="h-9 w-9 rounded-md bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-navy-950 font-bold text-lg shadow-card">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="h-9 w-9 rounded-xl gold-gradient flex items-center justify-center text-slate-950 font-bold text-lg gold-glow btn-tactile">
             S
           </div>
           <div className="hidden sm:flex flex-col leading-none">
-            <span className="font-serif text-lg font-bold text-navy-900">Sierra Estates</span>
-            <span className="text-[10px] uppercase tracking-[0.18em] text-gold-500">New Cairo</span>
+            <span className="font-display text-lg font-bold text-white group-hover:text-amber-300 transition-colors">Sierra Estates</span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-amber-400">New Cairo</span>
           </div>
         </Link>
 
         <div className="hidden lg:flex items-center gap-1">
           {navItems.map((it) => (
-            <a key={it.href} href={it.href} className="tab-link">
-              <it.icon className="h-4 w-4" />
+            <a key={it.href} href={it.href} className="tab-link px-3 py-2 rounded-xl hover:bg-white/5 transition flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-white btn-tactile">
+              <it.icon className="h-4 w-4 text-amber-400" />
               {it.label}
             </a>
           ))}
