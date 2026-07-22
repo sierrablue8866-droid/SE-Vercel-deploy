@@ -1,6 +1,5 @@
 name: Retry Copilot Review
-
-on:
+'on':
   pull_request_review:
     types: [submitted]
 
