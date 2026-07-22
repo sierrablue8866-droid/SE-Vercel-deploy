@@ -29,12 +29,16 @@ export interface RawOwnerSheetRow {
 function getSheetsClient() {
   const keyRaw = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
   if (keyRaw) {
-    const credentials = JSON.parse(keyRaw);
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
-    });
-    return google.sheets({ version: 'v4', auth });
+    try {
+      const credentials = JSON.parse(keyRaw);
+      const auth = new google.auth.GoogleAuth({
+        credentials,
+        scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+      });
+      return google.sheets({ version: 'v4', auth });
+    } catch (err: any) {
+      logger.warn('[MasterSheetSync] Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY credentials, falling back to API key');
+    }
   }
 
   // Fallback to unauthenticated / API key if available
@@ -42,33 +46,51 @@ function getSheetsClient() {
   return google.sheets({ version: 'v4', auth: apiKey });
 }
 
+function convertArabicNumerals(str: string): string {
+  if (!str) return '';
+  const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return str.replace(/[٠-٩]/g, (w) => arabicNumbers.indexOf(w).toString());
+}
+
 function parsePrice(priceStr?: string): { amount: number; currency: 'EGP' | 'USD' } {
   if (!priceStr) return { amount: 0, currency: 'EGP' };
-  const isUsd = priceStr.includes('$') || priceStr.toLowerCase().includes('usd');
-  const clean = priceStr.replace(/[^0-9.]/g, '');
-  const amount = parseFloat(clean) || 0;
+  const normalized = convertArabicNumerals(priceStr).trim().toLowerCase();
+  const isUsd = normalized.includes('$') || normalized.includes('usd') || normalized.includes('دولار');
+
+  let multiplier = 1;
+  if (/(m|million|مليون)/i.test(normalized)) {
+    multiplier = 1_000_000;
+  } else if (/(k|thousand|الف|ألف)/i.test(normalized)) {
+    multiplier = 1_000;
+  }
+
+  const clean = normalized.replace(/[^0-9.]/g, '');
+  const baseNum = parseFloat(clean) || 0;
+  const amount = baseNum * multiplier;
+
   return { amount, currency: isUsd ? 'USD' : 'EGP' };
 }
 
 function parseAvailability(avail?: string, typeRaw?: string): PropertyStatus {
   const normAvail = (avail || '').toLowerCase().trim();
   const normType = (typeRaw || '').toLowerCase().trim();
+  const combined = `${normAvail} ${normType}`;
 
-  if (normType.includes('اتباعت') || normAvail.includes('sold')) return 'sold';
-  if (normType.includes('تم الايجار') || normAvail.includes('rented')) return 'rented';
-  if (normAvail.includes('available')) return 'available';
-  if (normAvail.includes('no answer') || normAvail.includes('not available')) return 'off-market';
+  if (combined.includes('اتباعت') || combined.includes('مباع') || combined.includes('sold')) return 'sold';
+  if (combined.includes('تم الايجار') || combined.includes('مؤجر') || combined.includes('rented')) return 'rented';
+  if (combined.includes('no answer') || combined.includes('غير متاح') || combined.includes('مغلق') || combined.includes('off market')) return 'off-market';
+  if (combined.includes('متاح') || combined.includes('available')) return 'available';
   return 'available';
 }
 
 function parsePropertyType(raw?: string): PropertyType {
   const norm = (raw || '').toLowerCase().trim();
-  if (norm.includes('villa')) return 'villa';
-  if (norm.includes('town')) return 'townhouse';
-  if (norm.includes('floor with garden') || norm.includes('garden')) return 'duplex';
-  if (norm.includes('apartment') || norm.includes('شقة')) return 'apartment';
-  if (norm.includes('penthouse')) return 'penthouse';
-  if (norm.includes('chalet')) return 'chalet';
+  if (norm.includes('villa') || norm.includes('فيلا') || norm.includes('فيللا')) return 'villa';
+  if (norm.includes('town') || norm.includes('تاون')) return 'townhouse';
+  if (norm.includes('duplex') || norm.includes('دوبلكس') || norm.includes('garden')) return 'duplex';
+  if (norm.includes('penthouse') || norm.includes('بنتهاوس')) return 'penthouse';
+  if (norm.includes('chalet') || norm.includes('شاليه')) return 'chalet';
+  if (norm.includes('apartment') || norm.includes('شقة') || norm.includes('شقه') || norm.includes('استوديو')) return 'apartment';
   return 'apartment';
 }
 
@@ -91,12 +113,11 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
 
     const dataRows = rows.slice(1); // skip header
     const parsedUnits: Partial<Unit>[] = [];
-    const batch = adminDb.batch();
-    const unitsCollection = adminDb.collection(COLLECTIONS.units);
+    const pendingWrites: { docId: string; data: Partial<Unit> }[] = [];
 
     for (let i = 0; i < dataRows.length; i++) {
       const row = dataRows[i];
-      if (!row || row.length < 5) continue;
+      if (!row || row.length < 3) continue;
 
       const [
         timestamp,
@@ -119,12 +140,18 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
         comment
       ] = row;
 
-      const { amount: price, currency } = parsePrice(priceRaw);
+      const { amount: price } = parsePrice(priceRaw);
       const status = parseAvailability(availability, typeRaw);
       const propertyType = parsePropertyType(propertyTypeRaw);
-      const area = parseFloat((spaceArea || '').replace(/[^0-9.]/g, '')) || 0;
-      const bedCount = parseInt((bedrooms || '').replace(/[^0-9]/g, '')) || 0;
+
+      const cleanSpaceStr = convertArabicNumerals(spaceArea || '').replace(/[^0-9.]/g, '');
+      const area = parseFloat(cleanSpaceStr) || 0;
+
+      const cleanBedStr = convertArabicNumerals(bedrooms || '').replace(/[^0-9]/g, '');
+      const bedCount = parseInt(cleanBedStr, 10) || 0;
+
       const unitCode = (code || `SB-UNIT-${i + 1}`).trim();
+      const sanitizedDocId = unitCode.toLowerCase().replace(/[^a-z0-9_-]/g, '_');
 
       const unitDoc: Partial<Unit> = {
         code: unitCode,
@@ -146,12 +173,23 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
       };
 
       parsedUnits.push(unitDoc);
-
-      const docRef = unitsCollection.doc(unitCode.toLowerCase().replace(/[^a-z0-9_-]/g, '_'));
-      batch.set(docRef, unitDoc, { merge: true });
+      pendingWrites.push({ docId: sanitizedDocId, data: unitDoc });
     }
 
-    await batch.commit();
+    // Write to Firestore in chunks of max 400 operations to respect 500 write limit
+    const BATCH_SIZE = 400;
+    const unitsCollection = adminDb.collection(COLLECTIONS.units);
+
+    for (let i = 0; i < pendingWrites.length; i += BATCH_SIZE) {
+      const batch = adminDb.batch();
+      const chunk = pendingWrites.slice(i, i + BATCH_SIZE);
+      for (const item of chunk) {
+        const docRef = unitsCollection.doc(item.docId);
+        batch.set(docRef, item.data, { merge: true });
+      }
+      await batch.commit();
+    }
+
     logger.info(`[MasterSheetSync] Successfully synchronized ${parsedUnits.length} active inventory assets.`);
 
     return {
@@ -164,3 +202,4 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
     return { success: false, error: err.message };
   }
 }
+
