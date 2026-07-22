@@ -207,7 +207,7 @@
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
       '<a href="index.html" class="brand">' +
-        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
+        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:4px;box-shadow:var(--shadow-s);"><img src="logo.png" alt="Sierra Estates Logo" style="width:24px;height:24px;object-fit:contain;" /></span>' +
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
@@ -232,7 +232,7 @@
       '<div class="foot-grid">' +
         '<div>' +
           '<a href="index.html" class="brand">' +
-            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
+            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:4px;box-shadow:var(--shadow-s);"><img src="logo.png" alt="Sierra Estates Logo" style="width:24px;height:24px;object-fit:contain;" /></span>' +
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
           '<p class="blurb" data-i18n="footBlurb">' + t('footBlurb') + '</p>' +
