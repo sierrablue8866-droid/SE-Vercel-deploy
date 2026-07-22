@@ -1,24 +1,9 @@
+'use client';
+
 /**
  * Sierra Estates — Client Portal Home Page (Houzez Remix Portal)
  */
-import type { Metadata } from 'next';
 import Script from 'next/script';
-
-export const metadata: Metadata = {
-  title: 'Sierra Estates · New Cairo Properties — Rent & Resale',
-  description:
-    'Sierra Estates — AI-curated rent and resale properties across 50+ New Cairo compounds. Verified listings, live AVM pricing, licensed brokers.',
-  alternates: { canonical: 'https://sierra-estates.net/' },
-  openGraph: {
-    type: 'website',
-    title: 'Sierra Estates · New Cairo Properties',
-    description:
-      'AI-curated rent and resale properties across 50+ New Cairo compounds. Verified listings, live AVM pricing, licensed brokers.',
-    url: 'https://sierra-estates.net/',
-    images: [{ url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80' }],
-  },
-  twitter: { card: 'summary_large_image' },
-};
 
 export default function ClientHomePage() {
   return (
