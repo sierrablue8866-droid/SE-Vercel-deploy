@@ -65,19 +65,24 @@
 .ai-banner b{color:var(--pri);font-family:var(--mono);font-size:18px;}
 @media(max-width:1080px){.p-cols{grid-template-columns:1fr;}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px;}.gallery .g:first-child{grid-column:1/3;grid-row:1;}}
 @media(max-width:680px){.spec-row,.feats{grid-template-columns:repeat(2,1fr);}.p-head .price{text-align:start;}}
+.prop-hero-pad { padding: 40px 0 44px; }
+.prop-pt44 { padding-top: 44px; }
+.prop-mt20 { margin-top: 20px; }
+.prop-mt56 { margin-top: 56px; }
+.prop-w16 { width: 16px; height: 16px; }
 </style>
 </head>
 <body>
 
 <div id="site-chrome"></div>
 
-<header class="page-hero" style="padding:40px 0 44px;" data-screen-label="Property breadcrumb">
+<header class="page-hero prop-hero-pad" data-screen-label="Property breadcrumb">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html" data-i18n="crumbHome"></a><span class="sep">/</span><a href="properties.html" data-i18n="navProps"></a><span class="sep">/</span><span id="crumb-code"></span></div>
+    <div class="crumbs"><a href="/" title="Home" data-i18n="crumbHome"></a><span class="sep">/</span><a href="/properties" title="Properties" data-i18n="navProps"></a><span class="sep">/</span><span id="crumb-code"></span></div>
   </div>
 </header>
 
-<section class="block" style="padding-top:44px;" data-screen-label="Property detail">
+<section class="block prop-pt44" data-screen-label="Property detail">
   <div class="wrap">
 
     <div class="p-head rv">
@@ -96,7 +101,7 @@
         <div class="panel rv">
           <h3><i data-lucide="layout-dashboard" class="i"></i> <span data-i18n="overview"></span></h3>
           <div class="spec-row" id="p-specs"></div>
-          <p class="desc" id="p-desc" style="margin-top:20px;"></p>
+          <p class="desc prop-mt20" id="p-desc"></p>
         </div>
         <div class="panel rv">
           <h3><i data-lucide="list-checks" class="i"></i> Amenities</h3>
@@ -118,20 +123,20 @@
               <div class="a-sub">Sierra Estates · New Cairo</div>
             </div>
           </div>
-          <button class="btn btn-pri" type="button"><i data-lucide="calendar" class="i"></i> <span data-i18n="schedule"></span></button>
-          <button class="btn btn-wa" type="button"><i data-lucide="message-circle" class="i"></i> <span data-i18n="wa"></span></button>
-          <button class="btn btn-ghost" type="button"><i data-lucide="phone" class="i"></i> <span data-i18n="call"></span></button>
+          <button class="btn btn-pri" type="button" title="Schedule"><i data-lucide="calendar" class="i"></i> <span data-i18n="schedule"></span></button>
+          <button class="btn btn-wa" type="button" title="WhatsApp"><i data-lucide="message-circle" class="i"></i> <span data-i18n="wa"></span></button>
+          <button class="btn btn-ghost" type="button" title="Call"><i data-lucide="phone" class="i"></i> <span data-i18n="call"></span></button>
           <div class="ai-banner"><b id="a-ai"></b><span>Sierra AI score — benchmarked against 25 New Cairo compounds in real time.</span></div>
         </div>
       </aside>
     </div>
 
-    <div class="sec-head rv" style="margin-top:56px;">
+    <div class="sec-head rv prop-mt56">
       <div>
         <div class="eyebrow" data-i18n="eyeList"></div>
         <h2 data-i18n="similar"></h2>
       </div>
-      <a href="properties.html" class="sec-link"><span data-i18n="viewAll"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
+      <a href="/properties" class="sec-link" title="View all properties"><span data-i18n="viewAll"></span> <i data-lucide="arrow-right" class="i prop-w16"></i></a>
     </div>
     <div class="grid-props" id="sim-grid"></div>
 

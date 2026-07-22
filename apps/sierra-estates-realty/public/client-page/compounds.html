@@ -12,11 +12,6 @@
 <link rel="stylesheet" href="shared.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
-<!-- Firebase SDK (Firestore) -->
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script src="firebase-data.js"></script>
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <style>
@@ -98,7 +93,7 @@
 .cpd-card .u-link:hover{text-decoration:underline;text-underline-offset:3px;}
 
 /* ── units sheet (excel-style) ── */
-.sheet-overlay{position:fixed;inset:0;z-index:900;background:rgba(0,25,45,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:28px;}
+.sheet-overlay{position:fixed;inset:0;z-index:900;background:rgba(0,25,45,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:28px;}
 .sheet-overlay.on{display:flex;animation:ovIn .25s var(--silk);}
 @keyframes ovIn{from{opacity:0}to{opacity:1}}
 .sheet{background:var(--surface);border-radius:14px;box-shadow:var(--shadow-m);width:min(980px,100%);max-height:86vh;display:flex;flex-direction:column;overflow:hidden;animation:shIn .35s var(--silk);}
@@ -172,6 +167,12 @@
 
 @media(max-width:1080px){.map-shell{grid-template-columns:1fr;}.grid-cpds{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:680px){.grid-cpds{grid-template-columns:1fr;}#cpd-map{height:420px;}.af-bar{gap:12px;padding:14px;}.af-search{min-width:140px;}}
+.cpd-d-none { display: none; }
+.cpd-w-13 { width: 13px; height: 13px; }
+</style>
+<style id="extracted-styles">
+  [data-ext-style="ext-style-1"] { width:15px;height:15px }
+  [data-ext-style="ext-style-2"] { width:14px;height:14px }
 </style>
 </head>
 <body>
@@ -180,7 +181,7 @@
 
 <header class="page-hero" data-screen-label="Compounds hero">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navCpds"></span></div>
+    <div class="crumbs"><a href="/" title="Home" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navCpds"></span></div>
     <h1 data-i18n="cpdsTit"></h1>
     <p class="sub" data-i18n="cpdsSub"></p>
   </div>
@@ -196,8 +197,8 @@
       <!-- Search -->
       <div class="af-search">
         <i data-lucide="search" class="i"></i>
-        <input type="text" id="cpd-search" data-i18n-ph="searchCpdPh"/>
-        <button class="cs-clear" id="cpd-search-clear" type="button" aria-label="Clear" style="display:none;">×</button>
+        <input type="text" id="cpd-search" title="Search Compounds" placeholder="Search Compounds" data-i18n-ph="searchCpdPh"/>
+        <button class="cs-clear cpd-d-none" id="cpd-search-clear" type="button" aria-label="Clear">×</button>
       </div>
 
       <!-- Property Type -->
@@ -249,15 +250,15 @@
       <div class="af-group">
         <label class="af-label" data-i18n="afMode">Mode</label>
         <div class="af-seg" id="af-mode">
-          <button class="on" data-m="all" type="button" data-i18n="modeAll"></button>
-          <button data-m="sale" type="button" data-i18n="modeSale"></button>
-          <button data-m="rent" type="button" data-i18n="modeRent"></button>
+          <button class="on" data-m="all" type="button" title="All" data-i18n="modeAll"></button>
+          <button data-m="sale" type="button" title="Sale" data-i18n="modeSale"></button>
+          <button data-m="rent" type="button" title="Rent" data-i18n="modeRent"></button>
         </div>
       </div>
 
       <!-- Clear all -->
       <button class="af-clear" id="af-clear" type="button">
-        <i data-lucide="rotate-ccw" class="i" style="width:13px;height:13px;"></i>
+        <i data-lucide="rotate-ccw" class="i cpd-w-13"></i>
         <span>Clear</span>
       </button>
 
@@ -275,7 +276,7 @@
       </aside>
     </div>
     <div class="grid-cpds" id="cpd-cards"></div>
-    <div class="cpd-empty" id="cpd-empty" style="display:none;" data-i18n="noCpd"></div>
+    <div class="cpd-empty cpd-d-none" id="cpd-empty" data-i18n="noCpd"></div>
   </div>
 </section>
 
@@ -316,7 +317,7 @@
         <thead><tr id="sh-thead"></tr></thead>
         <tbody id="sh-tbody"></tbody>
       </table>
-      <div class="sh-empty" id="sh-empty" style="display:none;" data-i18n="shNoUnits"></div>
+      <div class="sh-empty cpd-d-none" id="sh-empty" data-i18n="shNoUnits"></div>
     </div>
   </div>
 </div>
@@ -329,7 +330,7 @@
   HZ.mount('cpds');
 
   /* map */
-  var map = L.map('cpd-map', { scrollWheelZoom: false, zoomControl: true }).setView([30.03, 31.57], 11);
+  var map = L.map('cpd-map', { scrollWheelZoom: false, zoomControl: true, touchZoom: true, dragging: true }).setView([30.03, 31.57], 11);
   var tiles = {
     light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
@@ -385,12 +386,12 @@
         '<td class="mono">' + u.ai.toFixed(1) + '</td>' +
         '<td><span class="st ' + (u.delivery === 'ready' ? 'av' : 'rs') + '">' + dl + '</span></td>' +
         '<td><span class="st ' + (rs ? 'rs' : 'av') + '">' + HZ.t(rs ? 'stReserved' : 'stAvail') + '</span></td>' +
-        '<td class="go">' + (rs ? '' : '<i data-lucide="arrow-right" class="i" style="width:15px;height:15px"></i>') + '</td></tr>';
+        '<td class="go">' + (rs ? '' : '<i data-lucide="arrow-right" class="i" data-ext-style="ext-style-1"></i>') + '</td></tr>';
     }).join('');
     document.getElementById('sh-empty').style.display = units.length ? 'none' : 'block';
     document.getElementById('sh-tbody').querySelectorAll('tr:not(.reserved)').forEach(function (tr) {
       tr.addEventListener('click', function () {
-        location.href = 'property.html?cpd=' + encodeURIComponent(c.n) + '&u=' + encodeURIComponent(tr.getAttribute('data-u'));
+        location.href = '/property?cpd=' + encodeURIComponent(c.n) + '&u=' + encodeURIComponent(tr.getAttribute('data-u'));
       });
     });
     HZ.refreshIcons();
@@ -440,7 +441,7 @@
     el.innerHTML =
       '<h3>' + c.n + '</h3>' +
       '<div class="zone">' + c.z + ' · New Cairo</div>' +
-      '<div class="metric"><span>' + HZ.t('unitsAvail') + '</span><b class="link" id="intel-units">' + units.length + ' <i data-lucide="table-2" class="i" style="width:14px;height:14px"></i></b></div>' +
+      '<div class="metric"><span>' + HZ.t('unitsAvail') + '</span><b class="link" id="intel-units">' + units.length + ' <i data-lucide="table-2" class="i" data-ext-style="ext-style-2"></i></b></div>' +
       '<div class="metric"><span>' + HZ.t('aiScore') + '</span><b>' + c.ai.toFixed(1) + ' / 10</b></div>' +
       '<div class="metric"><span>' + HZ.t('growth') + '</span><b class="up">' + c.g + '</b></div>' +
       '<div class="metric"><span>' + HZ.t('avg') + '</span><b>EGP ' + c.priceM + 'M</b></div>' +
@@ -677,7 +678,7 @@
         '<div class="top"><h4>' + c.n + '</h4><span class="ai-pill">AI ' + c.ai.toFixed(1) + '</span></div>' +
         '<div class="meta"><span>' + HZ.t('growth') + ' <b class="up">' + c.g + '</b></span>' +
         '<span>' + HZ.t('avg') + ' <b>EGP ' + c.priceM + 'M</b></span></div>' +
-        '<span class="u-link" data-units="' + c.n + '"><i data-lucide="table-2" class="i" style="width:14px;height:14px"></i>' + unitsFiltered(c).length + ' ' + HZ.t('unitsWord') + '</span>' +
+        '<span class="u-link" data-units="' + c.n + '"><i data-lucide="table-2" class="i" data-ext-style="ext-style-2"></i>' + unitsFiltered(c).length + ' ' + HZ.t('unitsWord') + '</span>' +
       '</div>';
     }).join('');
     document.getElementById('cpd-empty').style.display = list.length ? 'none' : 'block';
@@ -718,6 +719,33 @@
     }
   } catch (e) {}
 })();
+</script>
+<script type="module">
+  import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/framer-motion@11.1.7/dom/+esm";
+  
+  // Setup initial state for elements we will animate
+  document.querySelectorAll(".page-hero h1, .page-hero p.sub").forEach(el => {
+    el.style.opacity = "0";
+  });
+  document.querySelectorAll(".block").forEach(el => {
+    el.style.opacity = "0";
+  });
+
+  // Hero section entrance animations
+  setTimeout(() => {
+    animate(".page-hero h1", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.2, type: "spring", bounce: 0.2 });
+    animate(".page-hero p.sub", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.4, type: "spring", bounce: 0.2 });
+  }, 100);
+
+  // In-view scroll animations for main sections
+  inView(".block", (info) => {
+    animate(info.target, { opacity: [0, 1], y: [30, 0] }, { duration: 0.8, type: "spring", bounce: 0.1 });
+  }, { margin: "-50px" });
+
+  // Staggered lists (compound cards)
+  inView(".grid-cpds", (info) => {
+    animate(info.target.querySelectorAll(".cpd-card"), { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, delay: stagger(0.1) });
+  });
 </script>
 </body>
 </html>
