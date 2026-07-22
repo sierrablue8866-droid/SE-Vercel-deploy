@@ -357,33 +357,31 @@
     }
   })();
 
-  /* ═══ virtual tour modal (Three.js page in an iframe) ═══ */
+  /* ═══ virtual tour fullscreen handler (fullscreen on current main tour element) ═══ */
   (function () {
-    var modal = document.getElementById('tour-modal');
-    var closeBtn = document.getElementById('tour-close');
-    var lastFocus = null;
-    if (!modal || !closeBtn) return;
-    function openTour() {
-      var f = document.getElementById('tour-frame');
-      if (f && !f.src) f.src = 'https://listing3d.com/embed/r39d0bd4dde0a4fe693c7fe5fd230a896';
-      lastFocus = document.activeElement;
-      modal.classList.add('on');
-      document.body.style.overflow = 'hidden';
-      closeBtn.focus();
-    }
-    function closeTour() {
-      modal.classList.remove('on');
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
+    function toggleNativeFullscreen() {
+      var target = document.getElementById('vtv-banner') || document.getElementById('tour');
+      if (!target) return;
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (target.requestFullscreen) target.requestFullscreen();
+        else if (target.webkitRequestFullscreen) target.webkitRequestFullscreen();
+        else if (target.msRequestFullscreen) target.msRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
     }
     var openBtn = document.getElementById('tour-open');
-    if (openBtn) openBtn.addEventListener('click', openTour);
+    if (openBtn) openBtn.addEventListener('click', toggleNativeFullscreen);
+    var vtvLink = document.querySelector('.vtv-link');
+    if (vtvLink) {
+      vtvLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleNativeFullscreen();
+      });
+    }
     var tourCard = document.getElementById('ai-tour-card');
-    if (tourCard) tourCard.addEventListener('click', openTour);
-    closeBtn.addEventListener('click', closeTour);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('on')) closeTour();
-    });
+    if (tourCard) tourCard.addEventListener('click', toggleNativeFullscreen);
   })();
 
   /* ═══ live compound map — Leaflet loaded lazily when the section nears view ═══ */

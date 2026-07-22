@@ -35,6 +35,29 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/', destination: '/client-page/index.html' },
+        { source: '/index.html', destination: '/client-page/index.html' },
+      ],
+      afterFiles: [
+        { source: '/roi', destination: '/client-page/roi.html' },
+        { source: '/compounds', destination: '/client-page/compounds.html' },
+        { source: '/properties', destination: '/client-page/properties.html' },
+        { source: '/property', destination: '/client-page/property.html' },
+        { source: '/pricing', destination: '/client-page/pricing.html' },
+        { source: '/advice', destination: '/client-page/advice.html' },
+        { source: '/ai-engine', destination: '/client-page/ai-engine.html' },
+        { source: '/matches', destination: '/client-page/matches.html' },
+        { source: '/career', destination: '/client-page/career.html' },
+        { source: '/virtual-tour', destination: '/client-page/virtual-tour.html' },
+      ],
+      fallback: [
+        { source: '/:path*', destination: '/client-page/:path*' },
+      ],
+    };
+  },
   async headers() {
     return [
       {

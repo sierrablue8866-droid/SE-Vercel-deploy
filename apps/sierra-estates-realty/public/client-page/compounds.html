@@ -12,11 +12,6 @@
 <link rel="stylesheet" href="shared.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.min.js"></script>
-<!-- Firebase SDK (Firestore) -->
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-<script src="firebase-data.js"></script>
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <style>
@@ -331,7 +326,7 @@
   HZ.mount('cpds');
 
   /* map */
-  var map = L.map('cpd-map', { scrollWheelZoom: false, zoomControl: true }).setView([30.03, 31.57], 11);
+  var map = L.map('cpd-map', { scrollWheelZoom: false, zoomControl: true, touchZoom: true, dragging: true }).setView([30.03, 31.57], 11);
   var tiles = {
     light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
