@@ -70,11 +70,7 @@ export class PDFExportService {
   private static async loadHTML2PDF(): Promise<any> {
     try {
       return require('html2pdf');
-<<<<<<< HEAD
     } catch (_e) {
-=======
-    } catch (e) {
->>>>>>> feature/workflow
       return null;
     }
   }
