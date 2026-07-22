@@ -9,7 +9,7 @@
     "zod": "^3.22"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "typescript": "^5.3"
+    "@types/node": "^26",
+    "typescript": "^7.0"
   }
 }

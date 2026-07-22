@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17",
-    "@types/node": "^20",
-    "typescript": "^5.3"
+    "@types/node": "^26",
+    "typescript": "^7.0"
   }
 }
