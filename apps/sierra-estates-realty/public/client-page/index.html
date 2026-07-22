@@ -2075,5 +2075,37 @@
   }
 })();
 </script>
+<script type="module">
+  import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/framer-motion@11.1.7/dom/+esm";
+  
+  // Setup initial state for elements we will animate
+  document.querySelectorAll(".hero h1, .hero p.sub, .search-card").forEach(el => {
+    el.style.opacity = "0";
+  });
+  document.querySelectorAll(".block").forEach(el => {
+    el.style.opacity = "0";
+  });
+
+  // Hero section entrance animations
+  setTimeout(() => {
+    animate(".hero h1", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.2, type: "spring", bounce: 0.2 });
+    animate(".hero p.sub", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.4, type: "spring", bounce: 0.2 });
+    animate(".search-card", { opacity: [0, 1], y: [30, 0] }, { duration: 0.8, delay: 0.6, type: "spring", bounce: 0.2 });
+  }, 100);
+
+  // In-view scroll animations for main sections
+  inView(".block", (info) => {
+    animate(info.target, { opacity: [0, 1], y: [30, 0] }, { duration: 0.8, type: "spring", bounce: 0.1 });
+  }, { margin: "-50px" });
+
+  // Staggered lists (features, properties, compounds)
+  inView(".grid-feat", (info) => {
+    animate(info.target.querySelectorAll(".feat"), { opacity: [0, 1], scale: [0.95, 1] }, { duration: 0.6, delay: stagger(0.1) });
+  });
+  
+  inView(".grid-comp", (info) => {
+    animate(info.target.querySelectorAll(".comp"), { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, delay: stagger(0.1) });
+  });
+</script>
 </body>
 </html>

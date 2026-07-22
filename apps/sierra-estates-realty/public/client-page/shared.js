@@ -207,7 +207,7 @@
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
       '<a href="index.html" class="brand">' +
-        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:4px;box-shadow:var(--shadow-s);"><img src="logo.png" alt="Sierra Estates Logo" style="width:24px;height:24px;object-fit:contain;" /></span>' +
+        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
@@ -232,7 +232,7 @@
       '<div class="foot-grid">' +
         '<div>' +
           '<a href="index.html" class="brand">' +
-            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:4px;box-shadow:var(--shadow-s);"><img src="logo.png" alt="Sierra Estates Logo" style="width:24px;height:24px;object-fit:contain;" /></span>' +
+            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
           '<p class="blurb" data-i18n="footBlurb">' + t('footBlurb') + '</p>' +
