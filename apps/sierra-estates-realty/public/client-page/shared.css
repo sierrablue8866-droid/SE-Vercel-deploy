@@ -1,9 +1,9 @@
 /* Sierra Estates × Houzez portal — shared styles (light default + dark remix) */
 :root{
-  --pri:#84cc16;
-  --pri-d:#65a30d;
-  --pri-soft:#ecfccb;
-  --navy:#0f172a;
+  --pri:#c8961a;
+  --pri-d:#b38210;
+  --pri-soft:#fef3c7;
+  --navy:#0b1728;
   --ink:#020617;
   --text:#334155;
   --muted:#64748b;
@@ -12,9 +12,9 @@
   --bg:#f8fafc;
   --surface:#ffffff;
   --surface-2:#f1f5f9;
-  --topbar:#0f172a;
+  --topbar:#0b1728;
   --footer:#020617;
-  --green:#28a745;
+  --green:#c8961a;
   --red:#e63946;
   --white:#fff;
   --r-btn:32px;
@@ -24,35 +24,35 @@
   --shadow-m:0 20px 60px rgba(2,6,23,.08);
   --font:'Plus Jakarta Sans','Cairo',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
-  --display:'Playfair Display','Cairo',Georgia,serif;
-  --silk:cubic-bezier(0.32,0.72,0,1);
+  --display:'Cormorant Garamond','Playfair Display','Cairo',Georgia,serif;
+  --silk:cubic-bezier(0.16,1,0.3,1);
 }
 [data-theme="dark"]{
-  --pri:#bef264;
-  --pri-d:#d9f99d;
-  --pri-soft:#1a2e05;
-  --navy:#020617;
+  --pri:#e9c176;
+  --pri-d:#c8961a;
+  --pri-soft:#2a200a;
+  --navy:#07111e;
   --ink:#f8fafc;
   --text:#cbd5e1;
   --muted:#64748b;
   --line:#1e293b;
   --line-2:#334155;
-  --bg:#020617;
-  --surface:#0f172a;
-  --surface-2:#020617;
-  --topbar:#020617;
+  --bg:#07111e;
+  --surface:#0b1728;
+  --surface-2:#07111e;
+  --topbar:#07111e;
   --footer:#020617;
   --shadow-s:0 4px 12px rgba(0,0,0,.6);
   --shadow-m:0 24px 64px rgba(0,0,0,.8);
 }
-[data-theme="dark"] body{background:#020617;}
-[data-theme="dark"] .btn-pri{color:#020617;box-shadow:0 8px 24px rgba(190,242,100,.2);background:linear-gradient(135deg,#d9f99d,#bef264);}
-[data-theme="dark"] .btn-pri:hover{background:linear-gradient(135deg,#ecfccb,#d9f99d);}
-[data-theme="dark"] .tag.featured{background:#bef264;color:#020617;}
-[data-theme="dark"] .tag.sale{background:#1a2e05;color:#d9f99d;}
-[data-theme="dark"] .pcard .price-float{background:rgba(2,6,23,.88);color:#d9f99d;backdrop-filter:blur(8px);}
-[data-theme="dark"] .pcard .ai-score{background:rgba(15,23,42,.94);color:#d9f99d;backdrop-filter:blur(8px);}
-[data-theme="dark"] .nav-icon .dot{color:#020617;}
+[data-theme="dark"] body{background:#07111e;}
+[data-theme="dark"] .btn-pri{color:#07111e;box-shadow:0 8px 24px rgba(200,150,26,.3);background:linear-gradient(135deg,#e9c176,#c8961a);}
+[data-theme="dark"] .btn-pri:hover{background:linear-gradient(135deg,#fef3c7,#e9c176);}
+[data-theme="dark"] .tag.featured{background:#c8961a;color:#07111e;}
+[data-theme="dark"] .tag.sale{background:#2a200a;color:#e9c176;}
+[data-theme="dark"] .pcard .price-float{background:rgba(7,17,30,.88);color:#e9c176;backdrop-filter:blur(8px);}
+[data-theme="dark"] .pcard .ai-score{background:rgba(11,23,40,.94);color:#e9c176;backdrop-filter:blur(8px);}
+[data-theme="dark"] .nav-icon .dot{color:#07111e;}
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
 :focus-visible{outline:2px solid var(--pri);outline-offset:2px;border-radius:4px;}

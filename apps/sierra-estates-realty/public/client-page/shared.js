@@ -378,11 +378,8 @@
     var openMapBtn = document.getElementById('nav-open-map');
     if (openMapBtn) {
       openMapBtn.addEventListener('click', function () {
-        // If we're on a page with a map (#cpd-map), scroll to it; otherwise navigate
         var mapEl = document.getElementById('cpd-map');
-        if (mapEl) {
-          mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
+        if (!mapEl) {
           location.href = 'compounds.html';
         }
       });
