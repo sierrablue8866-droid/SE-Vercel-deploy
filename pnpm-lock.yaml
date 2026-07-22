@@ -7,8 +7,8 @@ settings:
 catalogs:
   default:
     '@tanstack/react-query':
-      specifier: ^5.90.21
-      version: 5.101.2
+      specifier: ^5.101.4
+      version: 5.101.4
     '@types/node':
       specifier: ^25.3.3
       version: 25.9.4
@@ -457,7 +457,7 @@ importers:
     dependencies:
       '@tanstack/react-query':
         specifier: 'catalog:'
-        version: 5.101.2(react@19.2.7)
+        version: 5.101.4(react@19.2.7)
       react:
         specifier: '>=18'
         version: 19.2.7
@@ -3330,11 +3330,11 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@tanstack/query-core@5.101.2':
-    resolution: {integrity: sha512-hH5MLoJhF7KaIGd7q3xTXGXvslI+GYlM1Z/35aSHHWaCJWB7XvTSHYuV3eM7tw+aE0mT/xMro4M4Q9rCGHT0lw==}
+  '@tanstack/query-core@5.101.4':
+    resolution: {integrity: sha512-gNwcvOJcRbLWPOLG/2OBm+zM+Yv+MKsXKEOWC57USuZDEsI71hEErQsiEGx5wX9rzWWkfwM0fVSPoiIFSsxfiw==}
 
-  '@tanstack/react-query@5.101.2':
-    resolution: {integrity: sha512-seDkr6kzGzX1okaaTtZPtgA688CDPlXUz1C6xSg0ESqn04Vuc8tlrYms1s3de+znBqhPVxFRfpAfUf+6XvfPWg==}
+  '@tanstack/react-query@5.101.4':
+    resolution: {integrity: sha512-yRg2pfOCxIs4ZJW3XYYHU/WgtD04FHSnfHlpRT7h7pR77hwkdRG4wxbKe4aq6P0RvXUTBSQpQeadS1SUYUe+KA==}
     peerDependencies:
       react: ^18 || ^19
 
@@ -3842,8 +3842,8 @@ packages:
       sharp:
         optional: true
 
-  '@whiskeysockets/eslint-config@https://codeload.github.com/whiskeysockets/eslint-config/tar.gz/299e8389baf62f9aa3034de18ff0d62cc0a5e838':
-    resolution: {tarball: https://codeload.github.com/whiskeysockets/eslint-config/tar.gz/299e8389baf62f9aa3034de18ff0d62cc0a5e838}
+  '@whiskeysockets/eslint-config@git+https://git@github.com:whiskeysockets/eslint-config.git#299e8389baf62f9aa3034de18ff0d62cc0a5e838':
+    resolution: {commit: 299e8389baf62f9aa3034de18ff0d62cc0a5e838, repo: git@github.com:whiskeysockets/eslint-config.git, type: git}
     version: 1.0.0
     peerDependencies:
       eslint: ^9.31.0
@@ -5929,8 +5929,8 @@ packages:
   libphonenumber-js@1.13.9:
     resolution: {integrity: sha512-VNS5vWMM7r0P66BYv+TQJATxExEgLxN+34hfHDVhDkUsGAE4cRg0shCNSLTXNKm7nIUscC7AfB51TjxEeF7msQ==}
 
-  libsignal@https://codeload.github.com/WhiskeySockets/libsignal-node/tar.gz/bcea72df9ec34d9d9140ab30619cf479c7c144c7:
-    resolution: {tarball: https://codeload.github.com/WhiskeySockets/libsignal-node/tar.gz/bcea72df9ec34d9d9140ab30619cf479c7c144c7}
+  libsignal@git+https://git@github.com:WhiskeySockets/libsignal-node.git#bcea72df9ec34d9d9140ab30619cf479c7c144c7:
+    resolution: {commit: bcea72df9ec34d9d9140ab30619cf479c7c144c7, repo: git@github.com:WhiskeySockets/libsignal-node.git, type: git}
     version: 6.0.0
 
   lie@3.3.0:
@@ -10419,11 +10419,11 @@ snapshots:
       tailwindcss: 4.3.3
       vite: 7.3.6(@types/node@25.9.4)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.22.4)(yaml@2.9.0)
 
-  '@tanstack/query-core@5.101.2': {}
+  '@tanstack/query-core@5.101.4': {}
 
-  '@tanstack/react-query@5.101.2(react@19.2.7)':
+  '@tanstack/react-query@5.101.4(react@19.2.7)':
     dependencies:
-      '@tanstack/query-core': 5.101.2
+      '@tanstack/query-core': 5.101.4
       react: 19.2.7
 
   '@thi.ng/bitstream@2.4.54':
@@ -11007,13 +11007,13 @@ snapshots:
       '@adiwajshing/keyed-db': 0.2.4
       '@cacheable/node-cache': 1.7.6
       '@hapi/boom': 9.1.4
-      '@whiskeysockets/eslint-config': https://codeload.github.com/whiskeysockets/eslint-config/tar.gz/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
+      '@whiskeysockets/eslint-config': git+https://git@github.com:whiskeysockets/eslint-config.git#299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
       async-lock: 1.4.1
       audio-decode: 2.2.3
       axios: 1.18.1
       cache-manager: 5.7.6
       libphonenumber-js: 1.13.9
-      libsignal: https://codeload.github.com/WhiskeySockets/libsignal-node/tar.gz/bcea72df9ec34d9d9140ab30619cf479c7c144c7
+      libsignal: git+https://git@github.com:WhiskeySockets/libsignal-node.git#bcea72df9ec34d9d9140ab30619cf479c7c144c7
       lodash: 4.18.1
       music-metadata: 7.14.0
       pino: 9.14.0
@@ -11030,7 +11030,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@whiskeysockets/eslint-config@https://codeload.github.com/whiskeysockets/eslint-config/tar.gz/299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)':
+  '@whiskeysockets/eslint-config@git+https://git@github.com:whiskeysockets/eslint-config.git#299e8389baf62f9aa3034de18ff0d62cc0a5e838(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/eslint-plugin': 8.62.1(@typescript-eslint/parser@8.62.1(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
       '@typescript-eslint/parser': 8.62.1(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
@@ -13734,7 +13734,7 @@ snapshots:
 
   libphonenumber-js@1.13.9: {}
 
-  libsignal@https://codeload.github.com/WhiskeySockets/libsignal-node/tar.gz/bcea72df9ec34d9d9140ab30619cf479c7c144c7:
+  libsignal@git+https://git@github.com:WhiskeySockets/libsignal-node.git#bcea72df9ec34d9d9140ab30619cf479c7c144c7:
     dependencies:
       curve25519-js: 0.0.4
       protobufjs: 7.6.4
