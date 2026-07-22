@@ -22,6 +22,7 @@ import {
 import Link from 'next/link';
 import { Navbar } from '@/components/client/Navbar';
 import { Footer } from '@/components/client/Footer';
+import ModelViewer from '@/components/client/ModelViewer';
 import { useI18n } from '@/lib/i18n-client';
 
 const PROPERTY_TYPES = [
@@ -408,6 +409,18 @@ export default function ClientRequestPage() {
 
           {/* Right Info Sidebar */}
           <div className="lg:col-span-5 space-y-6">
+            {/* 3D Property Interactive Experience */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold px-1 text-slate-400">
+                <span className="flex items-center gap-1.5 text-amber-400">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  {isAr ? 'معاينة تفاعلية 3D' : 'Interactive 3D Architectural Preview'}
+                </span>
+                <span className="text-[10px] text-slate-500 font-mono">Three.js / GLTF</span>
+              </div>
+              <ModelViewer className="h-[260px] w-full" />
+            </div>
+
             {/* Sierra Advantage Card */}
             <div className="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
               <h3 className="text-lg font-bold text-white font-display flex items-center gap-2">
