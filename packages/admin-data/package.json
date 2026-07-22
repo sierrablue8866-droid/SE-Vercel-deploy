@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "firebase": "^12.11.0"
+    "firebase": "^12.16.0"
   },
   "devDependencies": {
     "@types/node": "^20",

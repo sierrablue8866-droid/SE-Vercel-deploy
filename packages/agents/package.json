@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "private": true,
   "dependencies": {
-    "firebase": "^12.11",
+    "firebase": "^12.16",
     "zod": "^3.22",
     "pino": "^8.17",
     "react": "19.2.4"
