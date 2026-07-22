@@ -153,7 +153,7 @@
 [data-theme="dark"] .comp .co-body span{color:#e9c176;}
 .comp .co-count{position:absolute;top:14px;inset-inline-end:14px;z-index:3;background:rgba(255,255,255,.92);color:var(--navy);font-family:var(--mono);font-weight:700;font-size:12px;padding:5px 10px;border-radius:6px;white-space:nowrap;}
 
-.rooms{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(340px,1fr);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin;}
+.rooms{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(340px,1fr);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;}
 .rooms::-webkit-scrollbar{height:6px;}
 .rooms::-webkit-scrollbar-thumb{background:rgba(200,150,26,.4);border-radius:4px;}
 .room{position:relative;height:300px;border-radius:var(--r-card);overflow:hidden;scroll-snap-align:start;}
@@ -452,6 +452,138 @@
   .se-fade{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 </style>
+<style id="extracted-styles">
+  [data-ext-style="ext-style-1"] { left:auto; }
+  [data-ext-style="ext-style-2"] { width:13px;height:13px; }
+  [data-ext-style="ext-style-3"] { position:relative; }
+  [data-ext-style="ext-style-4"] { width:100%;border:none;background:none;font-family:var(--font);font-size:14px;color:var(--ink);outline:none;padding:8px 0; }
+  [data-ext-style="ext-style-5"] { display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--line);border-radius:0 0 10px 10px;box-shadow:var(--shadow-m);z-index:100;max-height:280px;overflow-y:auto; }
+  [data-ext-style="ext-style-6"] { width:100%;border:1.5px solid var(--line-2);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface-2);outline:none;cursor:pointer; }
+  [data-ext-style="ext-style-7"] { width:16px;height:16px }
+  [data-ext-style="ext-style-8"] { flex-direction:column;align-items:center;text-align:center; }
+  [data-ext-style="ext-style-9"] { margin-inline:auto; }
+  [data-ext-style="ext-style-10"] { display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:24px; }
+  [data-ext-style="ext-style-11"] { font-family:var(--display);font-size:34px;font-weight:700;letter-spacing:-.01em; }
+  [data-ext-style="ext-style-12"] { color:var(--pri);font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:10px 18px;border:1.5px solid var(--pri);border-radius:999px;transition:.25s var(--silk); }
+  [data-ext-style="ext-style-13"] { width:14px;height:14px; }
+  [data-ext-style="ext-style-14"] { position:relative;width:100%;aspect-ratio:21/9;min-height:420px;border-radius:18px;overflow:hidden;background:#0a1622;box-shadow:0 24px 70px rgba(13,33,54,.18),0 0 0 1px rgba(200,150,26,.18) inset;margin-top:8px; }
+  [data-ext-style="ext-style-15"] { position:absolute;inset:0;border-radius:18px;padding:1.5px;background:linear-gradient(135deg,rgba(200,150,26,.65) 0%,rgba(233,193,118,.25) 25%,transparent 50%,rgba(0,174,255,.18) 75%,rgba(200,150,26,.5) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:4; }
+  [data-ext-style="ext-style-16"] { position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background-color:#0a1622;background-image:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=2000&q=90');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center; }
+  [data-ext-style="ext-style-17"] { position:absolute;inset:0;background:linear-gradient(95deg,rgba(0,18,35,.88) 0%,rgba(0,18,35,.62) 38%,rgba(0,18,35,.18) 65%,rgba(0,18,35,.55) 100%);z-index:1; }
+  [data-ext-style="ext-style-18"] { position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,15,30,.65) 0%,transparent 35%);z-index:1; }
+  [data-ext-style="ext-style-19"] { position:absolute;top:0;left:0;bottom:0;width:54%;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;text-align:left;gap:14px; }
+  [data-ext-style="ext-style-20"] { display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#e9c176; }
+  [data-ext-style="ext-style-21"] { width:24px;height:1.5px;background:#e9c176;display:inline-block; }
+  [data-ext-style="ext-style-22"] { font-family:var(--display);font-size:46px;font-weight:700;line-height:1.05;letter-spacing:-.015em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.55);max-width:560px; }
+  [data-ext-style="ext-style-23"] { display:inline-block;font-style:italic;color:#e9c176;font-weight:600; }
+  [data-ext-style="ext-style-24"] { font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.86);max-width:480px;font-weight:500;margin-top:4px;text-shadow:0 1px 8px rgba(0,0,0,.4); }
+  [data-ext-style="ext-style-25"] { display:flex;gap:8px;flex-wrap:wrap;margin-top:8px; }
+  [data-ext-style="ext-style-26"] { display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:6px 11px;border-radius:999px; }
+  [data-ext-style="ext-style-27"] { width:11px;height:11px;color:#34d399; }
+  [data-ext-style="ext-style-28"] { position:absolute;inset-inline-end:0;top:0;bottom:0;width:46%;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;pointer-events:none; }
+  [data-ext-style="ext-style-29"] { width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;flex:none;box-shadow:0 0 0 8px rgba(255,255,255,.18),0 0 0 18px rgba(255,255,255,.08),0 18px 50px rgba(0,0,0,.45);transition:transform .35s var(--silk);animation:vtvPulse 2.6s ease-in-out infinite; }
+  [data-ext-style="ext-style-30"] { width:42px;height:42px;color:#0a1622;fill:#0a1622;margin-inline-start:5px; }
+  [data-ext-style="ext-style-31"] { display:block;font-family:var(--mono);font-size:12.5px;font-weight:800;letter-spacing:.32em;color:#fff;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.6); }
+  [data-ext-style="ext-style-32"] { position:absolute;bottom:26px;inset-inline-start:56px;z-index:3;display:flex;flex-direction:column;gap:5px; }
+  [data-ext-style="ext-style-33"] { display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;color:#e9c176;text-transform:uppercase; }
+  [data-ext-style="ext-style-34"] { width:11px;height:11px; }
+  [data-ext-style="ext-style-35"] { font-family:var(--display);font-size:22px;font-weight:700;line-height:1.2;color:#fff;max-width:480px;letter-spacing:-.005em; }
+  [data-ext-style="ext-style-36"] { font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.78);font-weight:600; }
+  [data-ext-style="ext-style-37"] { position:absolute;bottom:24px;inset-inline-end:24px;z-index:3;background:rgba(0,18,35,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(200,150,26,.32);border-radius:14px;padding:14px 18px;display:flex;gap:22px;align-items:center; }
+  [data-ext-style="ext-style-38"] { display:flex;flex-direction:column;align-items:center;gap:1px; }
+  [data-ext-style="ext-style-39"] { font-family:var(--mono);font-size:22px;font-weight:800;color:#e9c176;line-height:1; }
+  [data-ext-style="ext-style-40"] { font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72); }
+  [data-ext-style="ext-style-41"] { width:1px;height:32px;background:rgba(255,255,255,.14); }
+  [data-ext-style="ext-style-42"] { font-family:var(--mono);font-size:22px;font-weight:800;color:#34d399;line-height:1; }
+  [data-ext-style="ext-style-43"] { font-family:var(--mono);font-size:22px;font-weight:800;color:#8fe1ff;line-height:1; }
+  [data-ext-style="ext-style-44"] { position:absolute;top:22px;inset-inline-end:24px;z-index:3;display:inline-flex;align-items:center;gap:7px;background:rgba(0,18,35,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(52,211,153,.35);border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#34d399; }
+  [data-ext-style="ext-style-45"] { width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;animation:vtvBlink 1.6s ease-in-out infinite; }
+  [data-ext-style="ext-style-46"] { position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .4s ease;background:#0a1622; }
+  [data-ext-style="ext-style-47"] { position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:rgba(255,255,255,.85);font-size:14px;font-weight:600;background:linear-gradient(135deg,#0a1622 0%,#002b4b 100%);z-index:1; }
+  [data-ext-style="ext-style-48"] { width:32px;height:32px;animation:vtv-spin 1s linear infinite; }
+  [data-ext-style="ext-style-49"] { position:absolute;top:12px;inset-inline-end:12px;z-index:3;background:rgba(0,43,75,.78);color:#fff;border:0;border-radius:8px;width:36px;height:36px;cursor:pointer;display:none;place-items:center; }
+  [data-ext-style="ext-style-50"] { width:16px;height:16px; }
+  [data-ext-style="ext-style-51"] { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:14px; }
+  [data-ext-style="ext-style-52"] { display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--pri);text-decoration:none; }
+  [data-ext-style="ext-style-53"] { width:12px;height:12px; }
+  [data-ext-style="ext-style-54"] { font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase; }
+  [data-ext-style="ext-style-55"] { margin-bottom:18px; }
+  [data-ext-style="ext-style-56"] { display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 20px;background:var(--surface);border:1.5px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow-s);cursor:pointer;transition:.2s var(--silk);font-family:var(--font); }
+  [data-ext-style="ext-style-57"] { display:flex;align-items:center;gap:10px; }
+  [data-ext-style="ext-style-58"] { width:18px;height:18px;color:var(--pri);flex:none; }
+  [data-ext-style="ext-style-59"] { font-size:14.5px;font-weight:700;color:var(--ink); }
+  [data-ext-style="ext-style-60"] { display:none;background:var(--pri);color:#fff;font-family:var(--mono);font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.04em; }
+  [data-ext-style="ext-style-61"] { display:flex;align-items:center;gap:12px; }
+  [data-ext-style="ext-style-62"] { font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;white-space:nowrap; }
+  [data-ext-style="ext-style-63"] { width:18px;height:18px;color:var(--muted);transition:transform .3s var(--silk);flex:none; }
+  [data-ext-style="ext-style-64"] { display:none;margin-top:8px;padding:18px 20px;background:var(--surface);border:1.5px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow-s);animation:hmfSlideDown .3s var(--silk) both; }
+  [data-ext-style="ext-style-65"] { margin-bottom:16px; }
+  [data-ext-style="ext-style-66"] { display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px; }
+  [data-ext-style="ext-style-67"] { font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--muted);opacity:.7; }
+  [data-ext-style="ext-style-68"] { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;min-height:0; }
+  [data-ext-style="ext-style-69"] { display:flex;align-items:center;gap:9px;padding:10px 14px;background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:10px;transition:.2s;position:relative; }
+  [data-ext-style="ext-style-70"] { width:17px;height:17px;color:var(--muted);flex:none; }
+  [data-ext-style="ext-style-71"] { flex:1;border:none;outline:none;background:transparent;font-family:var(--font);font-size:14px;color:var(--ink);min-width:0; }
+  [data-ext-style="ext-style-72"] { width:16px;height:16px;color:var(--muted);flex:none;transition:transform .2s; }
+  [data-ext-style="ext-style-73"] { display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:280px;overflow-y:auto;background:var(--surface);border:1.5px solid var(--line-2);border-radius:10px;box-shadow:var(--shadow-m);z-index:200;padding:6px; }
+  [data-ext-style="ext-style-74"] { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+  [data-ext-style="ext-style-75"] { display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted); }
+  [data-ext-style="ext-style-76"] { display:flex;gap:4px;padding:3px;background:var(--bg);border-radius:999px; }
+  [data-ext-style="ext-style-77"] { border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s; }
+  [data-ext-style="ext-style-78"] { margin-inline-start:auto;border:1.5px solid var(--line-2);background:var(--surface-2);color:var(--text);font-family:var(--font);font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:5px; }
+  [data-ext-style="ext-style-79"] { height:480px;border-radius:var(--r-card);border:1px solid var(--line);z-index:1;background:var(--bg);margin-bottom:8px; }
+  [data-ext-style="ext-style-80"] { text-align:center;margin-top:12px; }
+  [data-ext-style="ext-style-81"] { display:inline-flex;align-items:center;gap:8px;text-decoration:none; }
+  [data-ext-style="ext-style-82"] { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:30px; }
+  [data-ext-style="ext-style-83"] { display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:24px;background:var(--bg);border-radius:14px;border:1px solid var(--line); }
+  [data-ext-style="ext-style-84"] { text-align:center; }
+  [data-ext-style="ext-style-85"] { font-family:var(--mono);font-size:32px;font-weight:800;color:var(--pri); }
+  [data-ext-style="ext-style-86"] { font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em; }
+  [data-ext-style="ext-style-87"] { font-family:var(--mono);font-size:32px;font-weight:800;color:#34d399; }
+  [data-ext-style="ext-style-88"] { text-align:center;margin-top:20px; }
+  [data-ext-style="ext-style-89"] { display:none;margin-top:14px;padding:14px 18px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.35);border-radius:10px;color:#16a34a;font-weight:600;font-size:13.5px;display:none; }
+  [data-ext-style="ext-style-90"] { width:16px;height:16px;vertical-align:middle;margin-inline-end:6px; }
+  [data-ext-style="ext-style-91"] { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px; }
+  [data-ext-style="ext-style-92"] { display:block;border-radius:14px;overflow:hidden;position:relative;text-decoration:none; }
+  [data-ext-style="ext-style-93"] { width:100%;height:180px;object-fit:cover;transition:transform .4s var(--silk); }
+  [data-ext-style="ext-style-94"] { position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,18,30,.9) 100%); }
+  [data-ext-style="ext-style-95"] { position:absolute;bottom:12px;left:16px;color:#fff; }
+  [data-ext-style="ext-style-96"] { font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#34d399; }
+  [data-ext-style="ext-style-97"] { font-size:14px;font-weight:700; }
+  [data-ext-style="ext-style-98"] { margin-top:16px; }
+  [data-ext-style="ext-style-99"] { padding-top:0; }
+  [data-ext-style="ext-style-100"] { text-decoration:none; }
+  [data-ext-style="ext-style-101"] { margin-top:14px;font-family:var(--mono);font-size:13px;color:rgba(255,255,255,.6); }
+  [data-ext-style="ext-style-102"] { width:14px;height:14px;vertical-align:-2px; }
+  [data-ext-style="ext-style-103"] { color:rgba(255,255,255,.7);text-decoration:none; }
+  [data-ext-style="ext-style-104"] { animation:vtv-spin 1s linear infinite; }
+  [data-ext-style="ext-style-105"] { padding:12px 16px;color:var(--muted);font-size:13px; }
+  [data-ext-style="ext-style-106"] { padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink);transition:.15s; }
+  [data-ext-style="ext-style-107"] { color:var(--muted);font-size:11px; }
+  [data-ext-style="ext-style-108"] { display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s var(--silk);position:relative; }
+  [data-ext-style="ext-style-109"] { position:relative;height:200px;overflow:hidden; }
+  [data-ext-style="ext-style-110"] { width:100%;height:100%;object-fit:cover; }
+  [data-ext-style="ext-style-111"] { position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#34d399,#22c55e);color:#fff;font-family:var(--mono);font-weight:800;font-size:12px;padding:5px 12px;border-radius:8px;box-shadow:0 4px 12px rgba(52,211,153,.4); }
+  [data-ext-style="ext-style-112"] { position:absolute;top:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:10px;padding:4px 9px;border-radius:5px;text-transform:uppercase; }
+  [data-ext-style="ext-style-113"] { position:absolute;bottom:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:13px;padding:6px 12px;border-radius:6px; }
+  [data-ext-style="ext-style-114"] { padding:18px; }
+  [data-ext-style="ext-style-115"] { font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--pri);margin-bottom:6px; }
+  [data-ext-style="ext-style-116"] { font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px; }
+  [data-ext-style="ext-style-117"] { font-size:13px;color:var(--muted);margin-bottom:12px; }
+  [data-ext-style="ext-style-118"] { display:flex;gap:14px;font-size:13px;color:var(--text);font-weight:600; }
+  [data-ext-style="ext-style-119"] { padding:12px;color:var(--muted);font-size:13px;text-align:center; }
+  [data-ext-style="ext-style-120"] { display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:.15s;' + (isSelected ? 'background:rgba(0,174,255,.08);' : '') + ' }
+  [data-ext-style="ext-style-121"] { width:18px;height:18px;border-radius:5px;border:2px solid ' + (isSelected ? 'var(--pri)' : 'var(--line-2)') + ';background:' + (isSelected ? 'var(--pri)' : 'transparent') + ';display:grid;place-items:center;flex:none; }
+  [data-ext-style="ext-style-122"] { flex:1;font-size:13.5px;font-weight:600;color:var(--ink); }
+  [data-ext-style="ext-style-123"] { font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:999px; }
+  [data-ext-style="ext-style-124"] { display:inline-flex;align-items:center;gap:6px;background:var(--pri);color:#fff;font-family:var(--font);font-size:12px;font-weight:700;padding:5px 10px 5px 12px;border-radius:999px;gap:6px; }
+  [data-ext-style="ext-style-125"] { border:none;background:rgba(255,255,255,.25);color:#fff;width:16px;height:16px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;display:grid;place-items:center;padding:0; }
+  [data-ext-style="ext-style-126"] { background:#00aeff; }
+  [data-ext-style="ext-style-127"] { background:#c8961a; }
+  [data-ext-style="ext-style-128"] { background:#34d399; }
+  [data-ext-style="ext-style-129"] { background:#e63946; }
+  [data-ext-style="ext-style-130"] { background:#a78bfa; }
+</style>
 </head>
 <body>
 
@@ -475,7 +607,7 @@
     <span class="mc-ic"><i data-lucide="map" class="i"></i></span>
     <span data-i18n="exploreMapBtn"></span>
   </a>
-  <div class="dots wrap" id="hero-dots" style="left:auto;"></div>
+  <div class="dots wrap" id="hero-dots" data-ext-style="ext-style-1"></div>
   <!-- ═══ LASER BEAM — inside hero only, never covers map or 3D ═══ -->
   <div class="page-laser" aria-hidden="true">
     <div class="page-laser-beam"></div>
@@ -489,7 +621,7 @@
   <div class="bell-content">
     <span class="bell-text">The first real estate ecosystem in Egypt · استكشف أفضل الفرص المتاحة في التجمع الخامس <b>AI Driven</b> · قدم طلبك الآن</span>
     <span class="bell-badge">خصم 25%</span>
-    <a href="#contact" class="bell-btn">اطلب الآن <i data-lucide="arrow-right" style="width:13px;height:13px;"></i></a>
+    <a href="#contact" class="bell-btn">اطلب الآن <i data-lucide="arrow-right" data-ext-style="ext-style-2"></i></a>
   </div>
 </div>
 
@@ -505,15 +637,15 @@
       <!-- Compound search with autocomplete -->
       <div class="field">
         <label data-i18n="fLoc"></label>
-        <div class="search-compound-wrap" style="position:relative;">
-          <input type="text" id="hero-compound-search" class="hero-search-input" placeholder="Search compound... (e.g. Mivida)" autocomplete="off" style="width:100%;border:none;background:none;font-family:var(--font);font-size:14px;color:var(--ink);outline:none;padding:8px 0;" />
-          <div id="hero-compound-results" class="compound-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--line);border-radius:0 0 10px 10px;box-shadow:var(--shadow-m);z-index:100;max-height:280px;overflow-y:auto;"></div>
+        <div class="search-compound-wrap" data-ext-style="ext-style-3">
+          <input type="text" id="hero-compound-search" class="hero-search-input" placeholder="Search compound... (e.g. Mivida)" autocomplete="off" data-ext-style="ext-style-4" />
+          <div id="hero-compound-results" class="compound-dropdown" data-ext-style="ext-style-5"></div>
         </div>
       </div>
       <!-- Property Type dropdown -->
       <div class="field">
         <label for="hero-type" data-i18n="fType"></label>
-        <select id="hero-type" class="hero-select" title="Property Type" style="width:100%;border:1.5px solid var(--line-2);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface-2);outline:none;cursor:pointer;">
+        <select id="hero-type" class="hero-select" title="Property Type" data-ext-style="ext-style-6">
           <option value="">Any Type</option>
           <option value="Apartment">Apartment</option>
           <option value="Villa">Villa</option>
@@ -526,7 +658,7 @@
       <!-- Bedrooms dropdown -->
       <div class="field">
         <label for="hero-beds" data-i18n="fBeds"></label>
-        <select id="hero-beds" class="hero-select" title="Bedrooms" style="width:100%;border:1.5px solid var(--line-2);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface-2);outline:none;cursor:pointer;">
+        <select id="hero-beds" class="hero-select" title="Bedrooms" data-ext-style="ext-style-6">
           <option value="0">Any</option>
           <option value="1">1+</option>
           <option value="2">2+</option>
@@ -538,7 +670,7 @@
       <!-- Price dropdown -->
       <div class="field">
         <label for="hero-price" data-i18n="fPrice"></label>
-        <select id="hero-price" class="hero-select" title="Price Range" style="width:100%;border:1.5px solid var(--line-2);border-radius:8px;padding:9px 12px;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--surface-2);outline:none;cursor:pointer;">
+        <select id="hero-price" class="hero-select" title="Price Range" data-ext-style="ext-style-6">
           <option value="0">Any Price</option>
           <option value="5">Up to 5M EGP</option>
           <option value="10">Up to 10M EGP</option>
@@ -567,7 +699,7 @@
         <h2 data-i18n="featTit"></h2>
         <p data-i18n="featSub"></p>
       </div>
-      <a href="properties.html" class="sec-link" title="View All Properties"><span data-i18n="viewAll"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
+      <a href="properties.html" class="sec-link" title="View All Properties"><span data-i18n="viewAll"></span> <i data-lucide="arrow-right" class="i" data-ext-style="ext-style-7"></i></a>
     </div>
     <div class="grid-props" id="prop-grid"></div>
   </div>
@@ -576,10 +708,10 @@
 <!-- WHY SIERRA (moved here — right after units/properties) -->
 <section class="block" id="agents" data-screen-label="Why Sierra">
   <div class="wrap">
-    <div class="sec-head rv" style="flex-direction:column;align-items:center;text-align:center;">
+    <div class="sec-head rv" data-ext-style="ext-style-8">
       <div>
         <h2>Why Sierra<sup>1</sup> Estates<sup>&trade;</sup></h2>
-        <p data-i18n="whySub" style="margin-inline:auto;"></p>
+        <p data-i18n="whySub" data-ext-style="ext-style-9"></p>
       </div>
     </div>
     <div class="net-banner rv">
@@ -611,7 +743,7 @@
         <h2 data-i18n="cpdTit"></h2>
         <p data-i18n="cpdSub"></p>
       </div>
-      <a href="compounds.html" class="sec-link" title="All Compounds"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
+      <a href="compounds.html" class="sec-link" title="All Compounds"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" data-ext-style="ext-style-7"></i></a>
     </div>
     <div class="grid-comp" id="comp-grid"></div>
   </div>
@@ -624,114 +756,114 @@
      feature pills + floating stats card communicate the unique value. -->
 <section class="block well" id="tour" data-screen-label="Virtual tour">
   <div class="wrap">
-    <div class="sec-head rv" style="display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:24px;">
+    <div class="sec-head rv" data-ext-style="ext-style-10">
       <div>
-        <h2 data-i18n="tourTit" style="font-family:var(--display);font-size:34px;font-weight:700;letter-spacing:-.01em;"></h2>
+        <h2 data-i18n="tourTit" data-ext-style="ext-style-11"></h2>
         <p data-i18n="tourSub"></p>
       </div>
-      <a href="virtual-tour.html" style="color:var(--pri);font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:10px 18px;border:1.5px solid var(--pri);border-radius:999px;transition:.25s var(--silk);">
-        Open full page <i data-lucide="arrow-right" class="i" style="width:14px;height:14px;"></i>
+      <a href="virtual-tour.html" data-ext-style="ext-style-12">
+        Open full page <i data-lucide="arrow-right" class="i" data-ext-style="ext-style-13"></i>
       </a>
     </div>
 
     <!-- ── Banner frame: gold gradient border + glow ── -->
-    <div id="vtv-banner" style="position:relative;width:100%;aspect-ratio:21/9;min-height:420px;border-radius:18px;overflow:hidden;background:#0a1622;box-shadow:0 24px 70px rgba(13,33,54,.18),0 0 0 1px rgba(200,150,26,.18) inset;margin-top:8px;">
+    <div id="vtv-banner" data-ext-style="ext-style-14">
       <!-- Gold gradient border glow -->
-      <div style="position:absolute;inset:0;border-radius:18px;padding:1.5px;background:linear-gradient(135deg,rgba(200,150,26,.65) 0%,rgba(233,193,118,.25) 25%,transparent 50%,rgba(0,174,255,.18) 75%,rgba(200,150,26,.5) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;z-index:4;"></div>
+      <div data-ext-style="ext-style-15"></div>
 
       <!-- Click-to-activate poster button -->
-      <button id="vtv-poster" type="button" aria-label="Launch 3D virtual tour" style="position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background-color:#0a1622;background-image:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=2000&q=90');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;">
+      <button id="vtv-poster" type="button" aria-label="Launch 3D virtual tour" data-ext-style="ext-style-16">
         <!-- Cinematic gradient scrim (deeper on left for text legibility) -->
-        <span style="position:absolute;inset:0;background:linear-gradient(95deg,rgba(0,18,35,.88) 0%,rgba(0,18,35,.62) 38%,rgba(0,18,35,.18) 65%,rgba(0,18,35,.55) 100%);z-index:1;"></span>
+        <span data-ext-style="ext-style-17"></span>
         <!-- Subtle bottom scrim for stats card -->
-        <span style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,15,30,.65) 0%,transparent 35%);z-index:1;"></span>
+        <span data-ext-style="ext-style-18"></span>
 
         <!-- ── LEFT: USP headline + feature pills ── -->
-        <span style="position:absolute;top:0;left:0;bottom:0;width:54%;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:48px 56px;text-align:left;gap:14px;">
-          <span style="display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#e9c176;">
-            <span style="width:24px;height:1.5px;background:#e9c176;display:inline-block;"></span>
+        <span data-ext-style="ext-style-19">
+          <span data-ext-style="ext-style-20">
+            <span data-ext-style="ext-style-21"></span>
             SIERRA 3D · POWERED BY IMMERSIVE TECH
           </span>
-          <span style="font-family:var(--display);font-size:46px;font-weight:700;line-height:1.05;letter-spacing:-.015em;color:#fff;text-shadow:0 4px 24px rgba(0,0,0,.55);max-width:560px;">
+          <span data-ext-style="ext-style-22">
             Walk Through Your<br/>Next Home
-            <span style="display:inline-block;font-style:italic;color:#e9c176;font-weight:600;">Before You Visit</span>
+            <span data-ext-style="ext-style-23">Before You Visit</span>
           </span>
-          <span style="font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.86);max-width:480px;font-weight:500;margin-top:4px;text-shadow:0 1px 8px rgba(0,0,0,.4);">
+          <span data-ext-style="ext-style-24">
             Every Sierra listing is captured in cinematic 4K HDR. Stroll room-by-room, peek into the garden at dusk, gauge the pool from above, all from your screen, all in seconds.
           </span>
           <!-- Feature pills -->
-          <span style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
-            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:6px 11px;border-radius:999px;">
-              <i data-lucide="video" class="i" style="width:11px;height:11px;color:#34d399;"></i> 4K HDR
+          <span data-ext-style="ext-style-25">
+            <span data-ext-style="ext-style-26">
+              <i data-lucide="video" class="i" data-ext-style="ext-style-27"></i> 4K HDR
             </span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:6px 11px;border-radius:999px;">
-              <i data-lucide="door-open" class="i" style="width:11px;height:11px;color:#34d399;"></i> Room-by-room
+            <span data-ext-style="ext-style-26">
+              <i data-lucide="door-open" class="i" data-ext-style="ext-style-27"></i> Room-by-room
             </span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:6px 11px;border-radius:999px;">
-              <i data-lucide="glasses" class="i" style="width:11px;height:11px;color:#34d399;"></i> VR-ready
+            <span data-ext-style="ext-style-26">
+              <i data-lucide="glasses" class="i" data-ext-style="ext-style-27"></i> VR-ready
             </span>
-            <span style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:6px 11px;border-radius:999px;">
-              <i data-lucide="grid-2x2" class="i" style="width:11px;height:11px;color:#34d399;"></i> Floor plan
+            <span data-ext-style="ext-style-26">
+              <i data-lucide="grid-2x2" class="i" data-ext-style="ext-style-27"></i> Floor plan
             </span>
           </span>
         </span>
 
         <!-- ── RIGHT: Big play button + label ── -->
-        <span style="position:absolute;inset-inline-end:0;top:0;bottom:0;width:46%;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;pointer-events:none;">
-          <span style="width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;flex:none;box-shadow:0 0 0 8px rgba(255,255,255,.18),0 0 0 18px rgba(255,255,255,.08),0 18px 50px rgba(0,0,0,.45);transition:transform .35s var(--silk);animation:vtvPulse 2.6s ease-in-out infinite;">
-            <i data-lucide="play" class="i" style="width:42px;height:42px;color:#0a1622;fill:#0a1622;margin-inline-start:5px;"></i>
+        <span data-ext-style="ext-style-28">
+          <span data-ext-style="ext-style-29">
+            <i data-lucide="play" class="i" data-ext-style="ext-style-30"></i>
           </span>
-          <span style="display:block;font-family:var(--mono);font-size:12.5px;font-weight:800;letter-spacing:.32em;color:#fff;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.6);">▶ Launch 3D Tour</span>
+          <span data-ext-style="ext-style-31">▶ Launch 3D Tour</span>
         </span>
 
         <!-- ── BOTTOM-LEFT: property info card ── -->
-        <span style="position:absolute;bottom:26px;inset-inline-start:56px;z-index:3;display:flex;flex-direction:column;gap:5px;">
-          <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.16em;color:#e9c176;text-transform:uppercase;">
-            <i data-lucide="map-pin" class="i" style="width:11px;height:11px;"></i> Featured · New Cairo
+        <span data-ext-style="ext-style-32">
+          <span data-ext-style="ext-style-33">
+            <i data-lucide="map-pin" class="i" data-ext-style="ext-style-34"></i> Featured · New Cairo
           </span>
-          <span style="font-family:var(--display);font-size:22px;font-weight:700;line-height:1.2;color:#fff;max-width:480px;letter-spacing:-.005em;">Sierra Signature Villa · Mivida</span>
-          <span style="font-family:var(--mono);font-size:11.5px;color:rgba(255,255,255,.78);font-weight:600;">5 Bed · 6 Bath · 480 m² · Pool · Garden</span>
+          <span data-ext-style="ext-style-35">Sierra Signature Villa · Mivida</span>
+          <span data-ext-style="ext-style-36">5 Bed · 6 Bath · 480 m² · Pool · Garden</span>
         </span>
 
         <!-- ── BOTTOM-RIGHT: floating stats card ── -->
-        <span style="position:absolute;bottom:24px;inset-inline-end:24px;z-index:3;background:rgba(0,18,35,.62);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(200,150,26,.32);border-radius:14px;padding:14px 18px;display:flex;gap:22px;align-items:center;">
-          <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-            <span style="font-family:var(--mono);font-size:22px;font-weight:800;color:#e9c176;line-height:1;">47</span>
-            <span style="font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);">tours live</span>
+        <span data-ext-style="ext-style-37">
+          <span data-ext-style="ext-style-38">
+            <span data-ext-style="ext-style-39">47</span>
+            <span data-ext-style="ext-style-40">tours live</span>
           </span>
-          <span style="width:1px;height:32px;background:rgba(255,255,255,.14);"></span>
-          <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-            <span style="font-family:var(--mono);font-size:22px;font-weight:800;color:#34d399;line-height:1;">12</span>
-            <span style="font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);">ready to move</span>
+          <span data-ext-style="ext-style-41"></span>
+          <span data-ext-style="ext-style-38">
+            <span data-ext-style="ext-style-42">12</span>
+            <span data-ext-style="ext-style-40">ready to move</span>
           </span>
-          <span style="width:1px;height:32px;background:rgba(255,255,255,.14);"></span>
-          <span style="display:flex;flex-direction:column;align-items:center;gap:1px;">
-            <span style="font-family:var(--mono);font-size:22px;font-weight:800;color:#8fe1ff;line-height:1;">4K</span>
-            <span style="font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);">HDR quality</span>
+          <span data-ext-style="ext-style-41"></span>
+          <span data-ext-style="ext-style-38">
+            <span data-ext-style="ext-style-43">4K</span>
+            <span data-ext-style="ext-style-40">HDR quality</span>
           </span>
         </span>
 
         <!-- ── TOP-RIGHT: LIVE badge ── -->
-        <span style="position:absolute;top:22px;inset-inline-end:24px;z-index:3;display:inline-flex;align-items:center;gap:7px;background:rgba(0,18,35,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid rgba(52,211,153,.35);border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#34d399;">
-          <span style="width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;animation:vtvBlink 1.6s ease-in-out infinite;"></span>
+        <span data-ext-style="ext-style-44">
+          <span data-ext-style="ext-style-45"></span>
           LIVE · SIERRA 3D
         </span>
       </button>
 
-      <iframe id="vtv-iframe" style="position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;transition:opacity .4s ease;background:#0a1622;" title="3D Virtual Tour" allow="fullscreen; accelerometer; gyroscope; magnetometer; vr; xr-spatial-tracking" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
-      <div id="vtv-loading" style="position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:rgba(255,255,255,.85);font-size:14px;font-weight:600;background:linear-gradient(135deg,#0a1622 0%,#002b4b 100%);z-index:1;">
-        <i data-lucide="loader-2" class="i" style="width:32px;height:32px;animation:vtv-spin 1s linear infinite;"></i>
+      <iframe id="vtv-iframe" data-ext-style="ext-style-46" title="3D Virtual Tour" allow="fullscreen; accelerometer; gyroscope; magnetometer; vr; xr-spatial-tracking" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+      <div id="vtv-loading" data-ext-style="ext-style-47">
+        <i data-lucide="loader-2" class="i" data-ext-style="ext-style-48"></i>
         <span>Loading immersive 3D tour…</span>
       </div>
-      <button id="vtv-fs" type="button" aria-label="Enter fullscreen" title="Fullscreen" style="position:absolute;top:12px;inset-inline-end:12px;z-index:3;background:rgba(0,43,75,.78);color:#fff;border:0;border-radius:8px;width:36px;height:36px;cursor:pointer;display:none;place-items:center;">
-        <i data-lucide="maximize-2" class="i" style="width:16px;height:16px;"></i>
+      <button id="vtv-fs" type="button" aria-label="Enter fullscreen" title="Fullscreen" data-ext-style="ext-style-49">
+        <i data-lucide="maximize-2" class="i" data-ext-style="ext-style-50"></i>
       </button>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:14px;">
-      <a href="https://listing3d.com/embed/r39d0bd4dde0a4fe693c7fe5fd230a896" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--pri);text-decoration:none;">
-        <i data-lucide="external-link" class="i" style="width:12px;height:12px;"></i> Open tour in new tab
+    <div data-ext-style="ext-style-51">
+      <a href="https://listing3d.com/embed/r39d0bd4dde0a4fe693c7fe5fd230a896" target="_blank" rel="noopener noreferrer" data-ext-style="ext-style-52">
+        <i data-lucide="external-link" class="i" data-ext-style="ext-style-53"></i> Open tour in new tab
       </a>
-      <span style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;">Cinematic capture · Matterport-grade fidelity</span>
+      <span data-ext-style="ext-style-54">Cinematic capture · Matterport-grade fidelity</span>
     </div>
   </div>
 </section>
@@ -804,7 +936,7 @@
         <h2>اكتشف أفضل الفرص</h2>
         <p>Explore all New Cairo compounds on the interactive map. Click any marker for details.</p>
       </div>
-      <a href="compounds.html" class="sec-link" title="All Compounds"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" style="width:16px;height:16px"></i></a>
+      <a href="compounds.html" class="sec-link" title="All Compounds"><span data-i18n="allCpds"></span> <i data-lucide="arrow-right" class="i" data-ext-style="ext-style-7"></i></a>
     </div>
 
     <!-- ═══ Quick filter bar (compound + bedrooms only) ═══
@@ -814,57 +946,57 @@
     <!-- ═══ SMART MAP FILTER — collapsible dropdown ═══
          Click the filter bar to expand/collapse. Shows active filter count
          as a badge. Compound search + beds selector inside. -->
-    <div class="hmf-wrap" style="margin-bottom:18px;">
+    <div class="hmf-wrap" data-ext-style="ext-style-55">
       <!-- Filter trigger bar (always visible) -->
-      <button class="hmf-trigger" id="hmf-trigger" type="button" aria-expanded="false" style="display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:14px 20px;background:var(--surface);border:1.5px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow-s);cursor:pointer;transition:.2s var(--silk);font-family:var(--font);">
-        <span style="display:flex;align-items:center;gap:10px;">
-          <i data-lucide="sliders-horizontal" class="i" style="width:18px;height:18px;color:var(--pri);flex:none;"></i>
-          <span style="font-size:14.5px;font-weight:700;color:var(--ink);" data-i18n="hmfTitle">Smart Filter</span>
-          <span id="hmf-active-badge" style="display:none;background:var(--pri);color:#fff;font-family:var(--mono);font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.04em;">0</span>
+      <button class="hmf-trigger" id="hmf-trigger" type="button" aria-expanded="false" data-ext-style="ext-style-56">
+        <span data-ext-style="ext-style-57">
+          <i data-lucide="sliders-horizontal" class="i" data-ext-style="ext-style-58"></i>
+          <span data-ext-style="ext-style-59" data-i18n="hmfTitle">Smart Filter</span>
+          <span id="hmf-active-badge" data-ext-style="ext-style-60">0</span>
         </span>
-        <span style="display:flex;align-items:center;gap:12px;">
-          <span id="home-map-count" style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;white-space:nowrap;">… compounds</span>
-          <i data-lucide="chevron-down" class="i" id="hmf-chevron" style="width:18px;height:18px;color:var(--muted);transition:transform .3s var(--silk);flex:none;"></i>
+        <span data-ext-style="ext-style-61">
+          <span id="home-map-count" data-ext-style="ext-style-62">… compounds</span>
+          <i data-lucide="chevron-down" class="i" id="hmf-chevron" data-ext-style="ext-style-63"></i>
         </span>
       </button>
 
       <!-- Filter panel (collapsible) -->
-      <div class="hmf-panel" id="hmf-panel" style="display:none;margin-top:8px;padding:18px 20px;background:var(--surface);border:1.5px solid var(--line-2);border-radius:14px;box-shadow:var(--shadow-s);animation:hmfSlideDown .3s var(--silk) both;">
+      <div class="hmf-panel" id="hmf-panel" data-ext-style="ext-style-64">
         <!-- Compound multi-select row -->
-        <div style="margin-bottom:16px;">
-          <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;">
-            <i data-lucide="building-2" class="i" style="width:14px;height:14px;"></i>
+        <div data-ext-style="ext-style-65">
+          <div data-ext-style="ext-style-66">
+            <i data-lucide="building-2" class="i" data-ext-style="ext-style-13"></i>
             <span data-i18n="hmfCompounds">Compounds</span>
-            <span style="font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--muted);opacity:.7;" data-i18n="hmfMultiHint">Click to select multiple</span>
+            <span data-ext-style="ext-style-67" data-i18n="hmfMultiHint">Click to select multiple</span>
           </div>
           <!-- Selected chips area -->
-          <div id="hmf-compound-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;min-height:0;"></div>
+          <div id="hmf-compound-chips" data-ext-style="ext-style-68"></div>
           <!-- Search + dropdown -->
-          <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:10px;transition:.2s;position:relative;">
-            <i data-lucide="search" class="i" style="width:17px;height:17px;color:var(--muted);flex:none;"></i>
-            <input id="home-map-compound" type="text" data-i18n-ph="hmfPlaceholder" placeholder="Search compounds (e.g. Mivida, Hyde Park)…" style="flex:1;border:none;outline:none;background:transparent;font-family:var(--font);font-size:14px;color:var(--ink);min-width:0;" autocomplete="off" />
-            <i data-lucide="chevron-down" class="i" style="width:16px;height:16px;color:var(--muted);flex:none;transition:transform .2s;" id="hmf-compound-chevron"></i>
+          <div data-ext-style="ext-style-69">
+            <i data-lucide="search" class="i" data-ext-style="ext-style-70"></i>
+            <input id="home-map-compound" type="text" data-i18n-ph="hmfPlaceholder" placeholder="Search compounds (e.g. Mivida, Hyde Park)…" data-ext-style="ext-style-71" autocomplete="off" />
+            <i data-lucide="chevron-down" class="i" data-ext-style="ext-style-72" id="hmf-compound-chevron"></i>
             <!-- Dropdown list (absolute positioned) -->
-            <div id="hmf-compound-dropdown" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:280px;overflow-y:auto;background:var(--surface);border:1.5px solid var(--line-2);border-radius:10px;box-shadow:var(--shadow-m);z-index:200;padding:6px;"></div>
+            <div id="hmf-compound-dropdown" data-ext-style="ext-style-73"></div>
           </div>
         </div>
 
         <!-- Beds selector row (single select, no '+') -->
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-          <span style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">
-            <i data-lucide="bed-double" class="i" style="width:14px;height:14px;"></i>
+        <div data-ext-style="ext-style-74">
+          <span data-ext-style="ext-style-75">
+            <i data-lucide="bed-double" class="i" data-ext-style="ext-style-13"></i>
             <span data-i18n="hmfBeds">Bedrooms</span>
           </span>
-          <div id="home-map-beds" style="display:flex;gap:4px;padding:3px;background:var(--bg);border-radius:999px;">
-            <button class="on" data-b="0" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;" data-i18n="hmfAny">Any</button>
-            <button data-b="1" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;">1</button>
-            <button data-b="2" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;">2</button>
-            <button data-b="3" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;">3</button>
-            <button data-b="4" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;">4</button>
-            <button data-b="5" type="button" style="border:none;cursor:pointer;padding:7px 14px;border-radius:999px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);background:transparent;transition:.2s;">5</button>
+          <div id="home-map-beds" data-ext-style="ext-style-76">
+            <button class="on" data-b="0" type="button" data-ext-style="ext-style-77" data-i18n="hmfAny">Any</button>
+            <button data-b="1" type="button" data-ext-style="ext-style-77">1</button>
+            <button data-b="2" type="button" data-ext-style="ext-style-77">2</button>
+            <button data-b="3" type="button" data-ext-style="ext-style-77">3</button>
+            <button data-b="4" type="button" data-ext-style="ext-style-77">4</button>
+            <button data-b="5" type="button" data-ext-style="ext-style-77">5</button>
           </div>
-          <button id="hmf-reset" type="button" style="margin-inline-start:auto;border:1.5px solid var(--line-2);background:var(--surface-2);color:var(--text);font-family:var(--font);font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:5px;">
-            <i data-lucide="rotate-ccw" class="i" style="width:12px;height:12px;"></i>
+          <button id="hmf-reset" type="button" data-ext-style="ext-style-78">
+            <i data-lucide="rotate-ccw" class="i" data-ext-style="ext-style-53"></i>
             <span data-i18n="hmfReset">Reset</span>
           </button>
         </div>
@@ -872,11 +1004,11 @@
     </div>
 
     <div class="map-sticky-wrap" id="map-sticky-wrap">
-      <div id="home-map" style="height:480px;border-radius:var(--r-card);border:1px solid var(--line);z-index:1;background:var(--bg);margin-bottom:8px;"></div>
+      <div id="home-map" data-ext-style="ext-style-79"></div>
     </div>
-    <div style="text-align:center;margin-top:12px;">
-      <a href="compounds.html" class="btn btn-navy" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
-        <i data-lucide="map" class="i" style="width:16px;height:16px;"></i>
+    <div data-ext-style="ext-style-80">
+      <a href="compounds.html" class="btn btn-navy" data-ext-style="ext-style-81">
+        <i data-lucide="map" class="i" data-ext-style="ext-style-50"></i>
         <span>Open Full Map</span>
       </a>
     </div>
@@ -895,28 +1027,28 @@
         <p>AI-ranked by match score, ROI potential, and market demand. Updates in real-time.</p>
       </div>
     </div>
-    <div id="insights-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:30px;"></div>
-    <div id="insights-market" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:24px;background:var(--bg);border-radius:14px;border:1px solid var(--line);">
-      <div style="text-align:center;">
-        <div style="font-family:var(--mono);font-size:32px;font-weight:800;color:var(--pri);">+24%</div>
-        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Top Growth (Mountain View)</div>
+    <div id="insights-grid" data-ext-style="ext-style-82"></div>
+    <div id="insights-market" data-ext-style="ext-style-83">
+      <div data-ext-style="ext-style-84">
+        <div data-ext-style="ext-style-85">+24%</div>
+        <div data-ext-style="ext-style-86">Top Growth (Mountain View)</div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:var(--mono);font-size:32px;font-weight:800;color:#34d399;">9.8</div>
-        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Highest AI Score (Hyde Park)</div>
+      <div data-ext-style="ext-style-84">
+        <div data-ext-style="ext-style-87">9.8</div>
+        <div data-ext-style="ext-style-86">Highest AI Score (Hyde Park)</div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:var(--mono);font-size:32px;font-weight:800;color:var(--pri);">EGP 35M</div>
-        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Top Price (Taj City)</div>
+      <div data-ext-style="ext-style-84">
+        <div data-ext-style="ext-style-85">EGP 35M</div>
+        <div data-ext-style="ext-style-86">Top Price (Taj City)</div>
       </div>
-      <div style="text-align:center;">
-        <div style="font-family:var(--mono);font-size:32px;font-weight:800;color:#34d399;">798</div>
-        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Active Units</div>
+      <div data-ext-style="ext-style-84">
+        <div data-ext-style="ext-style-87">798</div>
+        <div data-ext-style="ext-style-86">Active Units</div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:20px;">
-      <a href="properties.html" class="btn btn-navy" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
-        <i data-lucide="trending-up" class="i" style="width:16px;height:16px;"></i>
+    <div data-ext-style="ext-style-88">
+      <a href="properties.html" class="btn btn-navy" data-ext-style="ext-style-81">
+        <i data-lucide="trending-up" class="i" data-ext-style="ext-style-50"></i>
         <span>View All Best Listings</span>
       </a>
     </div>
@@ -979,8 +1111,8 @@
           <div><label for="inq-budget" data-i18n="inqBudget"></label><input type="text" id="inq-budget" placeholder="10,000,000" dir="ltr"/></div>
         </div>
         <button class="btn btn-pri" type="submit" title="Submit Inquiry"><i data-lucide="send" class="i"></i> <span data-i18n="inqSend"></span></button>
-        <div id="inq-success" style="display:none;margin-top:14px;padding:14px 18px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.35);border-radius:10px;color:#16a34a;font-weight:600;font-size:13.5px;display:none;">
-          <i data-lucide="check-circle" style="width:16px;height:16px;vertical-align:middle;margin-inline-end:6px;"></i>
+        <div id="inq-success" data-ext-style="ext-style-89">
+          <i data-lucide="check-circle" data-ext-style="ext-style-90"></i>
           <span>Thank you! Your inquiry has been received. Our team will contact you within 24 hours.</span>
         </div>
       </form>
@@ -997,33 +1129,33 @@
     <div class="ai-scan"></div>
     <div class="ai-grid" id="ai-grid"></div>
     <!-- AI tool preview images -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px;">
-      <a href="matches.html" style="display:block;border-radius:14px;overflow:hidden;position:relative;text-decoration:none;">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Smart Match" style="width:100%;height:180px;object-fit:cover;transition:transform .4s var(--silk);" loading="lazy"/>
-        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,18,30,.9) 100%);"></div>
-        <div style="position:absolute;bottom:12px;left:16px;color:#fff;">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#34d399;">LIVE</div>
-          <div style="font-size:14px;font-weight:700;">Smart Match v3</div>
+    <div data-ext-style="ext-style-91">
+      <a href="matches.html" data-ext-style="ext-style-92">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Smart Match" data-ext-style="ext-style-93" loading="lazy"/>
+        <div data-ext-style="ext-style-94"></div>
+        <div data-ext-style="ext-style-95">
+          <div data-ext-style="ext-style-96">LIVE</div>
+          <div data-ext-style="ext-style-97">Smart Match v3</div>
         </div>
       </a>
-      <a href="pricing.html" style="display:block;border-radius:14px;overflow:hidden;position:relative;text-decoration:none;">
-        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="AVM Pricing" style="width:100%;height:180px;object-fit:cover;transition:transform .4s var(--silk);" loading="lazy"/>
-        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,18,30,.9) 100%);"></div>
-        <div style="position:absolute;bottom:12px;left:16px;color:#fff;">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#34d399;">LIVE</div>
-          <div style="font-size:14px;font-weight:700;">AVM Pricing Engine</div>
+      <a href="pricing.html" data-ext-style="ext-style-92">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="AVM Pricing" data-ext-style="ext-style-93" loading="lazy"/>
+        <div data-ext-style="ext-style-94"></div>
+        <div data-ext-style="ext-style-95">
+          <div data-ext-style="ext-style-96">LIVE</div>
+          <div data-ext-style="ext-style-97">AVM Pricing Engine</div>
         </div>
       </a>
-      <a href="roi.html" style="display:block;border-radius:14px;overflow:hidden;position:relative;text-decoration:none;">
-        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80" alt="ROI Forecaster" style="width:100%;height:180px;object-fit:cover;transition:transform .4s var(--silk);" loading="lazy"/>
-        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,18,30,.9) 100%);"></div>
-        <div style="position:absolute;bottom:12px;left:16px;color:#fff;">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#34d399;">LIVE</div>
-          <div style="font-size:14px;font-weight:700;">ROI Forecaster</div>
+      <a href="roi.html" data-ext-style="ext-style-92">
+        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80" alt="ROI Forecaster" data-ext-style="ext-style-93" loading="lazy"/>
+        <div data-ext-style="ext-style-94"></div>
+        <div data-ext-style="ext-style-95">
+          <div data-ext-style="ext-style-96">LIVE</div>
+          <div data-ext-style="ext-style-97">ROI Forecaster</div>
         </div>
       </a>
     </div>
-    <div style="margin-top:16px;" class="rv">
+    <div data-ext-style="ext-style-98" class="rv">
       <button class="tour-launch" id="tour-open" type="button" title="Launch Tour">
         <span class="t-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></span>
         <span class="t-txt"><b data-i18n="tourLaunchTit"></b><span data-i18n="tourLaunchSub"></span></span>
@@ -1034,7 +1166,7 @@
 </section>
 
 <!-- CTA -->
-<section class="block" id="contact" style="padding-top:0;" data-screen-label="CTA band">
+<section class="block" id="contact" data-ext-style="ext-style-99" data-screen-label="CTA band">
   <div class="wrap">
     <div class="cta rv">
       <div class="ct-txt">
@@ -1043,10 +1175,10 @@
       </div>
       <div class="ct-act">
         <button class="btn btn-white" type="button" title="Add Listing"><i data-lucide="plus" class="i"></i> <span data-i18n="ctaBtn1"></span></button>
-        <a href="https://wa.me/201092048333" target="_blank" rel="noopener noreferrer" class="btn btn-out" style="text-decoration:none;"><i data-lucide="phone" class="i"></i> <span>+2 01092048333</span></a>
+        <a href="https://wa.me/201092048333" target="_blank" rel="noopener noreferrer" class="btn btn-out" data-ext-style="ext-style-100"><i data-lucide="phone" class="i"></i> <span>+2 01092048333</span></a>
       </div>
-      <div style="margin-top:14px;font-family:var(--mono);font-size:13px;color:rgba(255,255,255,.6);">
-        <i data-lucide="mail" class="i" style="width:14px;height:14px;vertical-align:-2px;"></i> <a href="mailto:info@Sierra-Estates.net" style="color:rgba(255,255,255,.7);text-decoration:none;">info@Sierra-Estates.net</a>
+      <div data-ext-style="ext-style-101">
+        <i data-lucide="mail" class="i" data-ext-style="ext-style-102"></i> <a href="mailto:info@Sierra-Estates.net" data-ext-style="ext-style-103">info@Sierra-Estates.net</a>
       </div>
     </div>
   </div>
@@ -1165,7 +1297,7 @@
       // Show loading state on button
       var submitBtn = inqForm.querySelector('button[type="submit"]');
       var originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i data-lucide="loader-2" class="i" style="animation:vtv-spin 1s linear infinite;"></i> <span>Sending…</span>'; if (window.lucide) lucide.createIcons(); }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i data-lucide="loader-2" class="i" data-ext-style="ext-style-104"></i> <span>Sending…</span>'; if (window.lucide) lucide.createIcons(); }
 
       function showSuccess() {
         var successEl = document.getElementById('inq-success');
@@ -1234,13 +1366,13 @@
         return c.n.toLowerCase().indexOf(q) >= 0 || (c.z && c.z.toLowerCase().indexOf(q) >= 0);
       }).slice(0, 8);
       if (matches.length === 0) {
-        heroResults.innerHTML = '<div style="padding:12px 16px;color:var(--muted);font-size:13px;">No compounds found</div>';
+        heroResults.innerHTML = '<div data-ext-style="ext-style-105">No compounds found</div>';
         heroResults.style.display = 'block';
         return;
       }
       heroResults.innerHTML = matches.map(function (c) {
-        return '<div class="compound-option" data-cpd="' + c.n + '" style="padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink);transition:.15s;">' +
-          '<b>' + c.n + '</b> <span style="color:var(--muted);font-size:11px;">&middot; ' + c.z + ' &middot; ' + D.unitsFor(c.n).length + ' units</span>' +
+        return '<div class="compound-option" data-cpd="' + c.n + '" data-ext-style="ext-style-106">' +
+          '<b>' + c.n + '</b> <span data-ext-style="ext-style-107">&middot; ' + c.z + ' &middot; ' + D.unitsFor(c.n).length + ' units</span>' +
           '</div>';
       }).join('');
       heroResults.style.display = 'block';
@@ -1300,18 +1432,18 @@
   var topListings = D.listings.slice().sort(function (a, b) { return b.ai - a.ai; }).slice(0, 3);
   document.getElementById('insights-grid').innerHTML = topListings.map(function (p, i) {
     var rank = i + 1;
-    return '<a href="property.html?id=' + p.id + '" style="display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s var(--silk);position:relative;">' +
-      '<div style="position:relative;height:200px;overflow:hidden;">' +
-        '<img src="' + p.img + '" alt="' + p.code + '" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>' +
-        '<div style="position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#34d399,#22c55e);color:#fff;font-family:var(--mono);font-weight:800;font-size:12px;padding:5px 12px;border-radius:8px;box-shadow:0 4px 12px rgba(52,211,153,.4);">#' + rank + ' AI ' + p.ai.toFixed(1) + '</div>' +
-        (p.tag ? '<div style="position:absolute;top:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:10px;padding:4px 9px;border-radius:5px;text-transform:uppercase;">' + p.tag + '</div>' : '') +
-        '<div style="position:absolute;bottom:12px;right:12px;background:rgba(0,43,75,.88);color:#fff;font-family:var(--mono);font-weight:700;font-size:13px;padding:6px 12px;border-radius:6px;">' + (p.mode === 'sale' ? p.egpM + 'M EGP' : '$' + p.usd + '/mo') + '</div>' +
+    return '<a href="property.html?id=' + p.id + '" data-ext-style="ext-style-108">' +
+      '<div data-ext-style="ext-style-109">' +
+        '<img src="' + p.img + '" alt="' + p.code + '" data-ext-style="ext-style-110" loading="lazy"/>' +
+        '<div data-ext-style="ext-style-111">#' + rank + ' AI ' + p.ai.toFixed(1) + '</div>' +
+        (p.tag ? '<div data-ext-style="ext-style-112">' + p.tag + '</div>' : '') +
+        '<div data-ext-style="ext-style-113">' + (p.mode === 'sale' ? p.egpM + 'M EGP' : '$' + p.usd + '/mo') + '</div>' +
       '</div>' +
-      '<div style="padding:18px;">' +
-        '<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--pri);margin-bottom:6px;">' + p.code + ' · ' + p.type + '</div>' +
-        '<div style="font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;">' + p.cmp + '</div>' +
-        '<div style="font-size:13px;color:var(--muted);margin-bottom:12px;">' + p.zone + '</div>' +
-        '<div style="display:flex;gap:14px;font-size:13px;color:var(--text);font-weight:600;">' +
+      '<div data-ext-style="ext-style-114">' +
+        '<div data-ext-style="ext-style-115">' + p.code + ' · ' + p.type + '</div>' +
+        '<div data-ext-style="ext-style-116">' + p.cmp + '</div>' +
+        '<div data-ext-style="ext-style-117">' + p.zone + '</div>' +
+        '<div data-ext-style="ext-style-118">' +
           '<span>🛏 ' + p.beds + '</span>' +
           '<span>🚿 ' + p.bath + '</span>' +
           '<span>📐 ' + p.area + ' m²</span>' +
@@ -1504,16 +1636,16 @@
       return c.n.toLowerCase().indexOf(q) >= 0;
     });
     if (!items.length) {
-      compoundDropdown.innerHTML = '<div style="padding:12px;color:var(--muted);font-size:13px;text-align:center;">No compounds found</div>';
+      compoundDropdown.innerHTML = '<div data-ext-style="ext-style-119">No compounds found</div>';
       return;
     }
     compoundDropdown.innerHTML = items.map(function (c) {
       var isSelected = filterState.compounds.indexOf(c.n) >= 0;
       var unitCount = (typeof D.unitsFor === 'function') ? D.unitsFor(c.n).length : 0;
-      return '<div class="hmf-cpd-item' + (isSelected ? ' selected' : '') + '" data-cpd="' + c.n + '" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;transition:.15s;' + (isSelected ? 'background:rgba(0,174,255,.08);' : '') + '">' +
-        '<span style="width:18px;height:18px;border-radius:5px;border:2px solid ' + (isSelected ? 'var(--pri)' : 'var(--line-2)') + ';background:' + (isSelected ? 'var(--pri)' : 'transparent') + ';display:grid;place-items:center;flex:none;">' + (isSelected ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '') + '</span>' +
-        '<span style="flex:1;font-size:13.5px;font-weight:600;color:var(--ink);">' + c.n + '</span>' +
-        '<span style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:999px;">' + unitCount + '</span>' +
+      return '<div class="hmf-cpd-item' + (isSelected ? ' selected' : '') + '" data-cpd="' + c.n + '" data-ext-style="ext-style-120">' +
+        '<span data-ext-style="ext-style-121">' + (isSelected ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '') + '</span>' +
+        '<span data-ext-style="ext-style-122">' + c.n + '</span>' +
+        '<span data-ext-style="ext-style-123">' + unitCount + '</span>' +
       '</div>';
     }).join('');
 
@@ -1556,9 +1688,9 @@
     compoundChips.style.minHeight = '32px';
     compoundChips.innerHTML = filterState.compounds.map(function (name) {
       var safeName = escapeHtml(name);
-      return '<span class="hmf-chip" data-cpd="' + safeName + '" style="display:inline-flex;align-items:center;gap:6px;background:var(--pri);color:#fff;font-family:var(--font);font-size:12px;font-weight:700;padding:5px 10px 5px 12px;border-radius:999px;gap:6px;">' +
+      return '<span class="hmf-chip" data-cpd="' + safeName + '" data-ext-style="ext-style-124">' +
         '<span>' + safeName + '</span>' +
-        '<button type="button" data-remove="' + safeName + '" style="border:none;background:rgba(255,255,255,.25);color:#fff;width:16px;height:16px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;display:grid;place-items:center;padding:0;" aria-label="Remove ' + safeName + '">×</button>' +
+        '<button type="button" data-remove="' + safeName + '" data-ext-style="ext-style-125" aria-label="Remove ' + safeName + '">×</button>' +
       '</span>';
     }).join('');
     // Bind remove buttons
@@ -1972,11 +2104,11 @@
     <div class="tweaks-section">
       <div class="tweaks-label">Accent Color</div>
       <div class="tweaks-swatches" id="tweaks-swatches">
-        <div class="tweaks-swatch on" data-color="#00aeff" style="background:#00aeff;" title="Cyan"></div>
-        <div class="tweaks-swatch" data-color="#c8961a" style="background:#c8961a;" title="Gold"></div>
-        <div class="tweaks-swatch" data-color="#34d399" style="background:#34d399;" title="Green"></div>
-        <div class="tweaks-swatch" data-color="#e63946" style="background:#e63946;" title="Red"></div>
-        <div class="tweaks-swatch" data-color="#a78bfa" style="background:#a78bfa;" title="Purple"></div>
+        <div class="tweaks-swatch on" data-color="#00aeff" data-ext-style="ext-style-126" title="Cyan"></div>
+        <div class="tweaks-swatch" data-color="#c8961a" data-ext-style="ext-style-127" title="Gold"></div>
+        <div class="tweaks-swatch" data-color="#34d399" data-ext-style="ext-style-128" title="Green"></div>
+        <div class="tweaks-swatch" data-color="#e63946" data-ext-style="ext-style-129" title="Red"></div>
+        <div class="tweaks-swatch" data-color="#a78bfa" data-ext-style="ext-style-130" title="Purple"></div>
       </div>
     </div>
     <div class="tweaks-section">

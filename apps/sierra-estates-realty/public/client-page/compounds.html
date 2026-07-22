@@ -170,6 +170,10 @@
 .cpd-d-none { display: none; }
 .cpd-w-13 { width: 13px; height: 13px; }
 </style>
+<style id="extracted-styles">
+  [data-ext-style="ext-style-1"] { width:15px;height:15px }
+  [data-ext-style="ext-style-2"] { width:14px;height:14px }
+</style>
 </head>
 <body>
 
@@ -382,7 +386,7 @@
         '<td class="mono">' + u.ai.toFixed(1) + '</td>' +
         '<td><span class="st ' + (u.delivery === 'ready' ? 'av' : 'rs') + '">' + dl + '</span></td>' +
         '<td><span class="st ' + (rs ? 'rs' : 'av') + '">' + HZ.t(rs ? 'stReserved' : 'stAvail') + '</span></td>' +
-        '<td class="go">' + (rs ? '' : '<i data-lucide="arrow-right" class="i" style="width:15px;height:15px"></i>') + '</td></tr>';
+        '<td class="go">' + (rs ? '' : '<i data-lucide="arrow-right" class="i" data-ext-style="ext-style-1"></i>') + '</td></tr>';
     }).join('');
     document.getElementById('sh-empty').style.display = units.length ? 'none' : 'block';
     document.getElementById('sh-tbody').querySelectorAll('tr:not(.reserved)').forEach(function (tr) {
@@ -437,7 +441,7 @@
     el.innerHTML =
       '<h3>' + c.n + '</h3>' +
       '<div class="zone">' + c.z + ' · New Cairo</div>' +
-      '<div class="metric"><span>' + HZ.t('unitsAvail') + '</span><b class="link" id="intel-units">' + units.length + ' <i data-lucide="table-2" class="i" style="width:14px;height:14px"></i></b></div>' +
+      '<div class="metric"><span>' + HZ.t('unitsAvail') + '</span><b class="link" id="intel-units">' + units.length + ' <i data-lucide="table-2" class="i" data-ext-style="ext-style-2"></i></b></div>' +
       '<div class="metric"><span>' + HZ.t('aiScore') + '</span><b>' + c.ai.toFixed(1) + ' / 10</b></div>' +
       '<div class="metric"><span>' + HZ.t('growth') + '</span><b class="up">' + c.g + '</b></div>' +
       '<div class="metric"><span>' + HZ.t('avg') + '</span><b>EGP ' + c.priceM + 'M</b></div>' +
@@ -674,7 +678,7 @@
         '<div class="top"><h4>' + c.n + '</h4><span class="ai-pill">AI ' + c.ai.toFixed(1) + '</span></div>' +
         '<div class="meta"><span>' + HZ.t('growth') + ' <b class="up">' + c.g + '</b></span>' +
         '<span>' + HZ.t('avg') + ' <b>EGP ' + c.priceM + 'M</b></span></div>' +
-        '<span class="u-link" data-units="' + c.n + '"><i data-lucide="table-2" class="i" style="width:14px;height:14px"></i>' + unitsFiltered(c).length + ' ' + HZ.t('unitsWord') + '</span>' +
+        '<span class="u-link" data-units="' + c.n + '"><i data-lucide="table-2" class="i" data-ext-style="ext-style-2"></i>' + unitsFiltered(c).length + ' ' + HZ.t('unitsWord') + '</span>' +
       '</div>';
     }).join('');
     document.getElementById('cpd-empty').style.display = list.length ? 'none' : 'block';
@@ -715,6 +719,33 @@
     }
   } catch (e) {}
 })();
+</script>
+<script type="module">
+  import { animate, inView, stagger } from "https://cdn.jsdelivr.net/npm/framer-motion@11.1.7/dom/+esm";
+  
+  // Setup initial state for elements we will animate
+  document.querySelectorAll(".page-hero h1, .page-hero p.sub").forEach(el => {
+    el.style.opacity = "0";
+  });
+  document.querySelectorAll(".block").forEach(el => {
+    el.style.opacity = "0";
+  });
+
+  // Hero section entrance animations
+  setTimeout(() => {
+    animate(".page-hero h1", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.2, type: "spring", bounce: 0.2 });
+    animate(".page-hero p.sub", { opacity: [0, 1], y: [20, 0] }, { duration: 0.8, delay: 0.4, type: "spring", bounce: 0.2 });
+  }, 100);
+
+  // In-view scroll animations for main sections
+  inView(".block", (info) => {
+    animate(info.target, { opacity: [0, 1], y: [30, 0] }, { duration: 0.8, type: "spring", bounce: 0.1 });
+  }, { margin: "-50px" });
+
+  // Staggered lists (compound cards)
+  inView(".grid-cpds", (info) => {
+    animate(info.target.querySelectorAll(".cpd-card"), { opacity: [0, 1], y: [20, 0] }, { duration: 0.6, delay: stagger(0.1) });
+  });
 </script>
 </body>
 </html>
