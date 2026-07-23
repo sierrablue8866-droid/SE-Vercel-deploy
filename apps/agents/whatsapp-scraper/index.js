@@ -44,16 +44,22 @@ client.on('message', async msg => {
   const groupName = chat.isGroup ? chat.name : 'Direct Message';
 
   try {
-    await axios.post(
+    const response = await axios.post(
       INGEST_URL,
       {
         from:      msg.from,
         Body:      msg.body,
         groupName,
+        isGroup:   chat.isGroup,
         timestamp: msg.timestamp,
       },
-      { headers: authHeaders, timeout: 10000 }
+      { headers: authHeaders, timeout: 15000 }
     );
+
+    // Omni-Channel Conversational Agent Reply
+    if (response.data && response.data.replyMessage) {
+      await msg.reply(response.data.replyMessage);
+    }
   } catch (error) {
     console.error('❌ Failed to forward message:', error.message);
   }
