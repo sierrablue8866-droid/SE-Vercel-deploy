@@ -16,7 +16,7 @@
     "express": "^5.2",
     "pino": "^8.17",
     "twilio": "^5.3",
-    "zod": "^3.22"
+    "zod": "^4.4"
   },
   "devDependencies": {
     "@types/express": "^5.0",

@@ -35,7 +35,11 @@ export async function POST(request: NextRequest) {
       case 'lead.updated':
       case 'lead.assigned': {
         const lead = event.data || event.payload;
+<<<<<<< HEAD
         const existing = await adminDb.collection('inquiries')
+=======
+        const existing = await adminDb.collection(COLLECTIONS.stakeholders)
+>>>>>>> origin/client
           .where('pfLeadId', '==', lead.id)
           .get();
 
@@ -43,6 +47,7 @@ export async function POST(request: NextRequest) {
           name: lead.sender?.name || lead.name || 'PF Lead',
           phone: lead.sender?.phone || lead.phone || '',
           email: lead.sender?.email || lead.email || '',
+<<<<<<< HEAD
           source: 'property_finder',
           status: 'new',
           mode: 'sale', // default assumption
@@ -55,6 +60,22 @@ export async function POST(request: NextRequest) {
           await adminDb.collection('inquiries').add({
             ...payload,
             createdAt: new Date().toISOString(),
+=======
+          source: 'property-finder',
+          stage: 'inbound',
+          phase: 'acquisition',
+          originChannel: `Property Finder (${lead.channel || 'web'})`,
+          pfLeadId: lead.id,
+          pfListingReferenceNumber: lead.listing?.reference || '',
+          updatedAt: Timestamp.now(),
+        };
+
+        if (existing.empty) {
+          await adminDb.collection(COLLECTIONS.stakeholders).add({
+            ...payload,
+            automation: { botInitiated: false, scoringCompleted: false, whatsappFollowupSent: false, viewingReminderSent: false },
+            createdAt: Timestamp.now(),
+>>>>>>> origin/client
           });
         } else {
           await existing.docs[0].ref.update(payload);
