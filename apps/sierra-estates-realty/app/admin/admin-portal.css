@@ -1,9 +1,50 @@
-/* ── TOKENS ─────────────────────────────────────────────────────────── */
-:root{--gold:#00AEFF;--gold-lt:#5FC9FF;--red:#E63946;--emerald:#34D399;--blue:#1E88D9;--purple:#7C3AED;--amber:#f59e0b;}
-[data-theme="dark"]{--bg:#07111E;--bg-s:#0B1A2E;--bg-e:#0F2035;--bg-e2:#152C48;--surf:rgba(255,255,255,.055);--surf2:rgba(255,255,255,.03);--tx:#F0EDE5;--tx-s:#FFFFFF;--tx-m:rgba(240,237,229,.58);--tx-f:rgba(240,237,229,.32);--bd:rgba(255,255,255,.08);--bd-s:rgba(255,255,255,.15);}
-[data-theme="light"]{--bg:#F7F5F1;--bg-s:#FDFCFA;--bg-e:#FFFFFF;--bg-e2:#FBFAF7;--surf:rgba(13,32,53,.045);--surf2:rgba(13,32,53,.02);--tx:#1A2B3D;--tx-s:#050B14;--tx-m:rgba(13,32,53,.62);--tx-f:rgba(13,32,53,.38);--bd:rgba(13,32,53,.08);--bd-s:rgba(13,32,53,.16);}
+/* ── TOKENS & CLAY DESIGN SYSTEM ─────────────────────────────────────── */
+:root{
+  --gold:#00AEFF;
+  --gold-lt:#5FC9FF;
+  --red:#E63946;
+  --emerald:#34D399;
+  --blue:#1E88D9;
+  --purple:#7C3AED;
+  --amber:#f59e0b;
+  --clay-bg: rgba(15, 32, 53, 0.65);
+  --clay-shadow-dark: rgba(2, 8, 16, 0.65);
+  --clay-shadow-light: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"]{
+  --bg:#07111E;
+  --bg-s:#0B1A2E;
+  --bg-e:#0F2035;
+  --bg-e2:#152C48;
+  --surf:rgba(255,255,255,.055);
+  --surf2:rgba(255,255,255,.03);
+  --tx:#F0EDE5;
+  --tx-s:#FFFFFF;
+  --tx-m:rgba(240,237,229,.58);
+  --tx-f:rgba(240,237,229,.32);
+  --bd:rgba(255,255,255,.08);
+  --bd-s:rgba(255,255,255,.15);
+  --clay-card: linear-gradient(145deg, #0e1e32, #081322);
+  --clay-card-shadow: 8px 8px 18px #040a12, -8px -8px 18px #0e243e, inset 1px 1px 2px rgba(255,255,255,0.12);
+}
+[data-theme="light"]{
+  --bg:#F7F5F1;
+  --bg-s:#FDFCFA;
+  --bg-e:#FFFFFF;
+  --bg-e2:#FBFAF7;
+  --surf:rgba(13,32,53,.045);
+  --surf2:rgba(13,32,53,.02);
+  --tx:#1A2B3D;
+  --tx-s:#050B14;
+  --tx-m:rgba(13,32,53,.62);
+  --tx-f:rgba(13,32,53,.38);
+  --bd:rgba(13,32,53,.08);
+  --bd-s:rgba(13,32,53,.16);
+  --clay-card: linear-gradient(145deg, #ffffff, #e6e2da);
+  --clay-card-shadow: 8px 8px 20px #d4cfc5, -8px -8px 20px #ffffff, inset 1px 1px 2px rgba(255,255,255,0.8);
+}
 [data-theme="light"] body{background:fixed radial-gradient(900px 600px at 85% 0%,rgba(0,174,255,.10),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(30,136,217,.07),transparent 55%),var(--bg);}
-[data-theme="light"] .card,[data-theme="light"] .kpi-card{box-shadow:0 1px 2px rgba(13,32,53,.04),0 8px 24px -12px rgba(13,32,53,.10);}
+[data-theme="light"] .card,[data-theme="light"] .kpi-card{box-shadow:var(--clay-card-shadow);}
 [data-theme="light"] #content{background:radial-gradient(900px 600px at 90% -5%,rgba(0,174,255,.08),transparent 55%),radial-gradient(700px 500px at -5% 105%,rgba(30,136,217,.06),transparent 50%);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
