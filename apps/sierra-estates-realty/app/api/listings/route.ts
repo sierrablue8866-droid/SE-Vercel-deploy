@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * /api/listings
  *
@@ -17,11 +18,14 @@
  * POST — create a listing (manager+). Writes to Firestore when the Admin SDK
  * is configured; in sandbox mode returns a demo id so the admin UI flow works.
  */
+=======
+>>>>>>> origin/client
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { COLLECTIONS } from '@/lib/models/schema';
 import { applyRateLimit, publicEndpointLimiter } from '@/lib/server/rate-limit';
 import { logger } from '@/lib/logger';
+<<<<<<< HEAD
 import { SEED_LISTINGS } from '@/lib/seed';
 import { getAdminDb } from '@/lib/firebase-admin';
 import { requireRole } from '@/lib/auth';
@@ -31,6 +35,8 @@ import type { Listing } from '@/lib/types';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+=======
+>>>>>>> origin/client
 
 const listingsQuerySchema = z.object({
   id: z.string().min(1, 'id must not be empty').optional(),
@@ -40,6 +46,7 @@ const listingsQuerySchema = z.object({
     .positive('limit must be positive')
     .max(100, 'limit must not exceed 100')
     .optional(),
+<<<<<<< HEAD
   mode: z.string().optional(),
   compound: z.string().optional(),
   type: z.string().optional(),
@@ -69,6 +76,10 @@ const listingCreateSchema = z
   })
   .passthrough();
 
+=======
+});
+
+>>>>>>> origin/client
 const API_KEY = process.env.NEXT_PUBLIC_FIREBASE_API_KEY ?? '';
 const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'sierra-estates';
 
@@ -81,7 +92,13 @@ interface FirestoreDocument {
   fields?: { [key: string]: FirestoreValue };
 }
 
+<<<<<<< HEAD
 /** Extract value from a Firestore REST document field. */
+=======
+/**
+ * Extract value from Firestore document field
+ */
+>>>>>>> origin/client
 function extractValue(field: FirestoreValue): any {
   if (!field) return undefined;
   if (field.stringValue) return field.stringValue;
@@ -101,13 +118,22 @@ function extractValue(field: FirestoreValue): any {
   return undefined;
 }
 
+<<<<<<< HEAD
 /** Query Firestore via the public REST API (legacy envelope mode). */
+=======
+/**
+ * Query Firestore via REST API
+ */
+>>>>>>> origin/client
 async function queryFirestoreRest(
   collectionName: string,
   limit?: number,
   docId?: string
 ): Promise<{ doc?: FirestoreDocument; docs: FirestoreDocument[] } | null> {
+<<<<<<< HEAD
   if (!API_KEY) return null;
+=======
+>>>>>>> origin/client
   try {
     const url = new URL(
       `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${collectionName}`
@@ -130,16 +156,31 @@ async function queryFirestoreRest(
     const data = await response.json();
 
     if (docId) {
+<<<<<<< HEAD
       return { doc: data, docs: [] };
     }
     return { docs: data.documents || [] };
+=======
+      // Single document response
+      return { doc: data, docs: [] };
+    } else {
+      // Collection query response
+      return { docs: data.documents || [] };
+    }
+>>>>>>> origin/client
   } catch (error: any) {
     logger.error('[FIRESTORE_REST_ERROR]', error?.message || error);
     return null;
   }
 }
 
+<<<<<<< HEAD
 /** Transform a Firestore REST document to the legacy envelope listing shape. */
+=======
+/**
+ * Transform Firestore document to listing object
+ */
+>>>>>>> origin/client
 function transformToListing(doc: FirestoreDocument): any {
   if (!doc || !doc.fields) return null;
 
@@ -167,6 +208,7 @@ function transformToListing(doc: FirestoreDocument): any {
   };
 }
 
+<<<<<<< HEAD
 /** Map a seed Listing to the legacy envelope shape (offline / sandbox fallback). */
 function seedToEnvelope(l: Listing) {
   return {
@@ -244,6 +286,15 @@ async function readListings(): Promise<Listing[]> {
 }
 
 export async function GET(request: Request) {
+=======
+export async function GET(request: Request) {
+  if (!API_KEY) {
+    return NextResponse.json(
+      { error: 'Server misconfigured: NEXT_PUBLIC_FIREBASE_API_KEY is not set', listings: [] },
+      { status: 503 }
+    );
+  }
+>>>>>>> origin/client
   const rateLimitResponse = await applyRateLimit(request, publicEndpointLimiter);
   if (rateLimitResponse) return rateLimitResponse;
 
@@ -253,12 +304,15 @@ export async function GET(request: Request) {
     const parseResult = listingsQuerySchema.safeParse({
       id: searchParams.get('id') ?? undefined,
       limit: searchParams.get('limit') ?? undefined,
+<<<<<<< HEAD
       mode: searchParams.get('mode') ?? undefined,
       compound: searchParams.get('compound') ?? undefined,
       type: searchParams.get('type') ?? undefined,
       beds: searchParams.get('beds') ?? undefined,
       maxUsd: searchParams.get('maxUsd') ?? undefined,
       q: searchParams.get('q') ?? undefined,
+=======
+>>>>>>> origin/client
     });
 
     if (!parseResult.success) {
@@ -268,6 +322,7 @@ export async function GET(request: Request) {
       );
     }
 
+<<<<<<< HEAD
     const { id, limit, mode, compound, type, beds, maxUsd, q } = parseResult.data;
 
     // ── Legacy envelope mode (?id= / ?limit=) ──────────────────────────────
@@ -318,6 +373,35 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(items);
+=======
+    const { id, limit } = parseResult.data;
+
+    if (id) {
+      const result = await queryFirestoreRest(COLLECTIONS.units, undefined, id);
+      if (!result?.doc) {
+        return NextResponse.json({ success: false, error: 'Listing not found' }, { status: 404 });
+      }
+      const listing = transformToListing(result.doc);
+      return NextResponse.json({ success: true, listing });
+    }
+
+    const limitParam = limit ?? 12;
+    const result = await queryFirestoreRest(COLLECTIONS.units, limitParam);
+
+    if (!result) {
+      return NextResponse.json(
+        { success: false, error: 'Failed to fetch listings from database' },
+        { status: 500 }
+      );
+    }
+
+    let listings = (result.docs || []).map(transformToListing).filter(Boolean);
+    
+    // Only show published listings to the client
+    listings = listings.filter((l: any) => l.publishToClient === true);
+
+    return NextResponse.json({ success: true, listings, count: listings.length });
+>>>>>>> origin/client
   } catch (error: any) {
     logger.error('[LISTINGS_ERROR] Failed to fetch listings:', error?.message || error);
     return NextResponse.json(
@@ -326,6 +410,7 @@ export async function GET(request: Request) {
     );
   }
 }
+<<<<<<< HEAD
 
 export async function POST(request: Request) {
   const rateLimitResponse = await applyRateLimit(request, publicEndpointLimiter);
@@ -376,3 +461,5 @@ export async function POST(request: Request) {
     );
   }
 }
+=======
+>>>>>>> origin/client
