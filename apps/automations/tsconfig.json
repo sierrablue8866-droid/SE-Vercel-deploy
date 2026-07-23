@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
+<<<<<<< HEAD
     "lib": ["ES2022", "DOM"],
+=======
+    "lib": ["ES2022"],
+>>>>>>> origin/client
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
