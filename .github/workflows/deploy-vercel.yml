@@ -130,7 +130,7 @@ jobs:
           echo "run=$ok" >> "$GITHUB_OUTPUT"
           [ "$ok" = "true" ] || echo "::notice::${ROLE} project variable not set — job ends here (green)."
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         if: steps.gate.outputs.run == 'true'
 
       # pnpm must be set up BEFORE setup-node so the cache key is correct

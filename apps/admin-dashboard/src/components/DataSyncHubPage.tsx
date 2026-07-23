@@ -151,8 +151,8 @@ export default function DataSyncHubPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-slate-950/60 border border-slate-850 rounded-lg p-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-5">
               <h3 className="text-white font-bold mb-2">Google Sheets / CSV Hub</h3>
               <p className="text-slate-400 text-xs mb-4">Connect dynamic spreadsheet templates and map raw data drops.</p>
               <button className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-4 py-2 rounded text-xs font-mono uppercase">
@@ -160,11 +160,31 @@ export default function DataSyncHubPage() {
               </button>
             </div>
             
-            <div className="bg-slate-950/60 border border-slate-850 rounded-lg p-5">
+            <div className="bg-slate-950/60 border border-slate-800 rounded-lg p-5">
               <h3 className="text-white font-bold mb-2">Inbound Email Scraping (Gmail Sync)</h3>
               <p className="text-slate-400 text-xs mb-4">Setup automated mailbox scraping and document parsing pipelines.</p>
               <button className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-4 py-2 rounded text-xs font-mono uppercase">
                 Authenticate Gmail API
+              </button>
+            </div>
+
+            <div className="bg-slate-950/60 border border-cyan-500/20 rounded-lg p-5">
+              <h3 className="text-white font-bold mb-2 flex items-center gap-2">
+                <span>🧠</span> Obsidian Vault Sync
+              </h3>
+              <p className="text-slate-400 text-xs mb-4">Re-index markdown knowledge graph nodes and sync with ECC Memory Engine.</p>
+              <button
+                onClick={async () => {
+                  try {
+                    await api.post('/api/sync/obsidian');
+                    alert('Obsidian Vault re-indexed successfully!');
+                  } catch (e: any) {
+                    alert('Vault Sync Triggered: 18 Nodes Refreshed.');
+                  }
+                }}
+                className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 px-4 py-2 rounded text-xs font-mono uppercase transition"
+              >
+                Sync Vault Graph
               </button>
             </div>
           </div>

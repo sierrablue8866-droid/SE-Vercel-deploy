@@ -6,12 +6,12 @@
   "types": "lib/index.ts",
   "private": true,
   "dependencies": {
-    "firebase": "^12.16",
-    "firebase-admin": "^14.2",
-    "zod": "^3.22"
+    "firebase": "^12.11",
+    "firebase-admin": "^13.0",
+    "zod": "^4.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "typescript": "^5.3"
+    "@types/node": "^26",
+    "typescript": "^7.0"
   }
 }
