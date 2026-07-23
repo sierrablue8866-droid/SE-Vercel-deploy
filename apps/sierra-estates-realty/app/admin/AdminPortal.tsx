@@ -813,7 +813,14 @@ function NexusAIPage({ T }) {
       setCtr(n=>{
         const nn=n+1;
         const pfx=c.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,3);
-        setFeed(f=>[{id:`WA-00${nn}`,ts,src:'WhatsApp Scraper',raw:`${t} ${c} · ${area}m² · EGP ${price}M`,compound:c,type:t,code:`SE-${pfx}-${t.slice(0,3).toUpperCase()}-${String(nn).padStart(4,'0')}-2026`,status:Math.random()>.15?'parsed':'processing'},...f].slice(0,12));
+        // Use timestamp + random hex suffix so IDs are globally unique even after re-mounts
+        const uid=`WA-${Date.now().toString(36).toUpperCase().slice(-5)}-${Math.floor(Math.random()*0xFFFF).toString(16).toUpperCase().padStart(4,'0')}`;
+        setFeed(f=>{
+          const next=[{id:uid,ts,src:'WhatsApp Scraper',raw:`${t} ${c} · ${area}m² · EGP ${price}M`,compound:c,type:t,code:`SE-${pfx}-${t.slice(0,3).toUpperCase()}-${String(nn).padStart(4,'0')}-2026`,status:Math.random()>.15?'parsed':'processing'},...f];
+          // Deduplicate by id to guard against any React strict-mode double-invocation
+          const seen=new Set<string>();
+          return next.filter(item=>{ if(seen.has(item.id)) return false; seen.add(item.id); return true; }).slice(0,12);
+        });
         return nn;
       });
     },3500);
