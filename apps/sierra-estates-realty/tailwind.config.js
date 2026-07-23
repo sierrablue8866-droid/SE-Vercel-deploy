@@ -90,19 +90,13 @@ module.exports = {
           600: '#059669',
         },
         amber: {
-<<<<<<< HEAD
           400: '#fbbf24',    // Warning
           500: '#f59e0b',
-=======
-          400: '#fbbf24',    // Luxury accent / warning
-          500: '#f59e0b',    // Warning
->>>>>>> origin/client
         },
         red: {
           500: '#ef4444',    // Error
           600: '#dc2626',
         },
-<<<<<<< HEAD
         // Premium Lime (Primary Brand Color)
         lime: {
           50: '#f7fee7',
@@ -136,26 +130,6 @@ module.exports = {
           300: '#cbd5e1',
           400: '#1e293b',
           DEFAULT: '#020617', // OLED Black / Slate 950
-=======
-        // Legacy gold (for backward compatibility, now muted)
-        gold: {
-          50: '#fffbf0',
-          100: '#fef3c7',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          DEFAULT: '#fbbf24',
-        },
-        // Legacy navy (now deep slate)
-        navy: {
-          50: '#f1f5f9',
-          100: '#e2e8f0',
-          200: '#cbd5e1',
-          300: '#0f172a',
-          400: '#1e293b',
-          DEFAULT: '#0f172a',
->>>>>>> origin/client
         },
         // Text color system
         text: {
@@ -197,33 +171,19 @@ module.exports = {
         'safe-r': 'max(1rem, env(safe-area-inset-right))',
       },
       backgroundImage: {
-<<<<<<< HEAD
         // Dark theme gradients with lime accents
         'gradient-subtle': 'linear-gradient(135deg, rgba(132,204,22,0.05) 0%, rgba(190,242,100,0.03) 100%)',
         'gradient-hero': 'linear-gradient(130deg, rgba(2,6,23,0.95) 0%, rgba(15,23,42,0.85) 45%, rgba(2,6,23,0.4) 100%)',
         'gradient-blue-accent': 'linear-gradient(135deg, rgba(132,204,22,0.1) 0%, rgba(190,242,100,0.05) 100%)',
         'gradient-card': 'linear-gradient(135deg, rgba(15,23,42,0.5) 0%, rgba(63,98,18,0.1) 100%)',
-=======
-        // Dark theme gradients with blue accents
-        'gradient-subtle': 'linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(14,165,233,0.03) 100%)',
-        'gradient-hero': 'linear-gradient(130deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.85) 45%, rgba(15,23,42,0.4) 100%)',
-        'gradient-blue-accent': 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(14,165,233,0.05) 100%)',
-        'gradient-card': 'linear-gradient(135deg, rgba(30,41,59,0.5) 0%, rgba(30,58,175,0.1) 100%)',
->>>>>>> origin/client
       },
       boxShadow: {
         'luxury': '0 20px 60px rgba(0, 0, 0, 0.35)',
         'card': '0 8px 24px rgba(0, 0, 0, 0.25)',
         'sm-luxury': '0 4px 12px rgba(0, 0, 0, 0.15)',
-<<<<<<< HEAD
         'blue-glow': '0 0 24px rgba(132, 204, 22, 0.2)',
         'blue-glow-lg': '0 0 40px rgba(132, 204, 22, 0.25)',
         'inset-subtle': 'inset 0 1px 2px rgba(132, 204, 22, 0.1)',
-=======
-        'blue-glow': '0 0 24px rgba(59, 130, 246, 0.2)',
-        'blue-glow-lg': '0 0 40px rgba(59, 130, 246, 0.25)',
-        'inset-subtle': 'inset 0 1px 2px rgba(59, 130, 246, 0.1)',
->>>>>>> origin/client
       },
       blur: {
         xs: '2px',

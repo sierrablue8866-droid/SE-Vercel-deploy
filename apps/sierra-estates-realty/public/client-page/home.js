@@ -2,7 +2,6 @@
    Depends on data.js (window.HZDATA) and shared.js (window.HZ). Loaded with defer. */
 (function () {
   'use strict';
-<<<<<<< HEAD
 
   function runHome() {
     var D = window.HZDATA;
@@ -10,13 +9,6 @@
     var isAr = HZ.lang() === 'ar';
 
     /* ═══ render dynamic content (before HZ.mount so i18n/icons/reveal apply) ═══ */
-=======
-  var D = window.HZDATA;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isAr = HZ.lang() === 'ar';
-
-  /* ═══ render dynamic content (before HZ.mount so i18n/icons/reveal apply) ═══ */
->>>>>>> origin/client
 
   /* hero slides + dots — only the first image loads eagerly */
   document.getElementById('hero-slides').innerHTML = D.slides.map(function (s, i) {
@@ -35,11 +27,7 @@
   document.getElementById('comp-grid').innerHTML = picks.map(function (n, i) {
     var c = D.compounds.find(function (x) { return x.n === n; });
     if (!c) return '';
-<<<<<<< HEAD
     return '<a class="comp rv d' + (i + 1) + '" href="/compounds?cpd=' + encodeURIComponent(c.n) + '">' +
-=======
-    return '<a class="comp rv d' + (i + 1) + '" href="compounds.html?cpd=' + encodeURIComponent(c.n) + '">' +
->>>>>>> origin/client
       '<img src="' + D.compoundImgs[n] + '" alt="' + c.n + '" loading="lazy" decoding="async"/>' +
       '<div class="co-scrim"></div>' +
       '<div class="co-count">AI ' + c.ai.toFixed(1) + ' · ' + c.g + '</div>' +
@@ -74,21 +62,12 @@
     tour: '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="18" stroke="#38bdf8" stroke-width="1.3" fill="rgba(56,189,248,.07)"/><ellipse cx="24" cy="24" rx="18" ry="7" stroke="#38bdf8" stroke-width="1" fill="none" opacity=".4"/><circle cx="24" cy="24" r="4" fill="#38bdf8"><animate attributeName="r" values="3;5;3" dur="1.8s" repeatCount="indefinite"/></circle><path d="M20 21 L28 24 L20 27 Z" fill="#fff" opacity=".9"/></svg>'
   };
   var aiTools = [
-<<<<<<< HEAD
     { k: 'engine', t: 'ai1t', s: 'ai1s', live: true, href: '/ai-engine' },
     { k: 'match', t: 'ai2t', s: 'ai2s', href: '/matches' },
     { k: 'roi', t: 'ai3t', s: 'ai3s', href: '/roi' },
     { k: 'price', t: 'ai4t', s: 'ai4s', href: '/pricing' },
     { k: 'dream', t: 'ai5t', s: 'ai5s', href: '/advice' },
     { k: 'imap', t: 'ai6t', s: 'ai6s', href: '/compounds' },
-=======
-    { k: 'engine', t: 'ai1t', s: 'ai1s', live: true, href: 'ai-engine.html' },
-    { k: 'match', t: 'ai2t', s: 'ai2s', href: 'matches.html' },
-    { k: 'roi', t: 'ai3t', s: 'ai3s', href: 'roi.html' },
-    { k: 'price', t: 'ai4t', s: 'ai4s', href: 'pricing.html' },
-    { k: 'dream', t: 'ai5t', s: 'ai5s', href: 'advice.html' },
-    { k: 'imap', t: 'ai6t', s: 'ai6s', href: 'compounds.html' },
->>>>>>> origin/client
     { k: 'tour', t: 'ai7t', s: 'ai7s', tour: true }
   ];
   document.getElementById('ai-grid').innerHTML = aiTools.map(function (tool, i) {
@@ -103,15 +82,9 @@
 
   /* AI tool preview cards */
   var previews = [
-<<<<<<< HEAD
     { href: '/matches', t: 'ai2t', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80' },
     { href: '/pricing', t: 'ai4t', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80' },
     { href: '/roi', t: 'ai3t', img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80' }
-=======
-    { href: 'matches.html', t: 'ai2t', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80' },
-    { href: 'pricing.html', t: 'ai4t', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80' },
-    { href: 'roi.html', t: 'ai3t', img: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=80' }
->>>>>>> origin/client
   ];
   document.getElementById('ai-previews').innerHTML = previews.map(function (p) {
     return '<a href="' + p.href + '" class="ai-prev">' +
@@ -128,11 +101,7 @@
   var topListings = D.listings.slice().sort(function (a, b) { return b.ai - a.ai; }).slice(0, 3);
   document.getElementById('insights-grid').innerHTML = topListings.map(function (p, i) {
     var rank = i + 1;
-<<<<<<< HEAD
     return '<a href="/property?id=' + p.id + '" style="display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s var(--silk);position:relative;">' +
-=======
-    return '<a href="property.html?id=' + p.id + '" style="display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.3s var(--silk);position:relative;">' +
->>>>>>> origin/client
       '<div style="position:relative;height:200px;overflow:hidden;">' +
         '<img src="' + p.img + '" alt="' + p.code + '" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>' +
         '<div style="position:absolute;top:12px;left:12px;background:linear-gradient(135deg,#34d399,#22c55e);color:#fff;font-family:var(--mono);font-weight:800;font-size:12px;padding:5px 12px;border-radius:8px;box-shadow:0 4px 12px rgba(52,211,153,.4);">#' + rank + ' AI ' + p.ai.toFixed(1) + '</div>' +
@@ -245,15 +214,9 @@
       if (price && price !== '0') params.set('maxPrice', price);
       var qs = params.toString();
       if (cpd) {
-<<<<<<< HEAD
         location.href = '/compounds' + (qs ? '?' + qs : '');
       } else {
         location.href = '/properties' + (qs ? '?' + qs : '');
-=======
-        location.href = 'compounds.html' + (qs ? '?' + qs : '');
-      } else {
-        location.href = 'properties.html' + (qs ? '?' + qs : '');
->>>>>>> origin/client
       }
     });
   }
@@ -394,7 +357,6 @@
     }
   })();
 
-<<<<<<< HEAD
   /* ═══ virtual tour fullscreen handler (fullscreen on current main tour element) ═══ */
   (function () {
     function toggleNativeFullscreen() {
@@ -420,35 +382,6 @@
     }
     var tourCard = document.getElementById('ai-tour-card');
     if (tourCard) tourCard.addEventListener('click', toggleNativeFullscreen);
-=======
-  /* ═══ virtual tour modal (Three.js page in an iframe) ═══ */
-  (function () {
-    var modal = document.getElementById('tour-modal');
-    var closeBtn = document.getElementById('tour-close');
-    var lastFocus = null;
-    if (!modal || !closeBtn) return;
-    function openTour() {
-      var f = document.getElementById('tour-frame');
-      if (f && !f.src) f.src = 'virtual-tour.html';
-      lastFocus = document.activeElement;
-      modal.classList.add('on');
-      document.body.style.overflow = 'hidden';
-      closeBtn.focus();
-    }
-    function closeTour() {
-      modal.classList.remove('on');
-      document.body.style.overflow = '';
-      if (lastFocus) lastFocus.focus();
-    }
-    var openBtn = document.getElementById('tour-open');
-    if (openBtn) openBtn.addEventListener('click', openTour);
-    var tourCard = document.getElementById('ai-tour-card');
-    if (tourCard) tourCard.addEventListener('click', openTour);
-    closeBtn.addEventListener('click', closeTour);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('on')) closeTour();
-    });
->>>>>>> origin/client
   })();
 
   /* ═══ live compound map — Leaflet loaded lazily when the section nears view ═══ */
@@ -528,11 +461,7 @@
         var isFeatured = featured.indexOf(c.n) >= 0;
         var marker = L.marker(c.c, { icon: markerIcon(c, isFeatured), title: c.n });
         marker.on('click', function () {
-<<<<<<< HEAD
           location.href = '/compounds?cpd=' + encodeURIComponent(c.n);
-=======
-          location.href = 'compounds.html?cpd=' + encodeURIComponent(c.n);
->>>>>>> origin/client
         });
         marker._compound = c;
         clusterGroup.addLayer(marker);
@@ -1002,7 +931,6 @@
   /* icons for content rendered after mount */
   HZ.refreshIcons();
   HZ.reveal();
-<<<<<<< HEAD
   } // end runHome
 
   if (window.SIERRA_DB && window.SIERRA_DB.isReady()) {
@@ -1019,6 +947,4 @@
   } else {
     requestAnimationFrame(runHome);
   }
-=======
->>>>>>> origin/client
 })();

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Cognitum website
+    url: https://cognitum.one
+    about: Product info, order a Seed, technical decks
+  - name: Twitter / X
+    url: https://twitter.com/Cognitum
+    about: Follow for announcements and updates
+  - name: LinkedIn
+    url: https://linkedin.com/company/cognitum
+    about: Company page

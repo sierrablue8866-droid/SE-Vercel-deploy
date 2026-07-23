@@ -299,7 +299,7 @@ function OverviewPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">{T('hotLeads')}</span><span className="chip chip-red">3 urgent</span></div>
           <div style={{maxHeight:160,overflowY:'auto'}}>
-            {LEADS_DATA.filter(l=>l.hot).map((l,i)=>(
+            {currentLeads.filter(l=>l.hot).map((l,i)=>(
               <div key={i} className="lead-row">
                 <div className="lead-avatar" style={{background:l.color}}>{l.name[0]}</div>
                 <div style={{flex:1,minWidth:0}}>
@@ -386,6 +386,13 @@ function AgentsPage({ T }) {
 /* ── WORKFLOWS PAGE ───────────────────────────────────────────────────── */
 function WorkflowsPage({ T }) {
   const [wfs,setWfs]=useState(WORKFLOWS.map(w=>({...w})));
+  useEffect(() => {
+    fetch('/api/admin/workflows').then(r=>r.json()).then(d => {
+      if (d.success && d.workflows?.length > 0) {
+        setWfs(d.workflows.map(w => ({ name: w.name, nameAr: w.nameAr, desc: w.desc, status: w.status, runs: w.runs, last: w.last })));
+      }
+    });
+  }, []);
   const toggle=i=>setWfs(p=>p.map((w,j)=>j===i?{...w,status:w.status==='paused'?'active':'paused'}:w));
   return (
     <div className="fade-up">
@@ -481,7 +488,15 @@ function OpenClawPage({ T }) {
 function LeadsPage({ T }) {
   const [q,setQ]=useState('');
   const [importModal,setImportModal]=useState(false);
-  const filtered=useMemo(()=>LEADS_DATA.filter(l=>!q||l.name.toLowerCase().includes(q.toLowerCase())||l.interest.toLowerCase().includes(q.toLowerCase())),[q]);
+  const [apiLeads, setApiLeads] = useState([]);
+  useEffect(() => {
+    fetch('/api/admin/leads').then(r=>r.json()).then(d => {
+      if (d.success) setApiLeads(d.leads || []);
+    }).catch(console.error);
+  }, []);
+  
+  const currentLeads = apiLeads.length > 0 ? apiLeads : LEADS_DATA;
+  const filtered=useMemo(()=>currentLeads.filter(l=>!q||l.name.toLowerCase().includes(q.toLowerCase())||l.interest.toLowerCase().includes(q.toLowerCase())),[q]);
   const stageChip=s=>({
     'Viewing Scheduled':'chip-blue','AI Matched':'chip-green','Contract Draft':'chip-green',
     'Initial Contact':'chip-amber','Negotiating':'chip-red',
@@ -545,8 +560,19 @@ function CuratorPage({ T }) {
   const [priceAdj, setPriceAdj] = useState(0);
   const cpds = Object.entries(COMPOUNDS_DATA);
   const selected = COMPOUNDS_DATA[selectedCpd];
+  const [apiListings, setApiListings] = useState([]);
 
-  const listings = [
+  useEffect(() => {
+    fetch('/api/admin/listings').then(r=>r.json()).then(d => {
+      if (d.success) setApiListings(d.listings || []);
+    }).catch(console.error);
+  }, []);
+
+  const generateAd = (id) => {
+    alert('Generating Property Finder Ad for listing ' + id + ' using The Curator AI...');
+  };
+
+  const listings = apiListings.length > 0 ? apiListings : [
     {code:'SE-MVD-APT-0041',type:'Apartment',area:95,beds:3,basePrice:5800000,quality:88,status:'parsed'},
     {code:'SE-MVD-VLA-0039',type:'Villa',area:320,beds:5,basePrice:22000000,quality:96,status:'indexed'},
     {code:'SE-MVD-TWH-0038',type:'Twin House',area:240,beds:4,basePrice:14500000,quality:79,status:'processing'},
@@ -620,7 +646,7 @@ function CuratorPage({ T }) {
         <div className="card-hd"><span className="card-title">📋 {selectedCpd} · Inventory ({listings.length} units)</span></div>
         <div style={{overflowX:'auto'}}>
           <table className="data-table">
-            <thead><tr><th>Unit Code</th><th>{T('type')}</th><th>{T('area')}</th><th>{T('beds')}</th><th>Base Price</th><th>Adj. Price</th><th>{T('qualityScore')}</th><th>{T('status')}</th></tr></thead>
+            <thead><tr><th>Unit Code</th><th>{T('type')}</th><th>{T('area')}</th><th>{T('beds')}</th><th>Base Price</th><th>Adj. Price</th><th>{T('qualityScore')}</th><th>{T('status')}</th><th>Actions</th></tr></thead>
             <tbody>
               {listings.map((l,i)=>(
                 <tr key={i}>

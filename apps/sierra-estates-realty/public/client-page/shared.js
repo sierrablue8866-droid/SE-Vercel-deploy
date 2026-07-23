@@ -207,11 +207,7 @@
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
       '<a href="index.html" class="brand">' +
-<<<<<<< HEAD
         '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
-=======
-        '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
->>>>>>> origin/client
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
@@ -236,11 +232,7 @@
       '<div class="foot-grid">' +
         '<div>' +
           '<a href="index.html" class="brand">' +
-<<<<<<< HEAD
             '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
-=======
-            '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
->>>>>>> origin/client
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
           '<p class="blurb" data-i18n="footBlurb">' + t('footBlurb') + '</p>' +
@@ -386,16 +378,8 @@
     var openMapBtn = document.getElementById('nav-open-map');
     if (openMapBtn) {
       openMapBtn.addEventListener('click', function () {
-<<<<<<< HEAD
         var mapEl = document.getElementById('cpd-map');
         if (!mapEl) {
-=======
-        // If we're on a page with a map (#cpd-map), scroll to it; otherwise navigate
-        var mapEl = document.getElementById('cpd-map');
-        if (mapEl) {
-          mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
->>>>>>> origin/client
           location.href = 'compounds.html';
         }
       });

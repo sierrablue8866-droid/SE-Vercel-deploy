@@ -1,7 +1,4 @@
 tsconfig.tsbuildinfo
 /public/agents
 .vercel
-<<<<<<< HEAD
 eslint-results.json
-=======
->>>>>>> origin/client

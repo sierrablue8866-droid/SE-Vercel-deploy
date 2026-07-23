@@ -14,11 +14,7 @@ export class ProposalGenerator {
     dealId: string
   ): Promise<{ proposalUrl: string; proposalId: string }> {
     const [leadDoc, assetDoc] = await Promise.all([
-<<<<<<< HEAD
       db.collection('inquiries').doc(leadId).get(),
-=======
-      db.collection('leads').doc(leadId).get(),
->>>>>>> origin/client
       db.collection('listings').doc(assetId).get(),
     ]);
 

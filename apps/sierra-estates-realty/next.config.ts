@@ -24,13 +24,7 @@ const nextConfig: NextConfig = {
     'firebase-admin',
   ],
   typescript: {
-<<<<<<< HEAD
     ignoreBuildErrors: false,
-=======
-    // Allow pages to be added without strict type checking on build.
-    // Pages are accepted as-is; CI type-check is separate.
-    ignoreBuildErrors: true,
->>>>>>> origin/client
   },
   images: {
     remotePatterns: [
@@ -41,7 +35,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
-<<<<<<< HEAD
   async rewrites() {
     return {
       beforeFiles: [
@@ -76,8 +69,6 @@ const nextConfig: NextConfig = {
       ],
     };
   },
-=======
->>>>>>> origin/client
   async headers() {
     return [
       {
@@ -105,14 +96,8 @@ const nextConfig: NextConfig = {
       '@opentelemetry/sdk-trace-node': './lib/stubs/empty.js',
       '@opentelemetry/instrumentation-http': './lib/stubs/empty.js',
       '@opentelemetry/instrumentation-express': './lib/stubs/empty.js',
-<<<<<<< HEAD
       // firebase-admin is intentionally NOT aliased here — it is a real
       // server-only package handled by serverExternalPackages above.
-=======
-      'firebase-admin': './lib/stubs/firebase-admin.js',
-      'firebase-admin/firestore': './lib/stubs/empty.js',
-      'firebase-admin/storage': './lib/stubs/empty.js',
->>>>>>> origin/client
     }
   },
   webpack(config, { isServer }) {

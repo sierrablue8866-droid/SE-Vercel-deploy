@@ -5,11 +5,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-<<<<<<< HEAD
     "strict": true,
-=======
-    "strict": false,
->>>>>>> origin/client
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -26,12 +22,8 @@
     "paths": {
       "@/*": ["./*"],
       "@agents-core/*": ["../../packages/agents-core/src/*"],
-<<<<<<< HEAD
       "@obedian/*": ["../../packages/obedian/src/*"],
       "@sierra-estates/ui": ["../../packages/ui/src/index.ts"]
-=======
-      "@obedian/*": ["../../packages/obedian/src/*"]
->>>>>>> origin/client
     }
   },
   "include": [
