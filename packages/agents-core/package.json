@@ -9,7 +9,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "zod": "^3.22",
+    "zod": "^4.4",
     "@sierra-estates/obedian": "workspace:*",
     "@sierra-estates/exchange": "workspace:*",
     "@google/generative-ai": "^0.11.0",
@@ -17,7 +17,7 @@
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
-    "typescript": "^5.3",
-    "@types/node": "^20"
+    "typescript": "^7.0",
+    "@types/node": "^26"
   }
 }

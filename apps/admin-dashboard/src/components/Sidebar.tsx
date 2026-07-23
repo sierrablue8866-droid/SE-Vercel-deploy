@@ -3,7 +3,7 @@ import {
   LogOut, Languages, PanelLeftClose, PanelLeftOpen, X,
   LayoutDashboard, Users, Building2, CalendarCheck, BarChart3,
   FileText, Bot, Workflow, Zap, Settings, RefreshCw, Database,
-  Sun, Moon,
+  Sun, Moon, Brain,
   type LucideIcon,
 } from 'lucide-react';
 import { auth } from '../firebase';
@@ -46,6 +46,7 @@ export const NAV_ITEMS: NavItem[] = [
   // ── Automation & agents ────────────────────────────────────────────
   { id: 'bots',           label: 'Bots Control',      labelAr: 'التحكم بالبوتات',       icon: Bot,             section: 'automation' },
   { id: 'agents',         label: 'AI Agents',         labelAr: 'وكلاء الذكاء',          icon: Bot,             section: 'automation', badge: '6', badgeTone: 'success' },
+  { id: 'memoryEngine',   label: 'Memory Engine & Vault', labelAr: 'محرك الذاكرة',     icon: Brain,           section: 'automation', badge: 'Vault', badgeTone: 'info' },
   { id: 'workflows',      label: 'Workflows',         labelAr: 'سير العمل',             icon: Workflow,        section: 'automation', badge: '8', badgeTone: 'info' },
   // ── Integrations ───────────────────────────────────────────────────
   { id: 'easyListing',    label: 'Easy Listing',      labelAr: 'إدراج سريع',            icon: Zap,             section: 'integrations' },

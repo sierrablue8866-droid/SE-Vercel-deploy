@@ -31,7 +31,7 @@ export class CloserAgentEnhanced {
    */
   async generateIntelligentProposal(context: ProposalContext): Promise<string> {
     const anthropicKey = process.env.ANTHROPIC_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY;
 
     const systemPrompt = `You are a master real estate closer for Sierra Estates, a luxury property developer in New Cairo.
 Your job is to generate a personalized, compelling proposal that:
