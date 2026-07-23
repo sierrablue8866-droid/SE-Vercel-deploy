@@ -36,7 +36,7 @@ function getSheetsClient() {
         scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
       });
       return google.sheets({ version: 'v4', auth });
-    } catch (err: any) {
+    } catch (_err: any) {
       logger.warn('[MasterSheetSync] Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY credentials, falling back to API key');
     }
   }
@@ -120,10 +120,10 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
       if (!row || row.length < 3) continue;
 
       const [
-        timestamp,
-        rowNo,
-        lastUpdated,
-        name,
+        _timestamp,
+        _rowNo,
+        _lastUpdated,
+        _name,
         mobile,
         availability,
         bedrooms,
@@ -134,9 +134,9 @@ export async function syncMasterOwnerSheet(sheetId?: string) {
         propertyTypeRaw,
         code,
         ownerTypeRaw,
-        gardenArea,
+        _gardenArea,
         spaceArea,
-        pool,
+        _pool,
         comment
       ] = row;
 

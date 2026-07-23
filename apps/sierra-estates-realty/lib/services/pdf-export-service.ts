@@ -70,7 +70,7 @@ export class PDFExportService {
   private static async loadHTML2PDF(): Promise<any> {
     try {
       return require('html2pdf');
-    } catch (e) {
+    } catch (_e) {
       return null;
     }
   }
