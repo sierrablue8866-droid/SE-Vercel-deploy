@@ -90,6 +90,7 @@ function mapProperty(property: PropertyFinderListing) {
     longitude,
     images: getImages(property),
     featured: false,
+<<<<<<< HEAD
     // Inventory Domain Service (additive, non-breaking): `syncSource` and
     // `lastSyncAt` already exist on the canonical Unit schema (lib/models/schema.ts)
     // but were never populated by this route. Filled in here without changing any
@@ -103,6 +104,8 @@ function mapProperty(property: PropertyFinderListing) {
     // to expose area (or a size field it should be mapped from).
     syncSource: 'property-finder' as const,
     lastSyncAt: Timestamp.now(),
+=======
+>>>>>>> origin/client
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   };
