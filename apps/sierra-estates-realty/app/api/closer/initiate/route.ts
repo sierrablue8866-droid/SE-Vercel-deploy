@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     const sanitizedId = String(propertyCode).toLowerCase().replace(/[^a-z0-9_-]/g, '_');
     const unit = await InventoryQueryService.getById(sanitizedId);
 
-    // Fall back to compound-based search if direct ID lookup fails
+    // Fall back to keyword search if direct ID lookup fails
     const matchedUnit = unit ?? (await InventoryQueryService.query({
       keyword: propertyCode,
       status: 'available',
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
     viewingDate.setDate(viewingDate.getDate() + 2);
     viewingDate.setHours(16, 0, 0, 0);
 
-    // 5. Email notification payload (dispatched to Ahmed Fawzy)
+    // 5. Email notification payload
     const emailPayload = {
       to: 'a.fawzy8866@gmail.com',
       subject: `📅 [Sierra Estates AI] Viewing Scheduled — Code: ${propertyCode}`,
@@ -121,6 +121,7 @@ Sierra Estates Intelligence OS
         contactName,
         contactPhone,
         unitDetails,
+        cobrokeScript,
         emailSentTo: emailPayload.to,
         emailContent: emailPayload.body,
         calendarEvent: `Viewing: ${propertyCode} — ${visitorName}`,

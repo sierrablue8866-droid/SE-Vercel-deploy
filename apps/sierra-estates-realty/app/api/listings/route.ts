@@ -27,24 +27,7 @@ import { getAdminDb } from '@/lib/firebase-admin';
 import { requireRole } from '@/lib/auth';
 import type { Listing } from '@/lib/types';
 
-// Firebase Firestore integration
-const getListingsFromFirebase = async () => {
-  try {
-    const db = await getAdminDb();
-    if (!db) return null;
 
-    const snap = await db.collection('houyez_listings').limit(1000).get();
-    if (snap.empty) return null;
-
-    return snap.docs.map((doc: any) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  } catch (err) {
-    console.warn('[Firebase] Firestore read failed:', err);
-    return null;
-  }
-};
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -208,19 +191,48 @@ function seedToEnvelope(l: Listing) {
 
 /** Filter-mode read: Firebase → Admin SDK → seed fallback (INTEGRATION.md contract). */
 async function readListings(): Promise<Listing[]> {
-  // Try Firebase Firestore first
-  const firebaseListings = await getListingsFromFirebase();
-  if (firebaseListings && firebaseListings.length > 0) {
-    return firebaseListings;
-  }
-
-  // Fallback to Admin SDK
+  // Try Firebase Firestore first (reads houyez_listings + listings merged)
   const db = await getAdminDb();
   if (db) {
     try {
-      const snap = await db.collection('listings').get();
-      if (!snap.empty) {
-        return snap.docs.map((d) => ({ id: d.id, ...(d.data() as any) })) as Listing[];
+      const [snap1, snap2] = await Promise.all([
+        db.collection('houyez_listings').get(),
+        db.collection('listings').get(),
+      ]);
+      const map = new Map<string, Listing>();
+      if (!snap1.empty) {
+        snap1.docs.forEach((d) => {
+          const data = d.data();
+          map.set(d.id, {
+            id: d.id,
+            code: data.code || `SE-${d.id.slice(0, 4).toUpperCase()}`,
+            compound: data.compound || data.cmp || data.location || 'New Cairo',
+            zone: data.zone || '5th Settlement',
+            type: data.type || data.propertyType || 'Apartment',
+            beds: data.beds ?? data.bedrooms ?? 3,
+            bath: data.bath ?? data.bathrooms ?? 2,
+            area: data.area ?? 150,
+            egpM: data.egpM ?? (data.price ? data.price / 1e6 : 8),
+            usd: data.usd ?? (data.price && data.currency === 'USD' ? data.price : 1500),
+            aiScore: data.aiScore ?? data.ai ?? 8.5,
+            tag: data.tag ?? data.badge ?? null,
+            mode: data.mode ?? 'sale',
+            agent: data.agent ?? 'Sierra Broker',
+            img: data.img ?? data.featuredImage ?? '',
+            status: data.status ?? (data.active === false ? 'archived' : 'available'),
+            description: data.description ?? '',
+          } as Listing);
+        });
+      }
+      if (!snap2.empty) {
+        snap2.docs.forEach((d) => {
+          if (!map.has(d.id)) {
+            map.set(d.id, { id: d.id, ...(d.data() as any) });
+          }
+        });
+      }
+      if (map.size > 0) {
+        return Array.from(map.values());
       }
     } catch (err) {
       console.warn('[listings] Admin SDK read failed, using seed:', err);
@@ -341,6 +353,15 @@ export async function POST(request: Request) {
     const db = await getAdminDb();
     if (db) {
       const ref = await db.collection('listings').add(doc);
+      // Dual-write to houyez_listings for real-time client page synchronization
+      await db.collection('houyez_listings').doc(ref.id).set({
+        ...doc,
+        id: ref.id,
+        cmp: doc.compound,
+        ai: doc.aiScore,
+        active: doc.status !== 'archived',
+      }, { merge: true });
+
       return NextResponse.json({ id: ref.id }, { status: 201 });
     }
 

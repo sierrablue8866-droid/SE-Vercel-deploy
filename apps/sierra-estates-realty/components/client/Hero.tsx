@@ -31,7 +31,7 @@ export function Hero({ onSearch }: { onSearch: (f: SearchFilters) => void }) {
   const slide = SLIDES[idx];
 
   return (
-    <section className="relative h-[88vh] min-h-[640px] w-full overflow-hidden">
+    <section className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col justify-between">
       {/* Background slides */}
       {SLIDES.map((s, i) => (
         <div
@@ -45,32 +45,35 @@ export function Hero({ onSearch }: { onSearch: (f: SearchFilters) => void }) {
           }}
         />
       ))}
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-navy-950/70 via-navy-950/40 to-navy-950/80" />
+      {/* Dark luxury overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#090d16]/80 via-[#090d16]/50 to-[#090d16]" />
 
       {/* Content */}
-      <div className="relative h-full container-page flex flex-col justify-end pb-24 pt-32">
-        <div className="max-w-3xl text-cream">
-          <p className="section-eyebrow !text-gold-300 mb-3">{slide.eyebrow}</p>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mb-4">
+      <div className="relative h-full container-page flex flex-col justify-end pb-16 pt-36 z-10 flex-1">
+        <div className="max-w-3xl text-white">
+          <p className="text-xs font-mono font-bold uppercase tracking-widest text-amber-400 mb-3 flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{slide.eyebrow}</span>
+          </p>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] mb-4 text-white">
             {slide.title}
           </h1>
-          <p className="text-lg text-cream/80 max-w-2xl">{slide.subtitle}</p>
+          <p className="text-lg text-slate-300 max-w-2xl font-sans leading-relaxed">{slide.subtitle}</p>
 
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href="#listings" className="btn-gold">
+            <a href="#listings" className="px-6 py-3.5 rounded-xl gold-gradient text-slate-950 font-bold text-sm gold-glow hover:opacity-90 transition btn-tactile inline-flex items-center gap-2">
               <Building2 className="h-4 w-4" />
-              {t("hero.cta.browse")}
+              <span>{t("hero.cta.browse")}</span>
             </a>
-            <a href="#match" className="btn-outline !text-cream !border-cream/30 hover:!bg-cream/10">
-              <Sparkles className="h-4 w-4" />
-              {t("hero.cta.match")}
+            <a href="/clients" className="px-6 py-3.5 rounded-xl glass-panel text-white font-semibold text-sm border border-slate-700 hover:bg-slate-800/80 transition btn-tactile inline-flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-amber-400" />
+              <span>Request Custom Property</span>
             </a>
           </div>
         </div>
 
         {/* Search bar */}
-        <div className="mt-8">
+        <div className="mt-10">
           <SearchBar onSearch={onSearch} />
         </div>
       </div>
