@@ -230,7 +230,7 @@
         <label class="af-label" data-i18n="afPrice">Price (EGP M)</label>
         <div class="af-price">
           <input type="number" id="af-price-min" placeholder="Min" min="0" step="0.5" />
-          <span class="af-price-sep">—</span>
+          <span class="af-price-sep">-</span>
           <input type="number" id="af-price-max" placeholder="Max" min="0" step="0.5" />
         </div>
       </div>
@@ -262,7 +262,7 @@
       </button>
 
       <!-- Result count -->
-      <div class="af-count" id="af-count">— units</div>
+      <div class="af-count" id="af-count">··· units</div>
     </div>
 
     <!-- Zone chips (secondary filter) -->
@@ -366,7 +366,7 @@
       return true;
     });
     document.getElementById('sh-title').textContent = HZ.t('unitsTit') + ' · ' + c.n;
-    document.getElementById('sh-sub').textContent = all.length + ' ' + HZ.t('unitsWord') + ' — ' + HZ.t('unitsSub');
+    document.getElementById('sh-sub').textContent = all.length + ' ' + HZ.t('unitsWord') + ' · ' + HZ.t('unitsSub');
     document.getElementById('shf-count').textContent = HZ.t('shShowing') + ' ' + units.length + ' ' + HZ.t('shOf') + ' ' + all.length;
     document.getElementById('sh-thead').innerHTML = ['thCode', 'thType', 'thBeds', 'thBath', 'thArea', 'thFloor', 'thPrice', 'thAI', 'thDelivery', 'thStatus', ''].map(function (k) {
       return '<th>' + (k ? HZ.t(k) : '') + '</th>';

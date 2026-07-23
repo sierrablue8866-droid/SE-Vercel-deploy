@@ -25,8 +25,7 @@ export async function GET(request: Request) {
   const cronSecret = process.env.CRON_SECRET;
 
   if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    // Basic verification — allow execution if CRON_SECRET isn't explicitly set in dev
-    console.warn('[Nightly Market Study] Executing without explicit bearer token');
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {

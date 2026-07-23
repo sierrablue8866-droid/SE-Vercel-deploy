@@ -10,8 +10,8 @@ export const EN = {
   navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools',
   addListing: 'Add Listing', signIn: 'Sign In', langBtn: 'العربية',
   addr: 'Banafseg 2, Villa 402, New Cairo',
-  heroSub: '21 compounds · 1,200+ units · AI-curated for you.',
-  q1: '1,240+ verified listings', q2: '19 compounds', q3: 'RERA-licensed brokers',
+  heroSub: '29 compounds · 1,200+ units · curated for you.',
+  q1: '1,240+ verified listings', q2: '29 compounds', q3: 'RERA-licensed brokers',
   tabBuy: 'Resale', tabRent: 'Rent', tabNew: 'New Projects',
   fLoc: 'Location', fType: 'Property Type', fBeds: 'Bedrooms', fPrice: 'Max Price', search: 'Search',
   vLoc: 'New Cairo, Egypt', vType: 'Villa', vBeds: '4+ Beds', vPrice: 'EGP 25M',
@@ -21,9 +21,9 @@ export const EN = {
   cpdSub: 'From gated family communities to waterfront lifestyle districts.', allCpds: 'All 29 compounds',
   eyeTour: 'Immersive 360° tour', tourTit: 'Tour a signature luxury villa in 360°', tourSub: 'Walk through our flagship New Cairo villa — drag to look around every room.',
   stat1: 'Active Listings', stat2: 'Compounds Covered', stat3: 'Licensed Agents', stat4: 'Closed in 2025',
-  eyeWhy: 'Our advantage · AI-powered', whyTit: 'Why Sierra Estates',
+  eyeWhy: 'Our advantage · Intelligence-led', whyTit: 'Why Sierra Estates',
   whySub: 'Every listing is verified, priced against live market data, and shown by a broker who knows the compound.',
-  w1t: 'AI Opportunity Scanner', w1s: 'Sierra scans 1,200+ units daily using 6 AI tools — ROI, AVM pricing, smart matching — to surface best deals first.',
+  w1t: 'AI Opportunity Scanner', w1s: 'Sierra scans 1,200+ units daily — ROI, AVM pricing, smart matching — to surface the best deals first.',
   w2t: 'Precise AVM Pricing', w2s: 'Real-time valuation engine benchmarks every unit against 25 compounds. No overpaying.',
   w3t: 'Human + AI Closing', w3s: 'AI-sourced opportunities paired with expert advisors. First match to signed contract in 48h.',
   w4t: 'Verified Inventory', w4s: 'Every listing personally verified on-site before appearing in your feed.',
@@ -74,7 +74,7 @@ export const EN = {
   unitsWord: 'units', unitsTit: 'Available units',
   chatTitle: 'Sierra', chatStatus: 'AI concierge · online', chatPlaceholder: 'Ask about listings, prices, viewings…',
   chatGreeting: "Hi, I'm Sierra — your AI concierge. Tell me what you're looking for in New Cairo and I'll find your match.",
-  tourNote: 'Full 360° three.js virtual tour coming soon.',
+  tourNote: 'Full 360° virtual tour coming soon.',
 } as const;
 
 export const AR: Record<CopyKey, string> = {
@@ -82,8 +82,8 @@ export const AR: Record<CopyKey, string> = {
   navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء',
   addListing: 'أضف عقارك', signIn: 'دخول', langBtn: 'English',
   addr: 'البنفسج 2، فيلا 402، القاهرة الجديدة',
-  heroSub: '21 كمبوند · +1200 وحدة · منتقاة لك بالذكاء الاصطناعي.',
-  q1: '+1240 عقار موثّق', q2: '19 كمبوند', q3: 'وسطاء مرخّصون',
+  heroSub: '29 كمبوند · +1200 وحدة · منتقاة لك بعناية.',
+  q1: '+1240 عقار موثّق', q2: '29 كمبوند', q3: 'وسطاء مرخّصون',
   tabBuy: 'بيع', tabRent: 'إيجار', tabNew: 'مشروعات جديدة',
   fLoc: 'الموقع', fType: 'نوع العقار', fBeds: 'الغرف', fPrice: 'أقصى سعر', search: 'ابحث',
   vLoc: 'القاهرة الجديدة، مصر', vType: 'فيلا', vBeds: '+4 غرف', vPrice: '25 مليون جنيه',
@@ -93,9 +93,9 @@ export const AR: Record<CopyKey, string> = {
   cpdSub: 'من مجتمعات عائلية مغلقة إلى أحياء حياة عصرية.', allCpds: 'كل الكمبوندات (29)',
   eyeTour: 'جولة 360° غامرة', tourTit: 'جولة 360° داخل فيلا فاخرة', tourSub: 'تجوّل داخل فيلا القاهرة الجديدة — اسحب لتستكشف كل غرفة.',
   stat1: 'عقار نشط', stat2: 'كمبوند', stat3: 'مستشار مرخّص', stat4: 'مبيعات 2025',
-  eyeWhy: 'مزايانا · بالذكاء الاصطناعي', whyTit: 'لماذا سيرا إستيتس',
+  eyeWhy: 'مزايانا · ذكاء استشاري', whyTit: 'لماذا سيرا إستيتس',
   whySub: 'كل عقار موثّق، مسعّر ببيانات السوق الحية، ويعرضه مستشار يعرف الكمبوند جيداً.',
-  w1t: 'ماسح الفرص الذكي', w1s: 'سيرا يفحص +1200 وحدة يومياً بـ 6 أدوات ذكاء اصطناعي لإيجاد أفضل الفرص أولاً.',
+  w1t: 'ماسح الفرص الذكي', w1s: 'سيرا يفحص +1200 وحدة يومياً لإيجاد أفضل الفرص أولاً.',
   w2t: 'تسعير AVM دقيق', w2s: 'محرك تقييم فوري يقارن كل وحدة مع 25 كمبوند في الوقت الفعلي.',
   w3t: 'إغلاق بشري + ذكاء', w3s: 'فرص يكتشفها الذكاء الاصطناعي مع مستشارين خبراء. من التوافق حتى التوقيع خلال 48 ساعة.',
   w4t: 'مخزون موثّق', w4s: 'كل عقار يُعاين ميدانياً قبل ظهوره أمامك.',
@@ -146,7 +146,7 @@ export const AR: Record<CopyKey, string> = {
   unitsWord: 'وحدة', unitsTit: 'الوحدات المتاحة',
   chatTitle: 'سيرا', chatStatus: 'مساعد ذكي · متصل', chatPlaceholder: 'اسأل عن العقارات والأسعار والمعاينات…',
   chatGreeting: 'أهلاً، أنا سيرا — مساعدك الذكي. قل لي عمّا تبحث في القاهرة الجديدة وسأجد لك الأنسب.',
-  tourNote: 'الجولة الافتراضية 360° بتقنية three.js قريباً.',
+  tourNote: 'الجولة الافتراضية 360° قريباً.',
 };
 
 export function makeT(locale: 'en' | 'ar') {
