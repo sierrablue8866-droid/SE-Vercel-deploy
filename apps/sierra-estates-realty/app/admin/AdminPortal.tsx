@@ -1390,16 +1390,6 @@ function Stage9CloserPage({T}){
 }
 
 /* ── PLACEHOLDER ──────────────────────────────────────────────────────── */
-function PlaceholderPage({title,emoji}){return <div className="fade-up" style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'60vh',opacity:.5}}><div style={{fontSize:48,marginBottom:12}}>{emoji}</div><h2 style={{fontFamily:'Cormorant Garamond',fontWeight:300,fontSize:'1.8rem',color:'var(--tx)',marginBottom:6}}>{title}</h2><p style={{color:'var(--tx-f)',fontSize:12}}>Module active · Data loading from Firestore…</p></div>;}
-
-function AdminCommandCenterPage({ T }) {
-  return <PlaceholderPage title={T('lang')==='ar'?'مركز القيادة':'Admin Command Center'} emoji="🎛️" />;
-}
-
-function MemoryEnginePage({ T }) {
-  return <PlaceholderPage title={T('lang')==='ar'?'محرك الذاكرة':'Memory Engine (Nexus)'} emoji="🧠" />;
-}
-
 /* ── MAIN APP ─────────────────────────────────────────────────────────── */
 const PIPE_STAGES = [
   {k:'New',ar:'جديد',c:'#1E88D9'},
@@ -1469,7 +1459,53 @@ const TASKS_INIT = [
   {t:'Publish weekly compound performance report',due:'Friday',pr:'low',done:false,ag:'—'},
   {t:'Verify Madinaty B10 owner-direct listing photos',due:'Done · Yesterday',pr:'low',done:true,ag:'Scribe'},
 ];
+
+/* ── MEMORY ENGINE ────────────────────────────────────────────── */
+function MemoryEnginePage({ T }) {
+  return (
+    <div className="page-animate">
+      <div className="grid-3" style={{marginBottom: 24}}>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Vector Database</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--emerald)'}}>1.2M</div>
+            <div className="text-dim">Active Embeddings (Pinecone)</div>
+          </div>
+        </div>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Semantic Cache Hits</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--blue)'}}>94.2%</div>
+            <div className="text-dim">Last 24 Hours</div>
+          </div>
+        </div>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Active Cognitive Sessions</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--purple)'}}>143</div>
+            <div className="text-dim">Realtime WhatsApp & Web Contexts</div>
+          </div>
+        </div>
+      </div>
+      <div className="card glass-card">
+        <div className="card-header">
+          <h3 className="card-title">Memory Thought Graph</h3>
+          <span className="badge nb-blue">Live Stream</span>
+        </div>
+        <div className="card-body" style={{height: 400, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <div className="text-dim" style={{textAlign: 'center'}}>
+            <div style={{fontSize: 48, marginBottom: 16}}>🧠</div>
+            <p>Thought Graph Visualization Active</p>
+            <p style={{fontSize: 12, opacity: 0.6}}>Connecting vector nodes for client: +20 100 111 2233...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TasksPage({ T }) {
+
   const ar = T('lang')==='ar';
   const [tasks,setTasks]=useState(TASKS_INIT);
   const [view,setView]=useState('active');
@@ -1486,16 +1522,8 @@ function TasksPage({ T }) {
             <div style={{position:'absolute',top:0,left:0,width:3,height:'100%',background:c}}/>
             <div className="kpi-val" style={{color:c}}>{v}</div>
             <div className="kpi-lbl">{l}</div>
-          <h3 className="card-title">Memory Thought Graph</h3>
-          <span className="badge nb-blue">Live Stream</span>
-        </div>
-        <div className="card-body" style={{height: 400, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <div className="text-dim" style={{textAlign: 'center'}}>
-            <div style={{fontSize: 48, marginBottom: 16}}>🧠</div>
-            <p>Thought Graph Visualization Active</p>
-            <p style={{fontSize: 12, opacity: 0.6}}>Connecting vector nodes for client: +20 100 111 2233...</p>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
