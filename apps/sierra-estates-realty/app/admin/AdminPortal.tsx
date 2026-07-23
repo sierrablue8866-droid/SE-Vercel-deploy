@@ -301,7 +301,7 @@ function OverviewPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">{T('hotLeads')}</span><span className="chip chip-red">3 urgent</span></div>
           <div style={{maxHeight:160,overflowY:'auto'}}>
-            {currentLeads.filter(l=>l.hot).map((l,i)=>(
+            {LEADS_DATA.filter(l=>l.hot).map((l,i)=>(
               <div key={i} className="lead-row">
                 <div className="lead-avatar" style={{background:l.color}}>{l.name[0]}</div>
                 <div style={{flex:1,minWidth:0}}>
