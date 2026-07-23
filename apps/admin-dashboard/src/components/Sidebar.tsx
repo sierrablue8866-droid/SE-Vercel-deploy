@@ -38,6 +38,7 @@ interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   // ── Core operations ────────────────────────────────────────────────
   { id: 'overview',       label: 'Live Dashboard',    labelAr: 'لوحة التحكم',           icon: LayoutDashboard, section: 'core' },
+  { id: 'commandCenter',  label: 'Command Center OS', labelAr: 'مركز القيادة',          icon: Zap,             section: 'core', badge: 'v4.0', badgeTone: 'success' },
   { id: 'leads',          label: 'Leads & CRM',       labelAr: 'العملاء و CRM',         icon: Users,           section: 'core' },
   { id: 'listings',       label: 'Property Inventory',labelAr: 'العقارات',              icon: Building2,       section: 'core' },
   { id: 'followups',      label: 'Follow-ups',        labelAr: 'المتابعات',             icon: CalendarCheck,   section: 'core' },

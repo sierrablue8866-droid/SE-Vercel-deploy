@@ -35,9 +35,9 @@ import ClientHub from './components/ClientHub';
 import SearchInsightsPage from './components/SearchInsightsPage';
 import DBEditorPage from './components/DBEditorPage';
 import PageEditorPage from './components/PageEditorPage';
-import FollowupsPage from './components/FollowupsPage';
 import BotsControlPage from './components/BotsControlPage';
 import MemoryEnginePage from './components/MemoryEnginePage';
+import AdminCommandCenterPage from './components/AdminCommandCenterPage';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
 import AdminHealthMonitor from './components/AdminHealthMonitor';
@@ -505,6 +505,8 @@ export default function App() {
     switch (tab) {
       case 'overview':
         return <OverviewPage T={T} />;
+      case 'commandCenter':
+        return <AdminCommandCenterPage />;
       case 'leads':
         return <LeadsPage T={T} isAr={isAr} searchQuery={searchQuery} />;
       case 'listings':
