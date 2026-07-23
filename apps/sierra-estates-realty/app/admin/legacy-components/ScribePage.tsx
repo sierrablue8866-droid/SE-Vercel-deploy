@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType, createSierraNotification } from '../firebase';

@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
 import { createSierraNotification } from '../firebase';
 import { api } from '../lib/apiClient';

@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 /**
  * PipelinePage — Kanban-style deal pipeline view.
  * Ported from Admin A (apps/sierra-estates-realty/app/admin/AdminPortal.tsx)

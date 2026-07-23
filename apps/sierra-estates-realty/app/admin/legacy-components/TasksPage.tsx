@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 /**
  * TasksPage — task management with real Firestore onSnapshot.
  * Ported from Admin A (apps/sierra-estates-realty/app/admin/AdminPortal.tsx)

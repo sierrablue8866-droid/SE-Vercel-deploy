@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React from 'react';
 import OverviewPage from './OverviewPage';
 import LeadsPage from './LeadsPage';

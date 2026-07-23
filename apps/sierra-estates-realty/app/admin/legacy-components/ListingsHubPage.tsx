@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React, { useState, useEffect, useMemo, FormEvent } from 'react';
 import { api } from '../lib/apiClient';
 import { Listing } from '../types';

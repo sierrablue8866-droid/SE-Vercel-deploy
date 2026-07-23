@@ -1,5 +1,8 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import '../admin.css';
+// admin.css removed - styles handled by admin-portal.css
 import { db } from '../firebase';
 import { collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 

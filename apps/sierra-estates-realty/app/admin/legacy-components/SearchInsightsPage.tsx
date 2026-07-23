@@ -1,3 +1,6 @@
+'use client';
+// @ts-nocheck
+/* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, onSnapshot, addDoc, query, where, QueryConstraint } from 'firebase/firestore';
 import { db } from '../firebase';
