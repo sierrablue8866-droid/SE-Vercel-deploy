@@ -117,3 +117,14 @@ export async function getAnalyticsInstance() {
 }
 
 export default app;
+
+export enum OperationType {
+  READ = 'read',
+  WRITE = 'write',
+  DELETE = 'delete'
+}
+
+export const handleFirestoreError = (error: any, context?: string, opType?: OperationType) => {
+  console.error([Firestore Error]  ():, error);
+  return { success: false, error: error.message || String(error) };
+};
