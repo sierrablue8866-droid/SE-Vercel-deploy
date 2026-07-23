@@ -8,7 +8,7 @@
   "dependencies": {
     "firebase": "^12.11",
     "firebase-admin": "^13.0",
-    "zod": "^3.22"
+    "zod": "^4.4"
   },
   "devDependencies": {
     "@types/node": "^26",

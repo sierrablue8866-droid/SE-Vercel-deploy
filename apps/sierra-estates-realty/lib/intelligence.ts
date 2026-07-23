@@ -6,6 +6,12 @@
  */
 import { memoryEngine } from '@sierra-estates/memory-engine';
 
+<<<<<<< HEAD
+import { pfClient } from './property-finder-client';
+import { closerAgent } from '@sierra-estates/agents/src/closer-agent-enhanced';
+
+=======
+>>>>>>> origin/client
 // ── Agent registrations ────────────────────────────────────────────
 const CORE_AGENTS = [
   { id: 'scribe',      name: 'Scribe',      domain: 'intake',       description: 'Lead qualification & intake'         },
@@ -19,7 +25,30 @@ const CORE_AGENTS = [
 
 // ── Skill registrations ────────────────────────────────────────────
 const CORE_SKILLS = [
+<<<<<<< HEAD
+  { 
+    id: 'property-finder', 
+    name: 'Property Finder', 
+    description: 'Search & filter property listings via Enterprise API',     
+    execute: async (params: any) => {
+      try {
+        return await pfClient.searchListings(params || {});
+      } catch (err: any) {
+        return { error: err.message, data: [] };
+      }
+    }
+  },
+  { 
+    id: 'closer-negotiate', 
+    name: 'AI Deal Closer', 
+    description: 'Generate AI proposals and counter-offers via Closer Agent', 
+    execute: async (context: any) => {
+      return await closerAgent.generateIntelligentProposal(context);
+    } 
+  },
+=======
   { id: 'property-finder', name: 'Property Finder', description: 'Search & filter property listings',     execute: async (p: unknown) => p },
+>>>>>>> origin/client
   { id: 'whatsapp-send',   name: 'WhatsApp Send',   description: 'Send WhatsApp messages via Twilio',    execute: async (p: unknown) => p },
   { id: 'telegram-alert',  name: 'Telegram Alert',  description: 'Send Telegram notifications',          execute: async (p: unknown) => p },
   { id: 'sheets-sync',     name: 'Sheets Sync',     description: 'Sync data with Google Sheets',         execute: async (p: unknown) => p },

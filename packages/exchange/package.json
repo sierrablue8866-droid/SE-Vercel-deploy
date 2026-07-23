@@ -11,8 +11,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "firebase": "^12.14.0",
-    "firebase-admin": "^13.0.0"
+    "firebase": "^12.16.0",
+    "firebase-admin": "^14.2.0"
   },
   "devDependencies": {
     "@types/node": "^26",
