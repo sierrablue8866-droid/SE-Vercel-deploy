@@ -37,6 +37,7 @@ import DBEditorPage from './components/DBEditorPage';
 import PageEditorPage from './components/PageEditorPage';
 import FollowupsPage from './components/FollowupsPage';
 import BotsControlPage from './components/BotsControlPage';
+import MemoryEnginePage from './components/MemoryEnginePage';
 
 import GlobalProgressTracker from './components/GlobalProgressTracker';
 import AdminHealthMonitor from './components/AdminHealthMonitor';
@@ -524,6 +525,8 @@ export default function App() {
         return <FollowupsPage T={T} isAr={isAr} />;
       case 'bots':
         return <BotsControlPage T={T} isAr={isAr} />;
+      case 'memoryEngine':
+        return <MemoryEnginePage isAr={isAr} />;
       case 'pageEditor':
         return <PageEditorPage T={T} isAr={isAr} />;
       case 'dbEditor':
