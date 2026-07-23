@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth, isFirebaseClientConfigured } from '@/lib/firebase';
 import '../admin-portal.css';
 
@@ -39,6 +39,41 @@ export default function AdminLoginPage() {
       }
     } catch (_err) {
       setError('Invalid credentials. Staff access only.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError('');
+    if (!isFirebaseClientConfigured) {
+      setError('Firebase is not configured in this environment.');
+      return;
+    }
+    setLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCred = await signInWithPopup(auth, provider);
+      const idToken = await userCred.user.getIdToken();
+
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          action: 'signin',
+          email: userCred.user.email,
+          token: idToken,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        router.replace('/admin');
+      } else {
+        setError(data.error || 'Google sign-in failed or access denied.');
+      }
+    } catch (_err: any) {
+      setError(_err?.message || 'Google sign-in failed.');
     } finally {
       setLoading(false);
     }
@@ -171,6 +206,42 @@ export default function AdminLoginPage() {
           }}
         >
           {loading ? 'Signing in…' : 'Login'}
+        </button>
+
+        <div style={{ display: 'flex', alignItems: 'center', margin: '18px 0 14px', gap: 10 }}>
+          <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,.1)' }} />
+          <span style={{ fontSize: 10, color: 'rgba(240,237,229,.38)', textTransform: 'uppercase', letterSpacing: '.12em' }}>OR</span>
+          <div style={{ flex: 1, height: 1, background: 'rgba(255,255,255,.1)' }} />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '10px 0',
+            borderRadius: 10,
+            border: '1px solid rgba(255,255,255,.15)',
+            background: 'rgba(255,255,255,.06)',
+            color: '#F0EDE5',
+            fontWeight: 600,
+            fontSize: 12,
+            cursor: loading ? 'wait' : 'pointer',
+            fontFamily: 'inherit',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z"/>
+          </svg>
+          Sign in with Google
         </button>
 
         <p
