@@ -1,5 +1,6 @@
 name: CI
 
+<<<<<<< HEAD
 # Gates the app that actually deploys to production (deploy-vercel.yml →
 # apps/sierra-estates-realty) plus the workspace packages it consumes.
 #
@@ -8,12 +9,15 @@ name: CI
 # never succeed without workspace node_modules. The realty app + its packages
 # are the deployable surface and are fully gated below.
 
+=======
+>>>>>>> origin/client
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
+<<<<<<< HEAD
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -21,17 +25,28 @@ concurrency:
 jobs:
   monorepo:
     name: Realty app + packages · Type-check + Lint + Test + Build
+=======
+jobs:
+  build-and-test:
+    name: Type-check + Lint + Build
+>>>>>>> origin/client
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
+<<<<<<< HEAD
+=======
+        with:
+          version: 9
+>>>>>>> origin/client
 
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: pnpm
 
+<<<<<<< HEAD
       - name: Install deps (workspace)
         run: pnpm install --frozen-lockfile
 
@@ -50,9 +65,31 @@ jobs:
       - name: Build realty app
         run: pnpm --filter sierra-estates-realty build
         env:
+=======
+      - name: Install deps
+        run: pnpm install --ignore-workspace --frozen-lockfile
+
+      - name: Type-check
+        run: pnpm type-check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+        env:
+          # Placeholder Firebase config so the build doesn't crash on
+          # getFirestore() during static generation. Real values are set
+          # as Vercel env vars in production.
+>>>>>>> origin/client
           NEXT_PUBLIC_FIREBASE_API_KEY: dummy
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: dummy.firebaseapp.com
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: dummy
           NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: dummy.appspot.com
+<<<<<<< HEAD
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: "000000000000"
           NEXT_PUBLIC_FIREBASE_APP_ID: "1:000000000000:web:dummy"
+=======
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: '000000000000'
+          NEXT_PUBLIC_FIREBASE_APP_ID: '1:000000000000:web:dummy'
+>>>>>>> origin/client

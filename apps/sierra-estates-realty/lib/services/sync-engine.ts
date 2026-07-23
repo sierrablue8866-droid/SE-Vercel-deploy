@@ -321,7 +321,11 @@ export async function syncBatch(
           result.dedupeQueue++;
         } else {
           // Clean merge — update directly
+<<<<<<< HEAD
           await updateDoc(doc(db, COLLECTIONS.listings, fsDoc.id), merged as any);
+=======
+          await updateDoc(doc(db, COLLECTIONS.listings, fsDoc.id), merged);
+>>>>>>> origin/client
           result.matched++;
         }
         continue;
@@ -342,7 +346,11 @@ export async function syncBatch(
         // High confidence — auto-merge with protection
         const protectedFields = getProtectedFields(bestMatch.data);
         const { merged } = mergeWithProtection(pfData, bestMatch.data, protectedFields);
+<<<<<<< HEAD
         await updateDoc(doc(db, COLLECTIONS.listings, bestMatch.docId), merged as any);
+=======
+        await updateDoc(doc(db, COLLECTIONS.listings, bestMatch.docId), merged);
+>>>>>>> origin/client
         result.matched++;
       } else if (bestMatch && bestMatch.confidence >= MATCH_THRESHOLD_LOW) {
         // Medium confidence — send to dedup queue
