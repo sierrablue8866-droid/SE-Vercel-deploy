@@ -1,46 +1,52 @@
-# Design System: Sierra Estates Admin Panel (Unified OS)
+# Design System: Sierra Estates 3.0 Admin (Intelligence OS)
+**Project ID:** `sierra-estates-admin-v3`
 
 ## 1. Visual Theme & Atmosphere
-A sophisticated, "Cockpit Dense" (Density: 7) yet visually breathable unified operations dashboard. The variance is Predictable Symmetric (3) to ensure massive amounts of data (CRM, Bots, Listings) remain legible. The atmosphere embodies "Quiet Luxury" — it feels like the digital command center of a high-end investment bank: deeply cinematic, glassmorphic, and strictly professional.
+The visual identity of Sierra Estates Admin radiates an **Ageless Architectural Sophistication** with **Weightless Tech Spatiality**. It merges warm Egyptian sandstone mineral warmth (`#F8F6F2`) in Light Mode with deep Vantablack OLED depth (`#070E1A`) in Dark Mode. The interface feels uncrowded, dense with high-value telemetry, yet effortless to scan.
+
+---
 
 ## 2. Color Palette & Roles
-- **Corporate Navy Canvas** (`#0A1628`) — The primary deep background surface for the entire application. Pure black (`#000000`) is BANNED.
-- **Surface Navy** (`#152232`) — Elevated card and container fill (used with backdrop-blur for glassmorphism).
-- **Signature Matte Gold** (`#C9A24D`) — The SINGULAR accent color. Used for active states, primary buttons, highlights, and focus rings. High-saturation neon or purple glows are strictly BANNED.
-- **Soft Ivory** (`#F4F0E8`) — Primary typography on dark surfaces. Provides lower eye strain than pure white.
-- **Muted Platinum** (`rgba(244, 240, 232, 0.5)`) — Secondary text, metadata, subtle borders, and disabled states.
-- **Whisper Gold Border** (`rgba(201, 162, 77, 0.2)`) — 1px structural lines, divider borders, and glassmorphic card edges.
+
+| Natural Language Description | Hex Code | Functional Role |
+| :--- | :--- | :--- |
+| **Sandstone Mineral Ivory** | `#F8F6F2` | Primary canvas background in Light Mode |
+| **Pure Alabaster Surface** | `#FFFFFF` | Elevated card & modal container backgrounds |
+| **Deep Vantablack OLED** | `#070E1A` | Primary canvas background in Dark Mode |
+| **Midnight Navy Surface** | `#0B1626` | Card background in Dark Mode |
+| **High-Contrast Slate Header** | `#0F172A` | Primary typography for headings, titles, & metrics |
+| **Warm Sandstone Muted Slate** | `#475569` | Secondary metadata text & table column labels |
+| **Royal Cairo Gold Accent** | `#C8961A` | High-value AI indicators, active state fills & badges |
+| **Vivid Electric Sky Blue** | `#00AEFF` | Focus rings, key action buttons & real-time telemetry |
+| **Emerald Signal Green** | `#10B981` | Online agent statuses, positive ROI & system health |
+| **Crimson Alert Red** | `#EF4444` | High-priority escalation badges & deletion triggers |
+
+---
 
 ## 3. Typography Rules
-- **Display & Headings:** `Playfair Display` — Track-tight, controlled scale, weight-driven hierarchy. Used for section titles and primary branding.
-- **Body & Arabic:** `Cairo` (for Arabic context) and a modern Sans-Serif (e.g., `Geist` or `Outfit`) for UI text — Relaxed leading, neutral secondary color.
-- **Mono / Data:** `Inter` — Strictly reserved for numbers, metrics, KPIs, and data grids.
-- **Banned:** Generic system fonts, neon gradients on text. `Inter` is banned for creative headlines, used only for data readability.
+- **Primary Brand Font**: `Inter` / `Plus Jakarta Sans` — Clean, crisp, high-x-height sans-serif for UI controls and body data.
+- **Data & Telemetry Font**: `JetBrains Mono` — Monospaced typography for monetary values (`EGP 25,000,000`), model scores (`AI 94`), and log timestamps.
+- **Display Serif Accent**: `Cormorant Garamond` — Elegantly weighted serif for section titles and top-level executive headers.
+
+---
 
 ## 4. Component Stylings
-- **Buttons:** Flat with subtle glassmorphic depth. Tactile -1px translate on active state. Accent fill (Matte Gold) for primary actions, ghost/outline with Gold borders for secondary actions. No outer glow.
-- **Cards / Widgets:** Glassmorphic (`backdrop-blur-md`). Background is Surface Navy (`#152232`) at 80% opacity. Borders are Whisper Gold (`rgba(201, 162, 77, 0.2)`). Generously rounded corners (`1rem` or `1.5rem`). Deep, subtle drop shadows (`0 10px 30px rgba(0,0,0,0.4)`).
-- **Inputs:** Label above input, error below. Focus ring in Matte Gold. Background is deeper Navy (`#060C16`) with subtle Gold border on focus. No floating labels.
-- **Loaders:** Skeletal shimmer matching exact layout dimensions using Matte Gold gradients. No generic circular spinners.
-- **Empty States:** Composed, cinematic compositions indicating how to populate data, not just "No data" text.
+
+* **Buttons (`.btn-gold`, `.btn-slate`):**
+  - Pill-shaped or rounded-lg with 8px/12px horizontal padding.
+  - Interactive haptic physics: `transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1)`.
+  - Active press effect: `active:scale-[0.97]`.
+* **Cards & Containers (`.kpi-card`, `.card`):**
+  - Subtly rounded corners (`border-radius: 16px`).
+  - **Light Mode Elevation**: Soft ambient dual-layer clay shadow (`6px 6px 18px #e4dfd5, -6px -6px 18px #ffffff, inset 1px 1px 2px #ffffff`).
+  - **Dark Mode Elevation**: Diffused glassmorphism glow (`0 20px 40px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.15)`).
+* **Inputs & Form Controls:**
+  - Soft mineral stroke (`border: 1px solid rgba(15, 23, 42, 0.12)`).
+  - Focused state ring: `outline: 2px solid #00AEFF; outline-offset: 2px`.
+
+---
 
 ## 5. Layout Principles
-- **Unified Dashboard (Mega Grid):** The UI operates as a single pane of glass. No hard tab switching that hides information entirely. Use CSS Grid to create a responsive masonry or bento-box layout where KPIs, CRM, Bots, and Listings coexist.
-- **Collapsible Panes:** Use sidebars or expanding panels for deep-dive editing (e.g., Editing a Listing slides out a panel rather than routing to a new page).
-- **Spatial Separation:** No overlapping elements — every widget occupies its own clear spatial zone.
-- **Responsive:** Strict single-column collapse below 768px. Max-width containment for ultra-wide monitors.
-- **Full Height:** The dashboard is a `min-h-[100dvh]` application viewport.
-
-## 6. Motion & Interaction
-- **Spring Physics:** `stiffness: 100, damping: 20` default for all transitions (panel slides, modal popups). Weighty, premium feel.
-- **Staggered Cascade:** On initial load, dashboard widgets cascade in sequentially.
-- **Hardware Acceleration:** Animate exclusively via `transform` and `opacity`.
-
-## 7. Anti-Patterns (Banned)
-- NEVER use pure black (`#000000`).
-- NEVER use neon/outer glow shadows.
-- NEVER use purple or oversaturated AI aesthetic colors.
-- NEVER overlap structural elements.
-- NEVER use emojis for professional dashboard icons.
-- NEVER use AI copywriting clichés ("Elevate", "Seamless", "Next-Gen").
-- NEVER use horizontal scroll on mobile viewports.
+- **Spatial Rhythm**: 16px base grid spacing with 24px/32px section paddings.
+- **Sidebar Layout**: Collapsible 240px fixed left sidebar with instant micro-animation transitions.
+- **Responsive Density**: Fluid grid auto-fit (`minmax(min(100%, 320px), 1fr)`).
