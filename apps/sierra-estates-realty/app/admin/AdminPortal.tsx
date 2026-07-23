@@ -1619,7 +1619,7 @@ function AdminCommandCenterPage({ T }) {
 
 function AdminApp() {
   const [tab,setTab]=useState('overview');
-  const [theme,setTheme]=useState(()=>(typeof window!=='undefined'&&localStorage.getItem('admin_theme'))||'light');
+  const [theme,setTheme]=useState('light');
   const [langKey,setLangKey]=useState(()=>(typeof window!=='undefined'&&localStorage.getItem('admin_lang'))||'en');
   const [collapsed,setCollapsed]=useState(false);
   const [mobileOpen,setMobileOpen]=useState(false);
