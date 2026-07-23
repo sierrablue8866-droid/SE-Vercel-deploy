@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-  LogOut, Languages, PanelLeftClose, PanelLeftOpen, X,
-  LayoutDashboard, Users, Building2, CalendarCheck, BarChart3,
-  FileText, Bot, Workflow, Zap, Settings, RefreshCw, Database,
-  Sun, Moon, Brain,
-  type LucideIcon,
-} from 'lucide-react';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 
@@ -22,51 +15,34 @@ interface SidebarProps {
   setLangKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
-interface NavItem {
-  id: string;
-  label: string;
-  labelAr: string;
-  icon: LucideIcon;
-  section: 'core' | 'automation' | 'integrations' | 'system';
-  badge?: string;
-  badgeTone?: 'success' | 'info';
-}
-
-// Professional nav items — Lucide icons, no emojis.
-// Each item carries EN + AR labels so the sidebar re-renders cleanly on
-// language switch without re-deriving the labels via the T() lookup.
-export const NAV_ITEMS: NavItem[] = [
-  // ── Core operations ────────────────────────────────────────────────
-  { id: 'overview',       label: 'Live Dashboard',    labelAr: 'لوحة التحكم',           icon: LayoutDashboard, section: 'core' },
-  { id: 'leads',          label: 'Leads & CRM',       labelAr: 'العملاء و CRM',         icon: Users,           section: 'core' },
-  { id: 'listings',       label: 'Property Inventory',labelAr: 'العقارات',              icon: Building2,       section: 'core' },
-  { id: 'followups',      label: 'Follow-ups',        labelAr: 'المتابعات',             icon: CalendarCheck,   section: 'core' },
-  { id: 'searchInsights', label: 'Search Insights',   labelAr: 'تحليلات البحث',         icon: BarChart3,       section: 'core' },
-  { id: 'pageEditor',     label: 'Page Editor',       labelAr: 'محرر الصفحات',          icon: FileText,        section: 'core' },
-  // ── Automation & agents ────────────────────────────────────────────
-  { id: 'bots',           label: 'Bots Control',      labelAr: 'التحكم بالبوتات',       icon: Bot,             section: 'automation' },
-  { id: 'agents',         label: 'AI Agents',         labelAr: 'وكلاء الذكاء',          icon: Bot,             section: 'automation', badge: '6', badgeTone: 'success' },
-  { id: 'memoryEngine',   label: 'Memory Engine & Vault', labelAr: 'محرك الذاكرة',     icon: Brain,           section: 'automation', badge: 'Vault', badgeTone: 'info' },
-  { id: 'workflows',      label: 'Workflows',         labelAr: 'سير العمل',             icon: Workflow,        section: 'automation', badge: '8', badgeTone: 'info' },
-  // ── Integrations ───────────────────────────────────────────────────
-  { id: 'easyListing',    label: 'Easy Listing',      labelAr: 'إدراج سريع',            icon: Zap,             section: 'integrations' },
-  { id: 'automation',     label: 'Automation Portal', labelAr: 'بوابة الأتمتة',         icon: Settings,        section: 'integrations' },
-  { id: 'dataSync',       label: 'Data Sync',         labelAr: 'مزامنة البيانات',       icon: RefreshCw,       section: 'integrations' },
-  // ── System ─────────────────────────────────────────────────────────
-  { id: 'dbEditor',       label: 'DB Editor',         labelAr: 'محرر قاعدة البيانات',   icon: Database,        section: 'system' },
+const NAV_ITEMS = (T: any) => [
+  {id:'overview',label:T('overview'),icon:'🏠',section:T('main')},
+  {id:'agents',label:T('agents'),icon:'🤖',section:T('main'),badge:'6',badgeCls:'nb-green'},
+  {id:'workflows',label:T('workflows'),icon:'⚡',section:T('main'),badge:'8',badgeCls:'nb-blue'},
+  {id:'automations',label:T('lang')==='ar'?'الأتمتة':'Automations',icon:'🪄',section:T('main'),badge:'3',badgeCls:'nb-green'},
+  {id:'openclaw',label:T('openclaw'),icon:'⚙️',section:T('main')},
+  {id:'nexus',label:T('nexus'),icon:'📡',section:T('main'),badge:'LIVE',badgeCls:'nb-green'},
+  {id:'leads',label:T('leads'),icon:'👥',section:T('operations'),badge:'23',badgeCls:'nb-red'},
+  {id:'pipeline',label:T('lang')==='ar'?'الصفقات':'Pipeline',icon:'💼',section:T('operations')},
+  {id:'tasks',label:T('lang')==='ar'?'المهام':'Tasks',icon:'✅',section:T('operations'),badge:'5',badgeCls:'nb-blue'},
+  {id:'listings',label:T('listings'),icon:'🏘️',section:T('operations')},
+  {id:'curator',label:T('curator'),icon:'🎨',section:T('operations')},
+  {id:'scribe',label:T('scribe'),icon:'✍️',section:T('operations')},
+  {id:'closer',label:T('closer'),icon:'💼',section:T('operations')},
+  {id:'reports',label:T('reports'),icon:'📊',section:T('analytics')},
+  {id:'settings',label:T('settings'),icon:'🔧',section:T('system')},
 ];
 
-const SECTION_LABELS: Record<NavItem['section'], { en: string; ar: string }> = {
-  core:         { en: 'Operations',   ar: 'العمليات' },
-  automation:   { en: 'Automation',   ar: 'الأتمتة' },
-  integrations: { en: 'Integrations', ar: 'التكاملات' },
-  system:       { en: 'System',       ar: 'النظام' },
-};
+const CollapseIcon = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>;
+const XIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>;
 
-const BADGE_TONES: Record<NonNullable<NavItem['badgeTone']>, string> = {
-  success: 'bg-emerald-500/10 text-emerald-400 ring-1 ring-inset ring-emerald-500/20',
-  info:    'bg-blue-500/10 text-blue-400 ring-1 ring-inset ring-blue-500/20',
-};
+function ShieldLogo({size=24}: {size?: number}) {
+  return (
+    <div style={{ width: size, height: size, background: 'var(--gold)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold' }}>
+      SE
+    </div>
+  );
+}
 
 export default function Sidebar({
   T,
@@ -80,189 +56,73 @@ export default function Sidebar({
   langKey,
   setLangKey,
 }: SidebarProps) {
-  const isAr = langKey === 'ar';
-  const sections: NavItem['section'][] = ['core', 'automation', 'integrations', 'system'];
+  const navItems = NAV_ITEMS(T);
+  const sections = [...new Set(navItems.map(n => n.section))];
 
   const handleSignOut = async () => {
-    if (confirm(isAr ? 'تسجيل الخروج من لوحة التحكم؟' : 'Sign out of admin session?')) {
+    if (confirm(T('lang') === 'ar' ? 'تسجيل الخروج من لوحة التحكم؟' : 'Sign out of admin session?')) {
       await signOut(auth);
     }
   };
 
-  const handleItemClick = (id: string) => {
-    setTab(id);
-    if (onClose) onClose();
-  };
-
   return (
-    <aside
-      className={`flex flex-col h-full bg-slate-950 border-r border-slate-800/80 overflow-hidden transition-[width] duration-200 ease-out ${
-        collapsed ? 'w-[60px]' : 'w-[244px]'
-      }`}
-      id="admin-sidebar"
-      dir={isAr ? 'rtl' : 'ltr'}
-    >
-      {/* ── Brand header ──────────────────────────────────────────────── */}
-      <div className="border-b border-slate-800/80 px-3 h-14 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2.5 overflow-hidden">
-          {/* Logo mark — refined, not glowing */}
-          <div className="w-8 h-8 rounded-md bg-gradient-to-br from-slate-100 to-slate-300 flex items-center justify-center shrink-0 shadow-sm">
-            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-              <path d="M4 20L12 4L20 20H4Z" stroke="#0f172a" strokeWidth="2" strokeLinejoin="round" />
-              <path d="M9 14H15" stroke="#0f172a" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+    <aside id="sidebar" className={collapsed ? 'collapsed' : ''}>
+      <div className="brand">
+        <ShieldLogo size={28}/>
+        {!collapsed && (
+          <div className="brand-text">
+            <div className="brand-name">{T('brand') || 'SIERRA ESTATES'}</div>
+            <div className="brand-sub">{T('brandSub') || 'INTELLIGENCE OS'}</div>
           </div>
-          {!collapsed && (
-            <div className="select-none overflow-hidden">
-              <div className="font-semibold text-[13px] text-white tracking-tight leading-none">
-                {isAr ? 'سييرا إستيتس' : 'Sierra Estates'}
-              </div>
-              <div className="text-[9px] tracking-[0.18em] text-slate-500 uppercase mt-1 font-medium">
-                {isAr ? 'لوحة التحكم' : 'Admin Console'}
-              </div>
-            </div>
-          )}
-        </div>
+        )}
         {onClose && (
-          <button
-            onClick={onClose}
-            className="p-1 hover:bg-slate-800 rounded text-slate-500 hover:text-white transition lg:hidden"
-            aria-label={isAr ? 'إغلاق' : 'Close'}
-          >
-            <X className="w-4 h-4" />
+          <button onClick={onClose} style={{marginInlineStart:'auto',background:'none',border:'none',color:'var(--tx-f)',cursor:'pointer'}}>
+            <XIcon/>
           </button>
         )}
       </div>
-
-      {/* ── Navigation ───────────────────────────────────────────────── */}
-      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-5 scrollbar-thin">
-        {sections.map((section) => {
-          const sectionItems = NAV_ITEMS.filter((i) => i.section === section);
-          if (sectionItems.length === 0) return null;
-          return (
-            <div key={section} className="space-y-0.5">
-              {!collapsed && (
-                <div className="px-2 mb-1.5 text-[10px] font-semibold tracking-[0.12em] text-slate-600 uppercase select-none">
-                  {isAr ? SECTION_LABELS[section].ar : SECTION_LABELS[section].en}
-                </div>
-              )}
-              {sectionItems.map((item) => {
-                const isActive = tab === item.id;
-                const Icon = item.icon;
-                const label = isAr ? item.labelAr : item.label;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleItemClick(item.id)}
-                    title={collapsed ? label : undefined}
-                    className={`group w-full flex items-center gap-2.5 px-2.5 h-8 rounded-md text-[13px] font-medium cursor-pointer transition-all duration-150 relative ${
-                      isActive
-                        ? 'bg-slate-800/80 text-white'
-                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
-                    }`}
-                  >
-                    {/* Active indicator bar — subtle, left edge */}
-                    {isActive && (
-                      <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full bg-blue-400" />
-                    )}
-                    <Icon
-                      className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'
-                      }`}
-                      strokeWidth={1.75}
-                    />
-                    {!collapsed && (
-                      <>
-                        <span className="truncate select-none flex-1 text-left">{label}</span>
-                        {item.badge && (
-                          <span
-                            className={`text-[10px] font-semibold px-1.5 py-0.5 rounded select-none ${
-                              BADGE_TONES[item.badgeTone ?? 'info']
-                            }`}
-                          >
-                            {item.badge}
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          );
-        })}
-      </nav>
-
-      {/* ── Footer controls ──────────────────────────────────────────── */}
-      <div className="border-t border-slate-800/80 p-2 space-y-0.5 shrink-0">
-        {/* Theme toggle (light / dark) — clean Lucide icons */}
-        <button
-          onClick={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
-          className="group w-full flex items-center gap-2.5 px-2.5 h-8 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/50 transition select-none"
-          title={theme === 'dark' ? (isAr ? 'الوضع الفاتح' : 'Light mode') : (isAr ? 'الوضع الداكن' : 'Dark mode')}
-        >
-          {theme === 'dark' ? (
-            <Sun className="w-4 h-4 text-slate-500 group-hover:text-amber-400 shrink-0" strokeWidth={1.75} />
-          ) : (
-            <Moon className="w-4 h-4 text-slate-500 group-hover:text-slate-300 shrink-0" strokeWidth={1.75} />
-          )}
-          {!collapsed && (
-            <span className="text-[13px] font-medium">
-              {theme === 'dark' ? (isAr ? 'الوضع الفاتح' : 'Light mode') : (isAr ? 'الوضع الداكن' : 'Dark mode')}
-            </span>
-          )}
-        </button>
-
-        {/* Language toggle */}
-        <button
-          onClick={() => setLangKey((prev) => (prev === 'ar' ? 'en' : 'ar'))}
-          className="group w-full flex items-center gap-2.5 px-2.5 h-8 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/50 transition select-none"
-          title={isAr ? 'Switch to English' : 'التحويل إلى العربية'}
-        >
-          <Languages className="w-4 h-4 text-slate-500 group-hover:text-slate-300 shrink-0" strokeWidth={1.75} />
-          {!collapsed && (
-            <span className="text-[13px] font-medium flex items-center justify-between w-full">
-              <span>{isAr ? 'اللغة' : 'Language'}</span>
-              <span className="text-[10px] uppercase tracking-wider text-slate-500 font-mono">
-                {isAr ? 'ع' : 'EN'}
-              </span>
-            </span>
-          )}
-        </button>
-
-        {/* Sign out */}
-        <button
-          onClick={handleSignOut}
-          className="group w-full flex items-center gap-2.5 px-2.5 h-8 rounded-md text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition select-none"
-          title={isAr ? 'تسجيل الخروج' : 'Sign out'}
-          id="sidebar-logout"
-        >
-          <LogOut className="w-4 h-4 text-slate-500 group-hover:text-red-400 shrink-0" strokeWidth={1.75} />
-          {!collapsed && (
-            <span className="text-[13px] font-medium">{isAr ? 'تسجيل الخروج' : 'Sign out'}</span>
-          )}
-        </button>
-
-        {/* Collapse toggle */}
-        <button
-          onClick={() => setCollapsed((v) => !v)}
-          className="group w-full flex items-center gap-2.5 px-2.5 h-8 rounded-md text-slate-500 hover:text-white hover:bg-slate-800/50 transition select-none"
-          title={`${isAr ? 'طيّ الشريط' : 'Collapse'} [/]`}
-          id="btn-sidebar-toggle"
-        >
-          {collapsed ? (
-            <PanelLeftOpen className="w-4 h-4 shrink-0" strokeWidth={1.75} />
-          ) : (
-            <PanelLeftClose className="w-4 h-4 shrink-0" strokeWidth={1.75} />
-          )}
-          {!collapsed && (
-            <div className="flex items-center justify-between w-full select-none">
-              <span className="text-[13px] font-medium">{isAr ? 'طيّ الشريط' : 'Collapse'}</span>
-              <kbd className="text-[9px] bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 text-slate-600 font-mono">/</kbd>
-            </div>
-          )}
-        </button>
+      
+      <div style={{flex:1,overflowY:'auto',paddingBottom:8}}>
+        {sections.map(sec => (
+          <div key={sec}>
+            {!collapsed && <div className="nav-section">{sec}</div>}
+            {navItems.filter(n => n.section===sec).map(n => (
+              <div 
+                key={n.id} 
+                className={`nav-item ${tab===n.id?'active':''}`} 
+                onClick={()=>{
+                  setTab(n.id);
+                  if (onClose) onClose();
+                }} 
+                title={n.label}
+              >
+                <span className="nav-icon">{n.icon}</span>
+                <span>{n.label}</span>
+                {n.badge && !collapsed && <span className={`nav-badge ${n.badgeCls}`}>{n.badge}</span>}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
+      
+      {!onClose && (
+        <div style={{borderTop:'1px solid var(--bd)',padding:'10px 8px'}}>
+          <div className="nav-item" onClick={()=>setTheme(prev => prev === 'dark' ? 'light' : 'dark')} title={T('theme')}>
+            <span className="nav-icon">🌓</span>
+            {!collapsed && <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>}
+          </div>
+          <div className="nav-item" onClick={handleSignOut} title={T('signOut') || 'Sign Out'}>
+            <span className="nav-icon">🚪</span>
+            {!collapsed && <span>{T('lang') === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}</span>}
+          </div>
+          <div className="nav-item" onClick={()=>setCollapsed(c=>!c)} title={T('collapse') || 'Collapse'}>
+            <span className="nav-icon" style={{transform:collapsed?'rotate(180deg)':'none',transition:'transform 300ms'}}>
+              <CollapseIcon/>
+            </span>
+            {!collapsed && <span>{T('collapse') || 'Collapse'}</span>}
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
