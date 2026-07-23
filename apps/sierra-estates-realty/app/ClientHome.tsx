@@ -184,25 +184,25 @@ export default function ClientHome() {
     let cancelled = false;
     (async () => {
       try {
-        const snap = await getDocs(query(collection(clientDb, 'properties'), limit(6)));
+        const snap = await getDocs(query(collection(clientDb, 'listings'), limit(6)));
         if (cancelled || snap.empty) return;
         const items: Listing[] = snap.docs.map((d, i) => {
           const p = d.data() as Record<string, any>;
-          const priceM = typeof p.price === 'number' ? p.price / 1e6 : null;
+          const priceM = typeof p.price_egp === 'number' ? p.price_egp / 1e6 : (typeof p.price === 'number' ? p.price / 1e6 : null);
           return {
             id: d.id,
-            title: p.title || p.type || 'Residence',
-            location: p.compound || p.location || 'New Cairo',
-            code: p.sbrCode || p.code || `SBR-${String(i + 1).padStart(2, '0')}`,
-            type: p.propertyType || p.type || 'Villa',
+            title: p.property_type || p.title || p.type || 'Residence',
+            location: p.compound_name || p.compound || p.location || 'New Cairo',
+            code: d.id.slice(0, 8).toUpperCase(),
+            type: p.property_type || p.type || 'Villa',
             beds: p.bedrooms ?? p.beds ?? 3,
             baths: p.bathrooms ?? p.baths ?? 2,
-            area: p.area ?? 200,
+            area: p.area_sqm ?? p.area ?? 200,
             priceLabel: p.priceLabel || (priceM != null ? `EGP ${priceM.toFixed(1)}M` : 'On Request'),
-            aiScore: p.aiScore ?? 90,
-            img: p.featuredImage || p.img || FALLBACK[i % FALLBACK.length].img,
-            badge: p.badge ?? p.tag ?? null,
-            badgeColor: p.badgeColor || '#C8961A',
+            aiScore: p.ai_score ?? p.aiScore ?? 90,
+            img: p.cover_image_url || p.featuredImage || p.img || FALLBACK[i % FALLBACK.length].img,
+            badge: p.status === 'sold' ? 'Sold' : (p.badge ?? p.tag ?? null),
+            badgeColor: p.status === 'sold' ? '#EF4444' : (p.badgeColor || '#C8961A'),
           };
         });
         setListings(items);
