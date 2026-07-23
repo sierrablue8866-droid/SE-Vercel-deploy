@@ -7,7 +7,7 @@ export type CopyKey = keyof typeof EN;
 
 export const EN = {
   brandSub: 'Future of Real Estate',
-  navHome: 'Home', navProps: 'Properties', navCpds: 'Compounds', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools',
+  navHome: 'Home', navProps: 'Properties', navInv: 'Inventory', navCpds: 'Compounds', navAgents: 'Agents', navContact: 'Contact', navAI: 'AI Tools',
   addListing: 'Add Listing', signIn: 'Sign In', langBtn: 'العربية',
   addr: 'Banafseg 2, Villa 402, New Cairo',
   heroSub: '29 compounds · 1,200+ units · curated for you.',
@@ -79,7 +79,7 @@ export const EN = {
 
 export const AR: Record<CopyKey, string> = {
   brandSub: 'مستقبل العقارات',
-  navHome: 'الرئيسية', navProps: 'العقارات', navCpds: 'الكمبوندات', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء',
+  navHome: 'الرئيسية', navProps: 'العقارات', navInv: 'المخزون', navCpds: 'الكمبوندات', navAgents: 'المستشارون', navContact: 'تواصل', navAI: 'أدوات الذكاء',
   addListing: 'أضف عقارك', signIn: 'دخول', langBtn: 'English',
   addr: 'البنفسج 2، فيلا 402، القاهرة الجديدة',
   heroSub: '29 كمبوند · +1200 وحدة · منتقاة لك بعناية.',
