@@ -16,6 +16,8 @@ export async function middleware(request: NextRequest) {
   const requestHost = request.headers.get('host') ?? request.nextUrl.hostname;
   const onAdminHost = Boolean(adminHost) && requestHost === adminHost;
 
+  const isLocal = requestHost.includes('localhost') || requestHost.includes('127.0.0.1');
+
   // 0a) On the admin host, the console IS the site: rewrite root to /admin
   if (onAdminHost && pathname === '/') {
     const url = request.nextUrl.clone();
@@ -25,7 +27,7 @@ export async function middleware(request: NextRequest) {
 
   // 0b) Admin route protection & host split
   if (pathname.startsWith('/admin')) {
-    if (adminHost && !onAdminHost) {
+    if (adminHost && !onAdminHost && !isLocal) {
       const url = new URL(request.url);
       url.hostname = adminHost;
       url.protocol = 'https:';
