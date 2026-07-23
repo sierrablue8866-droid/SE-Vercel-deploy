@@ -7,8 +7,8 @@
 
 .floating-nav {
   background: rgba(11, 22, 38, 0.75);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   border-radius: 9999px;
@@ -54,11 +54,11 @@
 .se-pcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-smooth); }
 .se-pcard:hover .se-pcard__img { transform: scale(1.08); }
 .se-pcard__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 14, 26, 0.85), transparent 60%); }
-.se-pcard__code { position: absolute; top: 12px; inset-inline-start: 12px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .12em; color: var(--gold-lt); background: rgba(7, 14, 26, 0.75); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 9999px; border: 1px solid rgba(0, 174, 255, 0.3); }
+.se-pcard__code { position: absolute; top: 12px; inset-inline-start: 12px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .12em; color: var(--gold-lt); background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 9999px; border: 1px solid rgba(0, 174, 255, 0.3); }
 .se-pcard__badge { position: absolute; top: 12px; inset-inline-end: 12px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #fff; padding: 5px 11px; border-radius: 9999px; }
-.se-pcard__ai { position: absolute; bottom: 12px; inset-inline-start: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 10px; color: #10B981; background: rgba(7, 14, 26, 0.75); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 9999px; }
+.se-pcard__ai { position: absolute; bottom: 12px; inset-inline-start: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 10px; color: #10B981; background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 9999px; }
 .se-pcard__ai .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #10B981; animation: pulseGold 2s infinite; }
-.se-pcard__save { position: absolute; bottom: 12px; inset-inline-end: 12px; width: 36px; height: 36px; display: grid; place-items: center; border: none; cursor: pointer; border-radius: 50%; background: rgba(7, 14, 26, 0.75); backdrop-filter: blur(8px); color: #fff; transition: all 200ms var(--ease-smooth); }
+.se-pcard__save { position: absolute; bottom: 12px; inset-inline-end: 12px; width: 36px; height: 36px; display: grid; place-items: center; border: none; cursor: pointer; border-radius: 50%; background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff; transition: all 200ms var(--ease-smooth); }
 .se-pcard__save:hover { background: rgba(7, 14, 26, 0.95); transform: scale(1.08); }
 .se-pcard__save--on { color: var(--red); }
 .se-pcard__body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
@@ -68,4 +68,3 @@
 .se-pcard__specs { display: flex; gap: 14px; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--bd); }
 .se-pcard__spec { display: flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; color: var(--tx-m); }
 @media (prefers-reduced-motion: reduce) { .se-pcard__ai .live-dot { animation: none; } }
-
