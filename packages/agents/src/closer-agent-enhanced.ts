@@ -30,14 +30,10 @@ export class CloserAgentEnhanced {
    * Generate an intelligent, personalized proposal
    */
   async generateIntelligentProposal(context: ProposalContext): Promise<string> {
-    const apiKey = process.env.ANTHROPIC_API_KEY || process.env.GEMINI_API_KEY;
+    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_AI_API_KEY;
 
-    if (!apiKey) {
-      return this.generateFallbackProposal(context);
-    }
-
-    try {
-      const systemPrompt = `You are a master real estate closer for Sierra Estates, a luxury property developer in New Cairo.
+    const systemPrompt = `You are a master real estate closer for Sierra Estates, a luxury property developer in New Cairo.
 Your job is to generate a personalized, compelling proposal that:
 1. Addresses the buyer's specific needs
 2. Highlights unique property features
@@ -53,7 +49,7 @@ Always include:
 - Warranty and after-sales support
 - Next steps and decision timeline`;
 
-      const userMessage = `Generate a proposal for:
+    const userMessage = `Generate a proposal for:
 Lead Phone: ${context.leadPhone}
 Property: ${context.propertyCode} (${JSON.stringify(context.propertyData)})
 Previous offers: ${context.previousOffers.length > 0 ? context.previousOffers.map(o => `${o.amount} EGP on ${o.date}`).join(', ') : 'None'}
@@ -77,12 +73,29 @@ Negotiation history: ${context.negotiationHistory.slice(-3).join(' → ') || 'Fr
           // Fall through to fallback template if SDK is missing
         }
       }
-
-      return this.generateFallbackProposal(context);
-    } catch (err: any) {
-      console.warn('[CloserAgentEnhanced] AI Proposal error:', err.message);
-      return this.generateFallbackProposal(context);
     }
+
+    if (geminiKey) {
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              { role: 'user', parts: [{ text: `${systemPrompt}\n\n${userMessage}` }] }
+            ],
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          return data.candidates?.[0]?.content?.parts?.[0]?.text || this.generateFallbackProposal(context);
+        }
+      } catch (err: any) {
+        console.warn('[CloserAgentEnhanced] Gemini fetch error:', err.message);
+      }
+    }
+
+    return this.generateFallbackProposal(context);
   }
 
   private generateFallbackProposal(context: ProposalContext): string {

@@ -1,14 +1,18 @@
 import tseslint from 'typescript-eslint'
 import unusedImports from 'eslint-plugin-unused-imports'
+<<<<<<< HEAD
 import nextPlugin from '@next/eslint-plugin-next'
 import reactHooks from 'eslint-plugin-react-hooks'
+=======
+>>>>>>> origin/client
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default [
-  { ignores: ['.next/**', 'out/**', 'build/**', 'coverage/**', 'next-env.d.ts', 'public/**'] },
+<<<<<<< HEAD
+  { ignores: ['.next/**', 'out/**', 'build/**', 'coverage/**', 'next-env.d.ts', 'public/**', 'node_modules/**'] },
   ...tseslint.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
@@ -17,6 +21,13 @@ export default [
       '@next/next': nextPlugin,
       'react-hooks': reactHooks,
     },
+=======
+  { ignores: ['.next/**', 'out/**', 'build/**', 'coverage/**', 'next-env.d.ts', 'public/**'] },
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    plugins: { 'unused-imports': unusedImports },
+>>>>>>> origin/client
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
@@ -35,9 +46,12 @@ export default [
         varsIgnorePattern: '^_',
         caughtErrorsIgnorePattern: '^_',
       }],
+<<<<<<< HEAD
       '@next/next/no-img-element': 'warn',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
+=======
+>>>>>>> origin/client
     },
   },
 ]

@@ -45,7 +45,7 @@ env:
   VERCEL_ORG_ID: team_k2jaWfzeatcYG6Qpl0ooCxQh
   VERCEL_CLI_VERSION: '43.3.0'
   CLIENT_APP_DIR: apps/sierra-estates-realty
-  # Per-project IDs are set as env at the job level (see below).
+  ADMIN_APP_DIR: apps/admin-dashboard
 
 # The OLD admin project id — guarded so we never deploy to it.
 jobs:
@@ -183,7 +183,7 @@ jobs:
             "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
             -H "Authorization: Bearer ${VERCEL_TOKEN}" \
             -H "Content-Type: application/json" \
-            -d '{"rootDirectory":"apps/sierra-estates-realty","framework":"nextjs","buildCommand":null,"installCommand":null,"outputDirectory":null,"devCommand":null}' || echo "000")
+            -d '{"rootDirectory":"apps/admin-dashboard","framework":"vite","buildCommand":"npm run build:vite","installCommand":null,"outputDirectory":"dist","devCommand":null}' || echo "000")
           if [ "$code" = "200" ] || [ "$code" = "204" ]; then
             echo "✅ Admin project settings normalized (HTTP $code)"
           else
@@ -199,7 +199,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           set -o pipefail
-          cd "${CLIENT_APP_DIR}"
+          cd "${ADMIN_APP_DIR}"
           vercel pull --yes --environment=${{ steps.target.outputs.name }} --token="${VERCEL_TOKEN}"
           vercel build ${{ steps.target.outputs.flag }} --token="${VERCEL_TOKEN}"
           vercel deploy --prebuilt ${{ steps.target.outputs.flag }} --token="${VERCEL_TOKEN}"

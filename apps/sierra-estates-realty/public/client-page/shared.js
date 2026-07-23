@@ -207,7 +207,11 @@
     return '' +
     '<nav class="nav" id="main-nav"><div class="wrap">' +
       '<a href="index.html" class="brand">' +
-        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
+<<<<<<< HEAD
+        '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
+=======
+        '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
+>>>>>>> origin/client
         '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
       '</a>' +
       '<div class="menu">' +
@@ -232,7 +236,11 @@
       '<div class="foot-grid">' +
         '<div>' +
           '<a href="index.html" class="brand">' +
-            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:8px;padding:6px;box-shadow:var(--shadow-s);"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--pri)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 10l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>' +
+<<<<<<< HEAD
+            '<span class="mark logo" style="display:flex;align-items:center;justify-content:center;background:var(--surface);border-radius:10px;padding:4px;box-shadow:var(--shadow-m);"><img src="logo.png" alt="Sierra Estates Logo" style="width:36px;height:36px;object-fit:contain;" /></span>' +
+=======
+            '<span class="mark logo"><img src="logo-gold.png" alt="Sierra Estates"/></span>' +
+>>>>>>> origin/client
             '<span><b>Sierra Estates</b><small data-i18n="brandSub">' + t('brandSub') + '</small></span>' +
           '</a>' +
           '<p class="blurb" data-i18n="footBlurb">' + t('footBlurb') + '</p>' +
@@ -378,11 +386,16 @@
     var openMapBtn = document.getElementById('nav-open-map');
     if (openMapBtn) {
       openMapBtn.addEventListener('click', function () {
+<<<<<<< HEAD
+        var mapEl = document.getElementById('cpd-map');
+        if (!mapEl) {
+=======
         // If we're on a page with a map (#cpd-map), scroll to it; otherwise navigate
         var mapEl = document.getElementById('cpd-map');
         if (mapEl) {
           mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
+>>>>>>> origin/client
           location.href = 'compounds.html';
         }
       });

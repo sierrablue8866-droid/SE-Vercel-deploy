@@ -24,7 +24,13 @@ const nextConfig: NextConfig = {
     'firebase-admin',
   ],
   typescript: {
+<<<<<<< HEAD
     ignoreBuildErrors: false,
+=======
+    // Allow pages to be added without strict type checking on build.
+    // Pages are accepted as-is; CI type-check is separate.
+    ignoreBuildErrors: true,
+>>>>>>> origin/client
   },
   images: {
     remotePatterns: [
@@ -35,6 +41,43 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
+<<<<<<< HEAD
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/', destination: '/client-page/index.html' },
+        { source: '/index.html', destination: '/client-page/index.html' },
+        { source: '/client-page', destination: '/client-page/index.html' },
+      ],
+      afterFiles: [
+        { source: '/roi', destination: '/client-page/roi.html' },
+        { source: '/roi.html', destination: '/client-page/roi.html' },
+        { source: '/compounds', destination: '/client-page/compounds.html' },
+        { source: '/compounds.html', destination: '/client-page/compounds.html' },
+        { source: '/properties', destination: '/client-page/properties.html' },
+        { source: '/properties.html', destination: '/client-page/properties.html' },
+        { source: '/property', destination: '/client-page/property.html' },
+        { source: '/property.html', destination: '/client-page/property.html' },
+        { source: '/pricing', destination: '/client-page/pricing.html' },
+        { source: '/pricing.html', destination: '/client-page/pricing.html' },
+        { source: '/advice', destination: '/client-page/advice.html' },
+        { source: '/advice.html', destination: '/client-page/advice.html' },
+        { source: '/ai-engine', destination: '/client-page/ai-engine.html' },
+        { source: '/ai-engine.html', destination: '/client-page/ai-engine.html' },
+        { source: '/matches', destination: '/client-page/matches.html' },
+        { source: '/matches.html', destination: '/client-page/matches.html' },
+        { source: '/career', destination: '/client-page/career.html' },
+        { source: '/career.html', destination: '/client-page/career.html' },
+        { source: '/virtual-tour', destination: '/client-page/virtual-tour.html' },
+        { source: '/virtual-tour.html', destination: '/client-page/virtual-tour.html' },
+      ],
+      fallback: [
+        { source: '/:path*', destination: '/client-page/:path*' },
+      ],
+    };
+  },
+=======
+>>>>>>> origin/client
   async headers() {
     return [
       {
@@ -62,8 +105,14 @@ const nextConfig: NextConfig = {
       '@opentelemetry/sdk-trace-node': './lib/stubs/empty.js',
       '@opentelemetry/instrumentation-http': './lib/stubs/empty.js',
       '@opentelemetry/instrumentation-express': './lib/stubs/empty.js',
+<<<<<<< HEAD
       // firebase-admin is intentionally NOT aliased here — it is a real
       // server-only package handled by serverExternalPackages above.
+=======
+      'firebase-admin': './lib/stubs/firebase-admin.js',
+      'firebase-admin/firestore': './lib/stubs/empty.js',
+      'firebase-admin/storage': './lib/stubs/empty.js',
+>>>>>>> origin/client
     }
   },
   webpack(config, { isServer }) {

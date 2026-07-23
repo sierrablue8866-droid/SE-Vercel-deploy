@@ -30,6 +30,7 @@
 @keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.grid-props .pcard{animation:none;}}
 .empty{padding:60px 0;text-align:center;color:var(--muted);font-size:15px;}
+.props-d-none { display: none; }
 </style>
 </head>
 <body>
@@ -38,7 +39,7 @@
 
 <header class="page-hero" data-screen-label="Properties hero">
   <div class="wrap">
-    <div class="crumbs"><a href="index.html" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navProps"></span></div>
+    <div class="crumbs"><a href="/" title="Home" data-i18n="crumbHome"></a><span class="sep">/</span><span data-i18n="navProps"></span></div>
     <h1 data-i18n="propsTit"></h1>
     <p class="sub" data-i18n="propsSub"></p>
   </div>
@@ -47,19 +48,19 @@
 <section class="block" data-screen-label="Listings grid">
   <div class="wrap">
     <div class="toolbar rv">
-      <button class="chip on" data-f-type="all" data-i18n="filterAll" type="button"></button>
-      <button class="chip" data-f-type="Villa" data-i18n="filterVilla" type="button"></button>
-      <button class="chip" data-f-type="Apartment" data-i18n="filterApt" type="button"></button>
-      <button class="chip" data-f-type="Town" data-i18n="filterTown" type="button"></button>
-      <button class="chip" data-f-type="Pent" data-i18n="filterPent" type="button"></button>
+      <button class="chip on" data-f-type="all" data-i18n="filterAll" type="button" title="All"></button>
+      <button class="chip" data-f-type="Villa" data-i18n="filterVilla" type="button" title="Villa"></button>
+      <button class="chip" data-f-type="Apartment" data-i18n="filterApt" type="button" title="Apartment"></button>
+      <button class="chip" data-f-type="Town" data-i18n="filterTown" type="button" title="Town"></button>
+      <button class="chip" data-f-type="Pent" data-i18n="filterPent" type="button" title="Penthouse"></button>
       <span class="chip-sep"></span>
-      <button class="chip on" data-f-mode="all" data-i18n="modeAll" type="button"></button>
-      <button class="chip" data-f-mode="sale" data-i18n="modeSale" type="button"></button>
-      <button class="chip" data-f-mode="rent" data-i18n="modeRent" type="button"></button>
+      <button class="chip on" data-f-mode="all" data-i18n="modeAll" type="button" title="All Modes"></button>
+      <button class="chip" data-f-mode="sale" data-i18n="modeSale" type="button" title="Sale"></button>
+      <button class="chip" data-f-mode="rent" data-i18n="modeRent" type="button" title="Rent"></button>
       <span class="count"><b id="res-count">0</b> <span data-i18n="results"></span></span>
     </div>
     <div class="grid-props" id="all-grid"></div>
-    <div class="empty" id="empty" style="display:none;">—</div>
+    <div class="empty props-d-none" id="empty">—</div>
   </div>
 </section>
 

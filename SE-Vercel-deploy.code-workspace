@@ -1,4 +1,11 @@
 {
+<<<<<<< HEAD
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
+=======
 	"folders": [
 		{
 			"name": "SE-Vercel-deploy",
@@ -23,4 +30,5 @@
 		"compile-hero.disable-compile-files-on-did-save-code": false,
 		"brightscript.bsdk": "1.0.0-alpha.52"
 	}
+>>>>>>> 10d9cd48578945d494edb589768b6d8d5cda8d62
 }

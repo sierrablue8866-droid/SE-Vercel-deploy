@@ -33,10 +33,15 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
   const patch = await req.json().catch(() => ({}));
   const db = await getAdminDb();
   if (db) {
-    await db.collection("listings").doc(id).set(
-      { ...patch, updatedAt: new Date().toISOString() },
-      { merge: true }
-    );
+    const update = { ...patch, updatedAt: new Date().toISOString() };
+    await db.collection("listings").doc(id).set(update, { merge: true });
+
+    const houyezUpdate: Record<string, any> = { ...update };
+    if (patch.compound) houyezUpdate.cmp = patch.compound;
+    if (patch.aiScore != null) houyezUpdate.ai = patch.aiScore;
+    if (patch.status != null) houyezUpdate.active = patch.status !== "archived";
+
+    await db.collection("houyez_listings").doc(id).set(houyezUpdate, { merge: true });
   }
   return NextResponse.json({ ok: true });
 }
@@ -46,10 +51,9 @@ export async function DELETE(req: Request, ctx: { params: Promise<{ id: string }
   const { id } = await ctx.params;
   const db = await getAdminDb();
   if (db) {
-    await db.collection("listings").doc(id).set(
-      { status: "archived", updatedAt: new Date().toISOString() },
-      { merge: true }
-    );
+    const update = { status: "archived", active: false, updatedAt: new Date().toISOString() };
+    await db.collection("listings").doc(id).set(update, { merge: true });
+    await db.collection("houyez_listings").doc(id).set(update, { merge: true });
   }
   return NextResponse.json({ ok: true });
 }
