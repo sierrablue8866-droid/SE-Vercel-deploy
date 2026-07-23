@@ -1,20 +1,24 @@
 """
-SIERRA BLUE AI BOT - SYSTEM PROMPT & DEPLOYMENT GUIDE
-Complete Implementation Ready for Production
+SIERRA ESTATES AI BOT - SYSTEM PROMPT & DEPLOYMENT GUIDE
+=========================================================
+
+This module contains:
+1. Complete System Prompt (Arabic & English)
+2. Deployment Scripts & Configuration
+3. Environment Setup Instructions
 """
 
-# ============================================================================
-# PART 1: COMPLETE SYSTEM PROMPT (For LLM/Claude)
-# ============================================================================
+SIERRA_ESTATES_COMPLETE_SYSTEM_PROMPT = """
+# NATIVE ARABIC SYSTEM PROMPT - SIERRA ESTATES AI BOT
 
-SIERRA_BLUE_COMPLETE_SYSTEM_PROMPT = """
-أنت مستشار عقاري ذكي في شركة سييرا بلو (Sierra Blue Real Estate).
-
+## 1. Persona & Identity Definition
+- **الصفة**: أنت مستشار عقاري ذكي في شركة سييرا إستيتس (Sierra Estates Real Estate).
+- **الهدف**: مساعدة العملاء في إيجاد العقار المناسب، الإجابة على استفساراتهم، وحجز المواعيد للمعاينة.
+- **النبرة**: احترافية، وديدة، وموثوقة.
+- **الاسم**: Sierra Estates AI Advisor
 ═══════════════════════════════════════════════════════════════════════════
-📋 IDENTITY & PERSONA
-═══════════════════════════════════════════════════════════════════════════
 
-الاسم: Sierra Blue AI Advisor
+الاسم: Sierra Estates AI Advisor
 الدور: مستشار عقاري ذكي متخصص في إدارة رحلة العميل من الاستفسار حتى المعاينة
 اللغة: اللهجة المصرية الاحترافية المهذبة
 مستوى الخبرة: خبير في سوق العقارات المصري
@@ -590,8 +594,8 @@ if __name__ == "__main__":
     print("Sierra Blue Bot - Complete System Implementation")
     print("=" * 70)
     print("\nGenerated Files:")
-    print("1. sierra_blue_bot_implementation.py - Core bot logic")
-    print("2. sierra_blue_api_integration.py - API integrations")
+    print("1. sierra_estates_bot_implementation.py - Core bot logic")
+    print("2. sierra_estates_api_integration.py - API integrations")
     print("3. system_prompt_and_deployment.py - This file")
     print("\nNext Steps:")
     print("1. Install requirements: pip install -r requirements.txt")
@@ -599,3 +603,4 @@ if __name__ == "__main__":
     print("3. Run tests: python -m pytest")
     print("4. Deploy using provided deployment script")
     print("5. Monitor metrics via dashboard")
+"""

@@ -29,6 +29,7 @@ askpass.bat
 askpass.sh
 
 # ─── Dependencies ───────────────────────────────────────────────────────────
+libs/
 node_modules/
 .pnp
 .pnp.js

@@ -27,7 +27,9 @@ name: Deploy · Vercel (client + admin)
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'feature/*'
   workflow_dispatch:
     inputs:
       environment:
@@ -123,7 +125,13 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         id: target
         run: |
-          ENV="${{ github.event.inputs.environment || 'production' }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENV="${{ github.event.inputs.environment }}"
+          elif [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            ENV="production"
+          else
+            ENV="preview"
+          fi
           echo "name=$ENV" >> "$GITHUB_OUTPUT"
           if [ "$ENV" = "production" ]; then
             echo "flag=--prod" >> "$GITHUB_OUTPUT"
