@@ -125,32 +125,34 @@ function SpecIcon({ d }: { d: string }) {
 function PropertyCard({ item, isAr: _isAr }: { item: Listing; isAr: boolean }) {
   const [saved, setSaved] = useState(false);
   return (
-    <Link href="/listings" className="se-pcard" style={{ textDecoration: 'none' }}>
-      <div className="se-pcard__media">
-        <img className="se-pcard__img" src={item.img} alt={item.title} loading="lazy" />
-        <div className="se-pcard__scrim" />
-        <span className="se-pcard__code">{item.code}</span>
-        {item.badge && <span className="se-pcard__badge" style={{ background: item.badgeColor || 'var(--gold)' }}>{item.badge}</span>}
-        <span className="se-pcard__ai"><span className="live-dot" /> AI {item.aiScore}</span>
-        <button type="button" className={saved ? 'se-pcard__save se-pcard__save--on' : 'se-pcard__save'}
-          aria-label={saved ? 'Saved' : 'Save'}
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((s) => !s); }}>
-          <svg viewBox="0 0 24 24" fill={saved ? 'var(--red)' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16 }}>
-            <path d={SPEC_ICONS.heart} />
-          </svg>
-        </button>
-      </div>
-      <div className="se-pcard__body">
-        <span className="se-pcard__loc">{item.location}</span>
-        <h3 className="se-pcard__title">{item.title}</h3>
-        <span className="se-pcard__price">{item.priceLabel}</span>
-        <div className="se-pcard__specs">
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bed} />{item.beds}</span>
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bath} />{item.baths}</span>
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.area} />{item.area} m²</span>
+    <div className="se-pcard-wrapper">
+      <Link href="/listings" className="se-pcard" style={{ textDecoration: 'none' }}>
+        <div className="se-pcard__media">
+          <img className="se-pcard__img" src={item.img} alt={item.title} loading="lazy" />
+          <div className="se-pcard__scrim" />
+          <span className="se-pcard__code">{item.code}</span>
+          {item.badge && <span className="se-pcard__badge" style={{ background: item.badgeColor || 'var(--gold)' }}>{item.badge}</span>}
+          <span className="se-pcard__ai"><span className="live-dot" /> AI {item.aiScore}</span>
+          <button type="button" className={saved ? 'se-pcard__save se-pcard__save--on' : 'se-pcard__save'}
+            aria-label={saved ? 'Saved' : 'Save'}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((s) => !s); }}>
+            <svg viewBox="0 0 24 24" fill={saved ? 'var(--red)' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16 }}>
+              <path d={SPEC_ICONS.heart} />
+            </svg>
+          </button>
         </div>
-      </div>
-    </Link>
+        <div className="se-pcard__body">
+          <span className="se-pcard__loc">{item.location}</span>
+          <h3 className="se-pcard__title">{item.title}</h3>
+          <span className="se-pcard__price">{item.priceLabel}</span>
+          <div className="se-pcard__specs">
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bed} />{item.beds}</span>
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bath} />{item.baths}</span>
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.area} />{item.area} m²</span>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
 

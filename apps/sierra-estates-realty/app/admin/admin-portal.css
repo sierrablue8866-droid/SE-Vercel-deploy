@@ -1,57 +1,56 @@
-/* ── TOKENS & CLAY DESIGN SYSTEM ─────────────────────────────────────── */
+/* ── TOKENS & HIGH-END DESIGN SYSTEM ─────────────────────────────────── */
 :root{
   --gold:#00AEFF;
   --gold-lt:#5FC9FF;
-  --red:#E63946;
-  --emerald:#34D399;
-  --blue:#1E88D9;
-  --purple:#7C3AED;
-  --amber:#f59e0b;
-  --clay-bg: rgba(15, 32, 53, 0.65);
-  --clay-shadow-dark: rgba(2, 8, 16, 0.65);
-  --clay-shadow-light: rgba(255, 255, 255, 0.08);
+  --red:#EF4444;
+  --emerald:#10B981;
+  --blue:#3B82F6;
+  --purple:#8B5CF6;
+  --amber:#F59E0B;
+  --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
 }
 [data-theme="dark"]{
-  --bg:#07111E;
-  --bg-s:#0B1A2E;
-  --bg-e:#0F2035;
-  --bg-e2:#152C48;
-  --surf:rgba(255,255,255,.055);
+  --bg:#070E1A;
+  --bg-s:#0B1626;
+  --bg-e:#0F1D30;
+  --bg-e2:#16273E;
+  --surf:rgba(255,255,255,.07);
   --surf2:rgba(255,255,255,.03);
-  --tx:#F0EDE5;
+  --tx:#F3F4F6;
   --tx-s:#FFFFFF;
-  --tx-m:rgba(240,237,229,.58);
-  --tx-f:rgba(240,237,229,.32);
-  --bd:rgba(255,255,255,.08);
-  --bd-s:rgba(255,255,255,.15);
-  --clay-card: linear-gradient(145deg, #0e1e32, #081322);
-  --clay-card-shadow: 8px 8px 18px #040a12, -8px -8px 18px #0e243e, inset 1px 1px 2px rgba(255,255,255,0.12);
+  --tx-m:rgba(243,244,246,.70);
+  --tx-f:rgba(243,244,246,.40);
+  --bd:rgba(255,255,255,.10);
+  --bd-s:rgba(255,255,255,.18);
+  --clay-card: linear-gradient(145deg, rgba(21, 38, 62, 0.9), rgba(11, 22, 38, 0.95));
+  --clay-card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 [data-theme="light"]{
-  --bg:#F7F5F1;
-  --bg-s:#FDFCFA;
+  --bg:#F8FAFC;
+  --bg-s:#FFFFFF;
   --bg-e:#FFFFFF;
-  --bg-e2:#FBFAF7;
-  --surf:rgba(13,32,53,.045);
-  --surf2:rgba(13,32,53,.02);
-  --tx:#1A2B3D;
-  --tx-s:#050B14;
-  --tx-m:rgba(13,32,53,.62);
-  --tx-f:rgba(13,32,53,.38);
-  --bd:rgba(13,32,53,.08);
-  --bd-s:rgba(13,32,53,.16);
-  --clay-card: linear-gradient(145deg, #ffffff, #e6e2da);
-  --clay-card-shadow: 8px 8px 20px #d4cfc5, -8px -8px 20px #ffffff, inset 1px 1px 2px rgba(255,255,255,0.8);
+  --bg-e2:#F1F5F9;
+  --surf:rgba(15,23,42,.05);
+  --surf2:rgba(15,23,42,.02);
+  --tx:#0F172A;
+  --tx-s:#020617;
+  --tx-m:rgba(15,23,42,.75);
+  --tx-f:rgba(15,23,42,.45);
+  --bd:rgba(15,23,42,.09);
+  --bd-s:rgba(15,23,42,.18);
+  --clay-card: linear-gradient(145deg, #ffffff, #f8fafc);
+  --clay-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
 }
-[data-theme="light"] body{background:fixed radial-gradient(900px 600px at 85% 0%,rgba(0,174,255,.10),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(30,136,217,.07),transparent 55%),var(--bg);}
+[data-theme="light"] body{background:fixed radial-gradient(900px 600px at 85% 0%,rgba(0,174,255,.08),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(59,130,246,.05),transparent 55%),var(--bg);}
 [data-theme="light"] .card,[data-theme="light"] .kpi-card{box-shadow:var(--clay-card-shadow);}
-[data-theme="light"] #content{background:radial-gradient(900px 600px at 90% -5%,rgba(0,174,255,.08),transparent 55%),radial-gradient(700px 500px at -5% 105%,rgba(30,136,217,.06),transparent 50%);}
+[data-theme="light"] #content{background:radial-gradient(900px 600px at 90% -5%,rgba(0,174,255,.06),transparent 55%),radial-gradient(700px 500px at -5% 105%,rgba(59,130,246,.04),transparent 50%);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
-[dir="rtl"] body{font-family:'Cairo','Inter',sans-serif;}
+body{font-family:'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;background:var(--bg);color:var(--tx);transition:background 0.3s var(--ease-smooth), color 0.3s var(--ease-smooth);}
+[dir="rtl"] body{font-family:'Cairo','Plus Jakarta Sans',sans-serif;}
 #root{display:flex;height:100vh;overflow:hidden;}
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-thumb{background:rgba(0,174,255,.25);border-radius:3px;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-thumb{background:rgba(0,174,255,.3);border-radius:4px;}
+
 
 /* ── ANIMATIONS ─────────────────────────────────────────────────────── */
 @keyframes goldShimmer{0%{background-position:0%}100%{background-position:200%}}

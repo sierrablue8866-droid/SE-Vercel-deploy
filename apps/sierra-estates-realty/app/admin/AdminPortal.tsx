@@ -20,6 +20,9 @@ import SearchInsightsPage from './legacy-components/SearchInsightsPage';
 import FollowupsPage from './legacy-components/FollowupsPage';
 import AdminHealthMonitor from './legacy-components/AdminHealthMonitor';
 import GlobalProgressTracker from './legacy-components/GlobalProgressTracker';
+import ListingsManagerPage from './legacy-components/ListingsManagerPage';
+import RequestsTicketPage from './legacy-components/RequestsTicketPage';
+import NexusExchangePage from './legacy-components/NexusExchangePage';
 
 
 /* ── TRANSLATIONS ─────────────────────────────────────────────────────── */
@@ -156,6 +159,9 @@ const NAV_ITEMS = (T) => [
   {id:'pipeline',label:T('lang')==='ar'?'الصفقات':'Pipeline',icon:'💼',section:T('operations')},
   {id:'tasks',label:T('lang')==='ar'?'المهام':'Tasks',icon:'✅',section:T('operations'),badge:'5',badgeCls:'nb-blue'},
   {id:'listings',label:T('listings'),icon:'🏘️',section:T('operations')},
+  {id:'listingsManager',label:T('lang')==='ar'?'إدارة العقارات':'Listings Manager',icon:'🏢',section:T('operations')},
+  {id:'requestsTicket',label:T('lang')==='ar'?'تذاكر الدعم':'Support Tickets',icon:'🎟️',section:T('operations'),badge:'NEW',badgeCls:'nb-blue'},
+  {id:'nexusExchange',label:T('lang')==='ar'?'شبكة التبادل':'Nexus Exchange',icon:'🔄',section:T('operations')},
   {id:'curator',label:T('curator'),icon:'🎨',section:T('operations')},
   {id:'scribe',label:T('scribe'),icon:'✍️',section:T('operations')},
   {id:'closer',label:T('closer'),icon:'💼',section:T('operations')},
@@ -1657,6 +1663,9 @@ function AdminApp() {
       case 'tasks':return <TasksPage T={T}/>;
       case 'automations':return <AutomationsPage T={T}/>;
       case 'listings':return <ListingsHubPage T={T}/>;
+      case 'listingsManager':return <ListingsManagerPage/>;
+      case 'requestsTicket':return <RequestsTicketPage/>;
+      case 'nexusExchange':return <NexusExchangePage T={T} isAr={T('lang')==='ar'}/>;
       case 'curator':return <CuratorPage T={T}/>;
       case 'scribe':return <ScribePage T={T}/>;
       case 'closer':return <Stage9CloserPage T={T}/>;
