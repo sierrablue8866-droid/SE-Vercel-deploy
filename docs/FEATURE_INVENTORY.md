@@ -37,7 +37,7 @@ Legend: 🟢 live in repo · 🟡 live but thin/stub · 🔵 staged for approval
 | Antigravity agent | `lib/agents` + `lib/services` (2 variants) | Autonomous task agent |
 | Nexus agent | both | Admin AI |
 | Stage-9 closer | `apps/agents/stage-9-closer` + MCP server | Deal-closing automation |
-| Sierra Blue bot | `apps/agents/sierra-blue-bot` (3 py files) | Python master bot (implementation + system prompt + API integration) |
+| Sierra Estates bot | `apps/agents/sierra-estates-bot` (3 py files) | Python master bot (implementation + system prompt + API integration) |
 | WhatsApp bot | `apps/agents/whatsapp-bot` (14 files) | Group listener/responder |
 | WhatsApp scraper | `apps/agents/whatsapp-scraper` (558 files) | Group scraping worker w/ heartbeat |
 

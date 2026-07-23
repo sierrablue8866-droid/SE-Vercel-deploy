@@ -29,24 +29,37 @@ export async function POST(req: NextRequest) {
     await WhatsAppStatusService.recordHeartbeat('syncing');
 
     // Dynamic extraction logic (Adapter Pattern)
-    // Here we adapt the payload to our internal processing schema.
     const message = body.message?.text || body.text || body.Body;
     const sender = body.from || body.From || "External Signal";
     const group = body.groupName || body.Source || "WhatsApp Broker Group";
+    const isGroup = body.isGroup === true || body.isGroup === 'true';
 
     if (!message) {
       return NextResponse.json({ error: "Empty signal ignored" }, { status: 400 });
     }
 
-    // Trigger AI Neural Processing
-    const result = await WhatsAppParserService.processIncomingMessage(message, sender, group);
+    let replyText = null;
 
-    return NextResponse.json({ 
-      status: "success", 
-      id: result.id,
-      ai_confidence: "high",
-      processed_at: new Date().toISOString()
-    });
+    if (isGroup) {
+      // Trigger AI Neural Processing for Listings
+      const result = await WhatsAppParserService.processIncomingMessage(message, sender, group);
+      return NextResponse.json({ 
+        status: "success", 
+        id: result.id,
+        ai_confidence: "high",
+        processed_at: new Date().toISOString()
+      });
+    } else {
+      // Trigger Conversational AI for Direct Messages (ECC Memory)
+      const { WhatsAppConversationalService } = await import('@/lib/services/WhatsAppConversationalService');
+      replyText = await WhatsAppConversationalService.processDirectMessage(message, sender);
+      
+      return NextResponse.json({ 
+        status: "success",
+        replyMessage: replyText,
+        processed_at: new Date().toISOString()
+      });
+    }
 
   } catch (error) {
     console.error("🚨 Webhook Critical Failure:", error);

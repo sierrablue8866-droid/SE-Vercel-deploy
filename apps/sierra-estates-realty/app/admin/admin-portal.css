@@ -1,9 +1,50 @@
-/* ── TOKENS ─────────────────────────────────────────────────────────── */
-:root{--gold:#00AEFF;--gold-lt:#5FC9FF;--red:#E63946;--emerald:#34D399;--blue:#1E88D9;--purple:#7C3AED;--amber:#f59e0b;}
-[data-theme="dark"]{--bg:#07111E;--bg-s:#0B1A2E;--bg-e:#0F2035;--bg-e2:#152C48;--surf:rgba(255,255,255,.055);--surf2:rgba(255,255,255,.03);--tx:#F0EDE5;--tx-s:#FFFFFF;--tx-m:rgba(240,237,229,.58);--tx-f:rgba(240,237,229,.32);--bd:rgba(255,255,255,.08);--bd-s:rgba(255,255,255,.15);}
-[data-theme="light"]{--bg:#F7F5F1;--bg-s:#FDFCFA;--bg-e:#FFFFFF;--bg-e2:#FBFAF7;--surf:rgba(13,32,53,.045);--surf2:rgba(13,32,53,.02);--tx:#1A2B3D;--tx-s:#050B14;--tx-m:rgba(13,32,53,.62);--tx-f:rgba(13,32,53,.38);--bd:rgba(13,32,53,.08);--bd-s:rgba(13,32,53,.16);}
+/* ── TOKENS & CLAY DESIGN SYSTEM ─────────────────────────────────────── */
+:root{
+  --gold:#00AEFF;
+  --gold-lt:#5FC9FF;
+  --red:#E63946;
+  --emerald:#34D399;
+  --blue:#1E88D9;
+  --purple:#7C3AED;
+  --amber:#f59e0b;
+  --clay-bg: rgba(15, 32, 53, 0.65);
+  --clay-shadow-dark: rgba(2, 8, 16, 0.65);
+  --clay-shadow-light: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"]{
+  --bg:#07111E;
+  --bg-s:#0B1A2E;
+  --bg-e:#0F2035;
+  --bg-e2:#152C48;
+  --surf:rgba(255,255,255,.055);
+  --surf2:rgba(255,255,255,.03);
+  --tx:#F0EDE5;
+  --tx-s:#FFFFFF;
+  --tx-m:rgba(240,237,229,.58);
+  --tx-f:rgba(240,237,229,.32);
+  --bd:rgba(255,255,255,.08);
+  --bd-s:rgba(255,255,255,.15);
+  --clay-card: linear-gradient(145deg, #0e1e32, #081322);
+  --clay-card-shadow: 8px 8px 18px #040a12, -8px -8px 18px #0e243e, inset 1px 1px 2px rgba(255,255,255,0.12);
+}
+[data-theme="light"]{
+  --bg:#F7F5F1;
+  --bg-s:#FDFCFA;
+  --bg-e:#FFFFFF;
+  --bg-e2:#FBFAF7;
+  --surf:rgba(13,32,53,.045);
+  --surf2:rgba(13,32,53,.02);
+  --tx:#1A2B3D;
+  --tx-s:#050B14;
+  --tx-m:rgba(13,32,53,.62);
+  --tx-f:rgba(13,32,53,.38);
+  --bd:rgba(13,32,53,.08);
+  --bd-s:rgba(13,32,53,.16);
+  --clay-card: linear-gradient(145deg, #ffffff, #e6e2da);
+  --clay-card-shadow: 8px 8px 20px #d4cfc5, -8px -8px 20px #ffffff, inset 1px 1px 2px rgba(255,255,255,0.8);
+}
 [data-theme="light"] body{background:fixed radial-gradient(900px 600px at 85% 0%,rgba(0,174,255,.10),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(30,136,217,.07),transparent 55%),var(--bg);}
-[data-theme="light"] .card,[data-theme="light"] .kpi-card{box-shadow:0 1px 2px rgba(13,32,53,.04),0 8px 24px -12px rgba(13,32,53,.10);}
+[data-theme="light"] .card,[data-theme="light"] .kpi-card{box-shadow:var(--clay-card-shadow);}
 [data-theme="light"] #content{background:radial-gradient(900px 600px at 90% -5%,rgba(0,174,255,.08),transparent 55%),radial-gradient(700px 500px at -5% 105%,rgba(30,136,217,.06),transparent 50%);}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
@@ -44,7 +85,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
 #sidebar.collapsed .nav-item span,#sidebar.collapsed .nav-section,#sidebar.collapsed .nav-badge{opacity:0;width:0;overflow:hidden;}
 
 /* ── MOBILE OVERLAY SIDEBAR ─────────────────────────────────────────── */
-.mobile-overlay{display:none;position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);}
+.mobile-overlay{display:none;position:fixed;inset:0;z-index:199;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
 .mobile-sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--bg-s);border-right:1px solid var(--bd);z-index:200;animation:slideIn .35s cubic-bezier(.16,1,.3,1);overflow-y:auto;flex-direction:column;display:flex;}
 [dir="rtl"] .mobile-sidebar{left:auto;right:0;border-right:none;border-left:1px solid var(--bd);}
 @media(max-width:768px){
@@ -174,7 +215,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
 .avm-card:hover{border-color:rgba(0,174,255,.3);}
 .score-ring{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;flex-shrink:0;}
 .slider-wrap{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
-.slider-wrap input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold) var(--pct,50%),var(--bd-s) var(--pct,50%));outline:none;cursor:pointer;}
+.slider-wrap input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold) var(--pct,50%),var(--bd-s) var(--pct,50%));outline:none;cursor:pointer;}
 .slider-wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);border:2px solid var(--bg-e);}
 .parse-box{background:#050B14;border:1px solid rgba(0,174,255,.15);border-radius:12px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11px;min-height:120px;color:var(--gold-lt);outline:none;width:100%;resize:vertical;}
 .parsed-field{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;background:var(--surf);border:1px solid var(--bd);margin-bottom:6px;font-size:11px;}
@@ -182,7 +223,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);}
 .parsed-val{color:var(--tx);font-weight:600;}
 
 /* ── MODAL ───────────────────────────────────────────────────────────── */
-.modal-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;}
 .modal-box{background:var(--bg-e);border:1px solid var(--bd-s);border-radius:20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
 .modal-hd{padding:18px 22px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;}
 

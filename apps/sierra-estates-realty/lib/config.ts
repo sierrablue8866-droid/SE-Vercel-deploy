@@ -6,17 +6,40 @@
 
 export const SiteConfig = {
   branding: {
-    name: "Sierra Estates Realty",
-    legalName: "Sierra Estates Real Estate Investment",
-    tagline: "Ultra-Cinematic Asset Intelligence",
+    name: "Sierra Blu Realty / Sierra Estates",
+    legalName: "Sierra Blu Realty & Sierra Estates Real Estate Investment",
+    tagline: "Beyond Brokerage — Smarter Decisions, AI-Driven.",
     foundedIn: "2026",
+    palette: {
+      navy: "#0A1628",
+      gold: "#C9A84C",
+      ivory: "#F4F0E8",
+      sierraBlue: "#BFDAF7",
+    },
+    fonts: {
+      headings: "Playfair Display, serif",
+      arabic: "Cairo, sans-serif",
+      metrics: "Inter, sans-serif",
+    },
   },
+  leadership: [
+    {
+      name: "Ahmed Fawzy",
+      role: "Chief Executive Officer & Sales Manager",
+      rbac: "Super Admin",
+      duties: "Executive Leadership, Foreign Buyer Sales & Deal Closing",
+    },
+    {
+      name: "Farida",
+      role: "Sales Team Leader & HR Manager",
+      rbac: "Operational Admin",
+      duties: "Operations Management, Team Leadership & Direct Closing",
+    },
+  ],
   executive: {
     name: "Ahmed Fawzy",
-    role: "Founding Executive & Strategic Lead",
-    // These are currently flagging as 'wrong' by the user. 
-    // Will update as soon as they provide the new data.
-    phone: "+20 10 61399688", 
+    role: "Chief Executive Officer & Sales Manager",
+    phone: "+20 10 61399688",
     email: "EmeraldEstatesegypt@gmail.com",
     telegramBot: "https://t.me/Sierrablurealtybot",
   },
