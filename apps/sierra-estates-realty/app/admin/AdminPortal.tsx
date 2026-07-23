@@ -131,6 +131,7 @@ const COMPOUNDS_DATA = {
 
 const NAV_ITEMS = (T) => [
   {id:'overview',label:T('overview'),icon:'🏠',section:T('main')},
+  {id:'commandCenter',label:T('lang')==='ar'?'مركز القيادة':'Command Center',icon:'🎛️',section:T('main')},
   {id:'agents',label:T('agents'),icon:'🤖',section:T('main'),badge:'6',badgeCls:'nb-green'},
   {id:'workflows',label:T('workflows'),icon:'⚡',section:T('main'),badge:'8',badgeCls:'nb-blue'},
   {id:'automations',label:T('lang')==='ar'?'الأتمتة':'Automations',icon:'🪄',section:T('main'),badge:'3',badgeCls:'nb-green'},
@@ -145,6 +146,7 @@ const NAV_ITEMS = (T) => [
   {id:'closer',label:T('closer'),icon:'💼',section:T('operations')},
   {id:'reports',label:T('reports'),icon:'📊',section:T('analytics')},
   {id:'settings',label:T('settings'),icon:'🔧',section:T('system')},
+  {id:'memoryEngine',label:T('lang')==='ar'?'محرك الذاكرة':'Memory Engine',icon:'🧠',section:T('system')},
 ];
 
 const OPENCLAW_LOGS = [
@@ -1172,6 +1174,14 @@ function Stage9CloserPage({T}){
 /* ── PLACEHOLDER ──────────────────────────────────────────────────────── */
 function PlaceholderPage({title,emoji}){return <div className="fade-up" style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'60vh',opacity:.5}}><div style={{fontSize:48,marginBottom:12}}>{emoji}</div><h2 style={{fontFamily:'Cormorant Garamond',fontWeight:300,fontSize:'1.8rem',color:'var(--tx)',marginBottom:6}}>{title}</h2><p style={{color:'var(--tx-f)',fontSize:12}}>Module active · Data loading from Firestore…</p></div>;}
 
+function AdminCommandCenterPage({ T }) {
+  return <PlaceholderPage title={T('lang')==='ar'?'مركز القيادة':'Admin Command Center'} emoji="🎛️" />;
+}
+
+function MemoryEnginePage({ T }) {
+  return <PlaceholderPage title={T('lang')==='ar'?'محرك الذاكرة':'Memory Engine (Nexus)'} emoji="🧠" />;
+}
+
 /* ── MAIN APP ─────────────────────────────────────────────────────────── */
 const PIPE_STAGES = [
   {k:'New',ar:'جديد',c:'#1E88D9'},
@@ -1365,6 +1375,7 @@ function AdminApp() {
   const renderPage=()=>{
     switch(tab){
       case 'overview':return <OverviewPage T={T}/>;
+      case 'commandCenter':return <AdminCommandCenterPage T={T}/>;
       case 'agents':return <AgentsPage T={T}/>;
       case 'workflows':return <WorkflowsPage T={T}/>;
       case 'openclaw':return <OpenClawPage T={T}/>;
@@ -1379,6 +1390,7 @@ function AdminApp() {
       case 'closer':return <Stage9CloserPage T={T}/>;
       case 'reports':return <ReportsPage T={T}/>;
       case 'settings':return <SettingsPage T={T}/>;
+      case 'memoryEngine':return <MemoryEnginePage T={T}/>;
       default:return <OverviewPage T={T}/>;
     }
   };
