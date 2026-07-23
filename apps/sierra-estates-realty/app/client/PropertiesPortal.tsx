@@ -15,13 +15,18 @@ type ModeFilter = 'all' | 'sale' | 'rent';
 export default function PropertiesPortal() {
   const { t, locale } = useT();
   const isAr = locale === 'ar';
-  const [listings, setListings] = useState<Listing[]>(FALLBACK_LISTINGS);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [fType, setFType] = useState<TypeFilter>('all');
   const [fMode, setFMode] = useState<ModeFilter>('all');
 
   useEffect(() => {
     let cancelled = false;
-    fetchListings(48).then((live) => { if (!cancelled && live.length) setListings(live); });
+    fetchListings(48).then((live) => {
+      if (!cancelled && live.length) {
+        const shuffled = [...live].sort(() => 0.5 - Math.random());
+        setListings(shuffled);
+      }
+    });
     return () => { cancelled = true; };
   }, []);
 

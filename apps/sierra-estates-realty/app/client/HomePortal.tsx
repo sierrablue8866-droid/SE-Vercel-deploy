@@ -66,14 +66,20 @@ function Stat({ value, dec, prefix, suffix, label }: { value: number; dec?: numb
 export default function HomePortal() {
   const { t, locale } = useT();
   const isAr = locale === 'ar';
-  const [listings, setListings] = useState<Listing[]>(FALLBACK_LISTINGS);
+  const [list, setList] = useState<Listing[]>([]);
   const [slide, setSlide] = useState(0);
   const [tab, setTab] = useState(0);
   const reduce = useReducedMotion();
 
   useEffect(() => {
     let cancelled = false;
-    fetchListings(12).then((live) => { if (!cancelled && live.length) setListings(live); });
+    fetchListings(48).then((live) => {
+      if (!cancelled && live.length) {
+        // Randomly shuffle and take 3 for the homepage featured grid
+        const shuffled = [...live].sort(() => 0.5 - Math.random());
+        setList(shuffled.slice(0, 3));
+      }
+    });
     return () => { cancelled = true; };
   }, []);
 
@@ -84,7 +90,7 @@ export default function HomePortal() {
     return () => clearInterval(id);
   }, [reduce]);
 
-  const featured = listings.slice(0, 6);
+  const featured = list;
   const heroMain = isAr ? SLIDES[slide].mainAr : SLIDES[slide].main;
   const heroPre = isAr ? SLIDES[slide].preAr : SLIDES[slide].pre;
   const heroWords = heroMain.split(' ');
