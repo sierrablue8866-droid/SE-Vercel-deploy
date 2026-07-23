@@ -1,0 +1,37 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/flutter/ephemeral": true,
+        "**/Flutter/ephemeral": true,
+        "**/.symlinks": true,
+        "**/.plugin_symlinks": true,
+        "**/CVS": true,
+        "**/.ruby-lsp": true
+    },
+    "compilets.autoStart": true,
+    "compile-hero.disable-compile-files-on-did-save-code": false,
+    "brightscript.bsdk": "1.0.0-alpha.52",
+
+    // ── YAML: associate GitHub Actions schema to suppress ${{ }} false-positives ──
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+    },
+    "yaml.validate": true,
+    "yaml.customTags": [
+        "!reference sequence"
+    ],
+
+    // ── Python: point Pylance at the correct interpreter with all deps installed ──
+    "python.defaultInterpreterPath": "C:\\Users\\sierr\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "python.analysis.extraPaths": [
+        "apps/agents/sierra-estates-bot"
+    ],
+
+    // ── TypeScript: suppress errors from non-existent/deleted folders ──
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.disableAutomaticTypeAcquisition": false
+}
