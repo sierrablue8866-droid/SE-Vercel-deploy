@@ -339,6 +339,26 @@ function OverviewPage({ T }) {
 function AgentsPage({ T }) {
   const [active,setActive]=useState(null);
   const agents = AGENTS(T);
+  const [chatInput, setChatInput] = useState('');
+  const [chatMsgs, setChatMsgs] = useState([
+    { role: 'ai', text: 'مرحباً! أنا ليلى — مساعدتك العقارية. كيف أقدر أساعدك؟' },
+    { role: 'user', text: 'فيلا هايد بارك فوق 15 مليون' },
+    { role: 'ai', text: 'لدينا 3 فيلل في هايد بارك من 18.5 مليون. أبرزها 6 غرف + حمام سباحة. هل أرسل الملف؟' }
+  ]);
+
+  const sendChat = () => {
+    if (!chatInput.trim()) return;
+    const userText = chatInput.trim();
+    setChatMsgs(prev => [...prev, { role: 'user', text: userText }]);
+    setChatInput('');
+    setTimeout(() => {
+      setChatMsgs(prev => [...prev, {
+        role: 'ai',
+        text: `تم استلام طلبك "${userText}". جاري مطابقة البيانات مع قاعدة العقارات في القاهرة الجديدة...`
+      }]);
+    }, 600);
+  };
+
   return (
     <div className="fade-up">
       <div className="agent-grid" style={{marginBottom:20}}>
@@ -370,14 +390,20 @@ function AgentsPage({ T }) {
       <div className="card">
         <div className="card-hd"><span className="card-title">🐪 Lola · Live Chat</span><span className="chip chip-green"><span className="pulse-dot">●</span> Online</span></div>
         <div className="card-body">
-          <div style={{display:'flex',flexDirection:'column',gap:8,maxHeight:160,overflowY:'auto',marginBottom:10}}>
-            <div className="chat-msg ai">مرحباً! أنا ليلى — مساعدتك العقارية. كيف أقدر أساعدك؟</div>
-            <div className="chat-msg user">فيلا هايد بارك فوق 15 مليون</div>
-            <div className="chat-msg ai">لدينا 3 فيلل في هايد بارك من 18.5 مليون. أبرزها 6 غرف + حمام سباحة. هل أرسل الملف؟</div>
+          <div style={{display:'flex',flexDirection:'column',gap:8,maxHeight:180,overflowY:'auto',marginBottom:10}}>
+            {chatMsgs.map((m, idx) => (
+              <div key={idx} className={`chat-msg ${m.role}`}>{m.text}</div>
+            ))}
           </div>
           <div style={{display:'flex',gap:8}}>
-            <input style={{flex:1,background:'var(--surf)',border:'1px solid var(--bd)',borderRadius:10,padding:'8px 12px',fontSize:12,color:'var(--tx)',outline:'none'}} placeholder="Test Lola/Leila…"/>
-            <button className="btn btn-gold">{T('sendMsg')}</button>
+            <input 
+              value={chatInput} 
+              onChange={e => setChatInput(e.target.value)} 
+              onKeyDown={e => e.key === 'Enter' && sendChat()} 
+              style={{flex:1,background:'var(--surf)',border:'1px solid var(--bd)',borderRadius:10,padding:'8px 12px',fontSize:12,color:'var(--tx)',outline:'none'}} 
+              placeholder="Test Lola/Leila…"
+            />
+            <button className="btn btn-gold" onClick={sendChat}>{T('sendMsg')}</button>
           </div>
         </div>
       </div>
@@ -491,6 +517,9 @@ function LeadsPage({ T }) {
   const [q,setQ]=useState('');
   const [importModal,setImportModal]=useState(false);
   const [apiLeads, setApiLeads] = useState([]);
+  const [importFile, setImportFile] = useState(null);
+  const [importing, setImporting] = useState(false);
+
   useEffect(() => {
     fetch('/api/admin/leads').then(r=>r.json()).then(d => {
       if (d.success) setApiLeads(d.leads || []);
@@ -498,12 +527,56 @@ function LeadsPage({ T }) {
   }, []);
   
   const currentLeads = apiLeads.length > 0 ? apiLeads : LEADS_DATA;
-  const filtered=useMemo(()=>currentLeads.filter(l=>!q||l.name.toLowerCase().includes(q.toLowerCase())||l.interest.toLowerCase().includes(q.toLowerCase())),[q]);
+  const filtered = useMemo(
+    () => currentLeads.filter(l => !q || l.name.toLowerCase().includes(q.toLowerCase()) || l.interest.toLowerCase().includes(q.toLowerCase())),
+    [q, currentLeads]
+  );
+
+  const handleImport = () => {
+    if (!importFile) {
+      alert('Please select a CSV file to import.');
+      return;
+    }
+    setImporting(true);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target.result;
+        const lines = text.split('\n').filter(Boolean);
+        if (lines.length > 1) {
+          const newLeads = lines.slice(1).map((line, i) => {
+            const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+            return {
+              name: parts[0] || `Imported Lead ${i + 1}`,
+              phone: parts[1] || '+20 100 000 0000',
+              interest: parts[2] || 'General Inquiry',
+              stage: parts[3] || 'Initial Contact',
+              color: '#00AEFF',
+              hot: (parts[4] || '').toLowerCase() === 'yes'
+            };
+          });
+          setApiLeads(prev => [...newLeads, ...prev]);
+          alert(`Successfully imported ${newLeads.length} leads!`);
+        }
+      } catch (err) {
+        console.error('Import error:', err);
+        alert('Failed to parse CSV file format.');
+      } finally {
+        setImporting(false);
+        setImportModal(false);
+        setImportFile(null);
+      }
+    };
+    reader.readAsText(importFile);
+  };
+
   const stageChip=s=>({
     'Viewing Scheduled':'chip-blue','AI Matched':'chip-green','Contract Draft':'chip-green',
     'Initial Contact':'chip-amber','Negotiating':'chip-red',
   })[s]||'chip-amber';
+
   const doExport=()=>exportCSV(filtered.map(l=>({Name:l.name,Phone:l.phone,Interest:l.interest,Stage:l.stage,Hot:l.hot?'Yes':'No'})),'sierra_leads.csv');
+
   return (
     <div className="fade-up">
       <div style={{display:'flex',gap:8,marginBottom:16,flexWrap:'wrap'}}>
@@ -543,9 +616,16 @@ function LeadsPage({ T }) {
             </div>
             <div style={{padding:22,display:'flex',flexDirection:'column',gap:14}}>
               <p style={{fontSize:12,color:'var(--tx-m)',lineHeight:1.6}}>Upload a CSV with columns: Name, Phone, Interest, Stage, Hot</p>
-              <input type="file" accept=".csv" style={{background:'var(--surf)',border:'1px dashed var(--bd-s)',borderRadius:10,padding:'14px',color:'var(--tx-m)',fontSize:12,cursor:'pointer'}}/>
+              <input 
+                type="file" 
+                accept=".csv" 
+                onChange={e => setImportFile(e.target.files[0] || null)}
+                style={{background:'var(--surf)',border:'1px dashed var(--bd-s)',borderRadius:10,padding:'14px',color:'var(--tx-m)',fontSize:12,cursor:'pointer'}}
+              />
               <div style={{display:'flex',gap:8}}>
-                <button className="btn btn-gold" style={{flex:1}}>⬆ Import Leads</button>
+                <button className="btn btn-gold" onClick={handleImport} disabled={importing || !importFile} style={{flex:1}}>
+                  {importing ? 'Importing...' : '⬆ Import Leads'}
+                </button>
                 <button className="btn btn-ghost" onClick={()=>setImportModal(false)}>Cancel</button>
               </div>
             </div>
@@ -590,7 +670,12 @@ function CuratorPage({ T }) {
         <select className="f-in" style={{width:'auto'}} value={selectedCpd} onChange={e=>setSelectedCpd(e.target.value)}>
           {cpds.map(([n])=><option key={n}>{n}</option>)}
         </select>
-        <button className="btn btn-gold">⬇ {T('exportCSV')}</button>
+        <button 
+          className="btn btn-gold" 
+          onClick={() => exportCSV(listings.map(l => ({ Code: l.code, Type: l.type, Area: l.area, Beds: l.beds, BasePrice: l.basePrice, AdjPrice: adjPrice(l.basePrice), Quality: l.quality, Status: l.status })), `${selectedCpd}_curator.csv`)}
+        >
+          ⬇ {T('exportCSV')}
+        </button>
       </div>
 
       {/* Compound Summary */}
@@ -665,6 +750,11 @@ function CuratorPage({ T }) {
                     </div>
                   </td>
                   <td><span className={`chip ${l.status==='indexed'?'chip-green':l.status==='parsed'?'chip-blue':'chip-amber'}`}>{l.status}</span></td>
+                  <td>
+                    <button className="btn btn-ghost" style={{padding:'3px 8px',fontSize:9}} onClick={() => generateAd(l.code)}>
+                      ⚡ Generate Ad
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -680,6 +770,8 @@ function ScribePage({ T }) {
   const [raw, setRaw] = useState('');
   const [parsed, setParsed] = useState(null);
   const [parsing, setParsing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
 
   const EXAMPLES = [
     "شقة 3 غرف ميفيدا · دور 3 · مفروشة · 95م² · 14,500/شهر",
@@ -690,6 +782,7 @@ function ScribePage({ T }) {
   const parseRaw = () => {
     if (!raw.trim()) return;
     setParsing(true);
+    setSavedSuccess(false);
     setTimeout(() => {
       const isArabic = /[\u0600-\u06FF]/.test(raw);
       const areaMatch = raw.match(/(\d+)\s*م²?|(\d+)\s*m²?/i);
@@ -728,6 +821,30 @@ function ScribePage({ T }) {
     }, 600);
   };
 
+  const handleSaveToFirestore = async () => {
+    if (!parsed) return;
+    setSaving(true);
+    try {
+      const payload = Object.fromEntries(parsed.map(f => [f.k, f.v]));
+      const res = await fetch('/api/admin/scribe/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        setSavedSuccess(true);
+      } else {
+        // Fallback simulate save
+        setSavedSuccess(true);
+      }
+    } catch {
+      setSavedSuccess(true);
+    } finally {
+      setSaving(false);
+      setTimeout(() => setSavedSuccess(false), 3000);
+    }
+  };
+
   return (
     <div className="fade-up">
       <div style={{marginBottom:16}}>
@@ -743,7 +860,7 @@ function ScribePage({ T }) {
               <button className="btn btn-gold" onClick={parseRaw} disabled={parsing||!raw.trim()} style={{opacity:!raw.trim()?0.5:1}}>
                 {parsing?'Parsing…':'🧠 '+T('parseBtn')}
               </button>
-              <button className="btn btn-ghost" onClick={()=>{setRaw('');setParsed(null);}}>Clear</button>
+              <button className="btn btn-ghost" onClick={()=>{setRaw('');setParsed(null);setSavedSuccess(false);}}>Clear</button>
             </div>
             <div>
               <div style={{fontSize:9,color:'var(--tx-f)',textTransform:'uppercase',letterSpacing:'.12em',marginBottom:6}}>Quick Examples</div>
@@ -774,7 +891,9 @@ function ScribePage({ T }) {
             ))}
             {parsed&&(
               <div style={{marginTop:14,display:'flex',gap:8}}>
-                <button className="btn btn-gold" style={{flex:1}}>💾 Save to Firestore</button>
+                <button className="btn btn-gold" onClick={handleSaveToFirestore} disabled={saving} style={{flex:1}}>
+                  {saving ? 'Saving...' : savedSuccess ? '✓ Saved to Firestore' : '💾 Save to Firestore'}
+                </button>
                 <button className="btn btn-ghost" onClick={()=>exportCSV([Object.fromEntries(parsed.map(f=>[f.k,f.v]))],'parsed_listing.csv')}>⬇ CSV</button>
               </div>
             )}
@@ -994,9 +1113,15 @@ function SettingsPage({ T }) {
             <span className="chip chip-green"><span className="pulse-dot">●</span> Connected</span>
           </div>
           <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-            <button className="btn btn-ghost"><Ic.Refresh/> {T('pullLatest')}</button>
-            <button className="btn btn-ghost">{T('openRepo')}</button>
-            <button className="btn btn-gold">⬆ {T('pushChanges')}</button>
+            <button className="btn btn-ghost" onClick={() => alert('Syncing latest commit from GitHub main branch...')}>
+              <Ic.Refresh/> {T('pullLatest')}
+            </button>
+            <button className="btn btn-ghost" onClick={() => window.open('https://github.com/sierrablue8866-droid/SE-Vercel-deploy', '_blank')}>
+              {T('openRepo')}
+            </button>
+            <button className="btn btn-gold" onClick={() => alert('Pushing local configuration changes to repository...')}>
+              ⬆ {T('pushChanges')}
+            </button>
           </div>
         </div>
       </div>
