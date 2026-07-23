@@ -15,22 +15,39 @@ interface SidebarProps {
   setLangKey: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NAV_ITEMS = (T: any) => [
-  {id:'overview',label:T('overview'),icon:'🏠',section:T('main')},
-  {id:'agents',label:T('agents'),icon:'🤖',section:T('main'),badge:'6',badgeCls:'nb-green'},
-  {id:'workflows',label:T('workflows'),icon:'⚡',section:T('main'),badge:'8',badgeCls:'nb-blue'},
-  {id:'automations',label:T('lang')==='ar'?'الأتمتة':'Automations',icon:'🪄',section:T('main'),badge:'3',badgeCls:'nb-green'},
-  {id:'openclaw',label:T('openclaw'),icon:'⚙️',section:T('main')},
-  {id:'nexus',label:T('nexus'),icon:'📡',section:T('main'),badge:'LIVE',badgeCls:'nb-green'},
-  {id:'leads',label:T('leads'),icon:'👥',section:T('operations'),badge:'23',badgeCls:'nb-red'},
-  {id:'pipeline',label:T('lang')==='ar'?'الصفقات':'Pipeline',icon:'💼',section:T('operations')},
-  {id:'tasks',label:T('lang')==='ar'?'المهام':'Tasks',icon:'✅',section:T('operations'),badge:'5',badgeCls:'nb-blue'},
-  {id:'listings',label:T('listings'),icon:'🏘️',section:T('operations')},
-  {id:'curator',label:T('curator'),icon:'🎨',section:T('operations')},
-  {id:'scribe',label:T('scribe'),icon:'✍️',section:T('operations')},
-  {id:'closer',label:T('closer'),icon:'💼',section:T('operations')},
-  {id:'reports',label:T('reports'),icon:'📊',section:T('analytics')},
-  {id:'settings',label:T('settings'),icon:'🔧',section:T('system')},
+interface NavItem {
+  id: string;
+  label: string;
+  labelAr: string;
+  icon: LucideIcon;
+  section: 'core' | 'automation' | 'integrations' | 'system';
+  badge?: string;
+  badgeTone?: 'success' | 'info';
+}
+
+// Professional nav items — Lucide icons, no emojis.
+// Each item carries EN + AR labels so the sidebar re-renders cleanly on
+// language switch without re-deriving the labels via the T() lookup.
+export const NAV_ITEMS: NavItem[] = [
+  // ── Core operations ────────────────────────────────────────────────
+  { id: 'overview',       label: 'Live Dashboard',    labelAr: 'لوحة التحكم',           icon: LayoutDashboard, section: 'core' },
+  { id: 'commandCenter',  label: 'Command Center OS', labelAr: 'مركز القيادة',          icon: Zap,             section: 'core', badge: 'v4.0', badgeTone: 'success' },
+  { id: 'leads',          label: 'Leads & CRM',       labelAr: 'العملاء و CRM',         icon: Users,           section: 'core' },
+  { id: 'listings',       label: 'Property Inventory',labelAr: 'العقارات',              icon: Building2,       section: 'core' },
+  { id: 'followups',      label: 'Follow-ups',        labelAr: 'المتابعات',             icon: CalendarCheck,   section: 'core' },
+  { id: 'searchInsights', label: 'Search Insights',   labelAr: 'تحليلات البحث',         icon: BarChart3,       section: 'core' },
+  { id: 'pageEditor',     label: 'Page Editor',       labelAr: 'محرر الصفحات',          icon: FileText,        section: 'core' },
+  // ── Automation & agents ────────────────────────────────────────────
+  { id: 'bots',           label: 'Bots Control',      labelAr: 'التحكم بالبوتات',       icon: Bot,             section: 'automation' },
+  { id: 'agents',         label: 'AI Agents',         labelAr: 'وكلاء الذكاء',          icon: Bot,             section: 'automation', badge: '6', badgeTone: 'success' },
+  { id: 'memoryEngine',   label: 'Memory Engine & Vault', labelAr: 'محرك الذاكرة',     icon: Brain,           section: 'automation', badge: 'Vault', badgeTone: 'info' },
+  { id: 'workflows',      label: 'Workflows',         labelAr: 'سير العمل',             icon: Workflow,        section: 'automation', badge: '8', badgeTone: 'info' },
+  // ── Integrations ───────────────────────────────────────────────────
+  { id: 'easyListing',    label: 'Easy Listing',      labelAr: 'إدراج سريع',            icon: Zap,             section: 'integrations' },
+  { id: 'automation',     label: 'Automation Portal', labelAr: 'بوابة الأتمتة',         icon: Settings,        section: 'integrations' },
+  { id: 'dataSync',       label: 'Data Sync',         labelAr: 'مزامنة البيانات',       icon: RefreshCw,       section: 'integrations' },
+  // ── System ─────────────────────────────────────────────────────────
+  { id: 'dbEditor',       label: 'DB Editor',         labelAr: 'محرر قاعدة البيانات',   icon: Database,        section: 'system' },
 ];
 
 const CollapseIcon = () => <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6"/></svg>;

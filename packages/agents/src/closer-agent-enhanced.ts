@@ -55,28 +55,23 @@ Property: ${context.propertyCode} (${JSON.stringify(context.propertyData)})
 Previous offers: ${context.previousOffers.length > 0 ? context.previousOffers.map(o => `${o.amount} EGP on ${o.date}`).join(', ') : 'None'}
 Negotiation history: ${context.negotiationHistory.slice(-3).join(' → ') || 'Fresh negotiation'}`;
 
-    if (anthropicKey) {
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'x-api-key': anthropicKey,
-            'anthropic-version': '2023-06-01',
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'claude-3-5-sonnet-20241022',
-            max_tokens: 1200,
-            system: systemPrompt,
-            messages: [{ role: 'user', content: userMessage }],
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          return data.content?.[0]?.text || this.generateFallbackProposal(context);
+      if (process.env.ANTHROPIC_API_KEY) {
+        try {
+          // Dynamic safe require to prevent bundler errors when SDK is absent
+          const anthropicModule = typeof require !== 'undefined' ? eval('require')('@anthropic-ai/sdk') : null;
+          if (anthropicModule && anthropicModule.Anthropic) {
+            const anthropic = new anthropicModule.Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+            const message = await anthropic.messages.create({
+              model: 'claude-3-5-sonnet-20241022',
+              max_tokens: 1500,
+              system: systemPrompt,
+              messages: [{ role: 'user', content: userMessage }],
+            });
+            return message.content[0]?.type === 'text' ? message.content[0].text : '';
+          }
+        } catch {
+          // Fall through to fallback template if SDK is missing
         }
-      } catch (err: any) {
-        console.warn('[CloserAgentEnhanced] Anthropic fetch error:', err.message);
       }
     }
 
