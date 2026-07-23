@@ -23,7 +23,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Plus, Search, Edit3, Trash2, Phone, Eye, EyeOff, X, Check,
-  Building2, MapPin, BedDouble, Maximize, Tag, Loader2, AlertCircle,
+  Building2, MapPin, BedDouble, Maximize, Tag, Loader2, AlertCircle, Star
 } from 'lucide-react';
 import {
   fetchListings, createListingWithOwner, updateListing, deleteListingAndOwner,
@@ -119,6 +119,16 @@ export default function ListingsManagerPage() {
       setListings(prev => prev.map(l => l.id === id ? { ...l, status } : l));
     } catch (err: any) {
       setError(`Failed to update status: ${err.message}`);
+    }
+  };
+
+  // ── Featured toggle ──
+  const handleFeaturedToggle = async (id: string, current: boolean) => {
+    try {
+      await updateListing(id, { featured: !current });
+      setListings(prev => prev.map(l => l.id === id ? { ...l, featured: !current } : l));
+    } catch (err: any) {
+      setError(`Failed to toggle featured status: ${err.message}`);
     }
   };
 
@@ -222,9 +232,12 @@ export default function ListingsManagerPage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {filtered.map(listing => (
-                <tr key={listing.id} className="hover:bg-gray-50">
+                <tr key={listing.id} className={`hover:bg-gray-50 ${listing.featured ? 'bg-yellow-50/30' : ''}`}>
                   <td className="px-4 py-3">
-                    <div className="font-medium text-gray-900">{listing.compound_name}</div>
+                    <div className="font-medium text-gray-900 flex items-center gap-1.5">
+                      {listing.featured && <Star size={14} className="text-yellow-500" fill="currentColor" />}
+                      {listing.compound_name}
+                    </div>
                     <div className="text-xs text-gray-500 flex items-center gap-1">
                       <MapPin size={10} /> {listing.location_sector}
                     </div>
@@ -275,7 +288,14 @@ export default function ListingsManagerPage() {
                       </button>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-right">
+                  <td className="px-4 py-3 text-right flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => handleFeaturedToggle(listing.id, !!listing.featured)}
+                      className={`p-1 transition-colors ${listing.featured ? 'text-yellow-500 hover:text-yellow-600' : 'text-gray-300 hover:text-yellow-500'}`}
+                      title={listing.featured ? 'Remove from featured' : 'Feature on homepage'}
+                    >
+                      <Star size={16} fill={listing.featured ? 'currentColor' : 'none'} />
+                    </button>
                     <button
                       onClick={() => handleDelete(listing.id)}
                       className="text-red-500 hover:text-red-700 p-1"
@@ -330,6 +350,7 @@ function CreateListingModal({ onClose, onCreated }: {
   const [paymentPlan, setPaymentPlan] = useState('');
   const [virtualTourUrl, setVirtualTourUrl] = useState('');
   const [status, setStatus] = useState<ListingStatus>('draft');
+  const [featured, setFeatured] = useState(false);
 
   // Owner fields (PII)
   const [ownerName, setOwnerName] = useState('');
@@ -349,6 +370,7 @@ function CreateListingModal({ onClose, onCreated }: {
     try {
       const listingInput: ListingInput = {
         status,
+        featured,
         property_type: propertyType,
         compound_name: compoundName.trim(),
         location_sector: locationSector.trim(),
@@ -450,6 +472,13 @@ function CreateListingModal({ onClose, onCreated }: {
                   <option value="sold">Sold</option>
                 </select>
               </Field>
+              <div className="flex items-center mt-6">
+                <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
+                  <input type="checkbox" checked={featured} onChange={e => setFeatured(e.target.checked)} className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                  <Star size={16} className={featured ? 'text-yellow-500' : 'text-gray-400'} fill={featured ? 'currentColor' : 'none'} />
+                  Feature on Homepage
+                </label>
+              </div>
               <Field label="Payment Plan (optional)">
                 <input type="text" value={paymentPlan} onChange={e => setPaymentPlan(e.target.value)}
                   className="input" placeholder="e.g. 10% down, 5 years" />

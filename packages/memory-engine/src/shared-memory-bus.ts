@@ -15,7 +15,7 @@ import type { MemoryEntry } from '@sierra-estates/obedian'
 // Types
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type AgentName = 'liela' | 'sierra' | 'hermes' | 'openclaw' | 'closer' | 'system'
+export type AgentName = 'liela' | 'sierra' | 'hermes' | 'openclaw' | 'closer' | 'super-broker' | 'system'
 
 export interface MemoryWriteOptions {
   /** Agent writing this memory */
@@ -42,7 +42,7 @@ export interface MemoryEvent {
 
 export type MemorySubscriber = (event: MemoryEvent) => void
 
-const AGENT_NAMES = ['liela', 'sierra', 'hermes', 'openclaw', 'closer', 'system'] as const
+const AGENT_NAMES = ['liela', 'sierra', 'hermes', 'openclaw', 'closer', 'super-broker', 'system'] as const
 
 function isAgentName(value: unknown): value is AgentName {
   return typeof value === 'string' && AGENT_NAMES.includes(value as AgentName)

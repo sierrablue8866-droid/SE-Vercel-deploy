@@ -7,7 +7,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Nav, Topbar, Footer, PropertyCard, Reveal, SierraConcierge, useT } from './ui';
-import { FALLBACK_LISTINGS, fetchListings, Listing } from './portalData';
+import { fetchListings, Listing } from './portalData';
 
 type TypeFilter = 'all' | 'Villa' | 'Apartment' | 'Town' | 'Pent';
 type ModeFilter = 'all' | 'sale' | 'rent';

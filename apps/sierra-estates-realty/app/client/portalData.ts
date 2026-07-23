@@ -24,6 +24,7 @@ export interface Listing {
   agent: string;
   ago: string;
   img: string;
+  featured?: boolean;
 }
 
 export interface Compound {
@@ -53,16 +54,6 @@ export const SLIDES: Slide[] = [
   { pre: 'CURATED PORTFOLIO', preAr: 'محفظة منتقاة', main: 'Your Journey to Exceptional Homes Begins Here', mainAr: 'رحلتك نحو منزل استثنائي تبدأ هنا', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1920&q=85' },
 ];
 
-export const FALLBACK_LISTINGS: Listing[] = [
-  { id: 1, code: 'HP-VL-01', cmp: 'Hyde Park', zone: '5th Settlement', type: 'Villa', beds: 5, bath: 5, area: 480, egpM: 28.5, usd: 5200, ai: 9.8, tag: 'Premium', mode: 'sale', agent: 'Layla Mansour', ago: '2d ago', img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85' },
-  { id: 2, code: 'MVW-TH-02', cmp: 'Mountain View iCity', zone: '5th Settlement', type: 'Twin House', beds: 4, bath: 3, area: 280, egpM: 15.5, usd: 2400, ai: 9.6, tag: 'Featured', mode: 'sale', agent: 'Karim Fahmy', ago: '5h ago', img: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=85' },
-  { id: 3, code: 'MV-AP-03', cmp: 'Mivida', zone: '5th Settlement', type: 'Apartment', beds: 3, bath: 2, area: 145, egpM: 6.8, usd: 1650, ai: 9.1, tag: 'Smart Match', mode: 'rent', agent: 'Nour Saleh', ago: '1d ago', img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=85' },
-  { id: 4, code: 'UPC-PH-04', cmp: 'Uptown Cairo', zone: 'Mokattam', type: 'Penthouse', beds: 4, bath: 3, area: 300, egpM: 18.5, usd: 3800, ai: 9.5, tag: 'Exclusive', mode: 'sale', agent: 'Omar Magdy', ago: '6h ago', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85' },
-  { id: 5, code: 'TAJ-VL-05', cmp: 'Taj City', zone: 'New Cairo', type: 'Villa', beds: 5, bath: 5, area: 500, egpM: 35.0, usd: 6500, ai: 9.5, tag: 'Premium', mode: 'sale', agent: 'Yara Hakim', ago: '4d ago', img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=85' },
-  { id: 6, code: 'VLT-VL-06', cmp: 'Villette', zone: '5th Settlement', type: 'Villa', beds: 4, bath: 4, area: 390, egpM: 24.5, usd: 4400, ai: 9.3, tag: 'New', mode: 'sale', agent: 'Rana Adel', ago: '3d ago', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=85' },
-  { id: 7, code: 'PH-VL-07', cmp: 'Palm Hills NC', zone: '5th Settlement', type: 'Villa', beds: 4, bath: 3, area: 380, egpM: 23.5, usd: 4200, ai: 9.2, tag: 'Best ROI', mode: 'sale', agent: 'Layla Mansour', ago: '1w ago', img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=85' },
-  { id: 8, code: 'EST-DX-08', cmp: 'Eastown', zone: '5th Settlement', type: 'Duplex', beds: 3, bath: 2, area: 220, egpM: 11.5, usd: 2400, ai: 9.1, tag: null, mode: 'rent', agent: 'Karim Fahmy', ago: '2d ago', img: 'https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=85' },
-];
 
 export const COMPOUNDS: Compound[] = [
   { n: 'Katameya Heights', g: '+10%', ai: 9.0, z: 'Katameya', priceM: 26, rent: 5000, c: [29.99, 31.48] },
@@ -132,8 +123,7 @@ export function priceLabel(p: Pick<Listing, 'mode' | 'usd' | 'egpM'>): string {
 
 /* ── Firestore mapping ──────────────────────────────────────────────────────
    Reads the live `properties` collection via the client SDK (same pattern as
-   DesktopHome.tsx). Missing / unconfigured Firestore → empty array so callers
-   fall back to FALLBACK_LISTINGS. */
+   DesktopHome.tsx). Missing / unconfigured Firestore → empty array. */
 function mapDoc(id: string, p: Record<string, unknown>): Listing {
   const num = (v: unknown, d: number): number => (typeof v === 'number' ? v : d);
   const str = (v: unknown, d: string): string => (typeof v === 'string' ? v : d);
@@ -152,11 +142,15 @@ function mapDoc(id: string, p: Record<string, unknown>): Listing {
     egpM,
     usd: num(p.usd, num(p.rent, Math.round(egpM * 180))),
     ai: num(p.ai_score, num(p.ai, num(p.aiScore, 9.0))),
-    tag: p.status === 'sold' ? 'Sold' : (typeof p.tag === 'string' ? p.tag : null),
+    tag: p.status === 'sold' ? 'Sold' : null,
     mode,
-    agent: str(p.agent, str(p.agentName, 'Sierra Advisor')),
-    ago: str(p.ago, 'Live'),
-    img: str(p.cover_image_url, str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img))),
+    agent: str(p.agent_name, str(p.agentName, str(p.agent, 'Sarah M.'))),
+    ago: 'Just now',
+    img: str(
+      p.cover_image_url ?? p.image_url ?? p.coverImageUrl ?? p.imageUrl ?? (p.images as string[])?.[0],
+      INTERIORS[Math.floor(Math.random() * INTERIORS.length)]
+    ),
+    featured: typeof p.featured === 'boolean' ? p.featured : false,
   };
 }
 

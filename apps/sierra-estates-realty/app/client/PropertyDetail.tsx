@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Nav, Topbar, Footer, PropertyCard, Reveal, SierraConcierge, useT } from './ui';
-import { FALLBACK_LISTINGS, INTERIORS, Listing, priceLabel, compoundCoords } from './portalData';
+import { INTERIORS, Listing, priceLabel, compoundCoords, fetchListings } from './portalData';
 import { IconMapPin, IconBed, IconBath, IconScaling, IconSparkles, IconLayout, IconListChecks, IconMap, IconCalendar, IconMessageCircle, IconPhone, IconArrowRight, IconCheckCircle } from './icons';
 
 const PropertyMiniMap = dynamic(() => import('./maps').then((m) => m.PropertyMiniMap), {
@@ -37,29 +37,57 @@ function mapOne(id: string, p: Record<string, unknown>): Listing {
     tag: p.status === 'sold' ? 'Sold' : (typeof p.tag === 'string' ? p.tag : null),
     mode: p.mode === 'rent' || p.listingType === 'rent' ? 'rent' : 'sale',
     agent: str(p.agent, str(p.agentName, 'Sierra Advisor')), ago: str(p.ago, 'Live'),
-    img: str(p.cover_image_url, str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img))),
+    img: str(p.cover_image_url, str(p.featuredImage, str(p.img, INTERIORS[0]))),
   };
 }
 
 export default function PropertyDetail({ id }: { id: string }) {
   const { t, locale } = useT();
   const isAr = locale === 'ar';
-  const fallback = useMemo(
-    () => FALLBACK_LISTINGS.find((x) => String(x.id) === String(id)) ?? FALLBACK_LISTINGS[0],
-    [id],
-  );
-  const [p, setP] = useState<Listing>(fallback);
+  const [p, setP] = useState<Listing | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [similar, setSimilar] = useState<Listing[]>([]);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         const snap = await getDoc(doc(db, 'listings', id));
-        if (!cancelled && snap.exists()) setP(mapOne(snap.id, snap.data() as Record<string, unknown>));
-      } catch { /* keep fallback */ }
+        if (!cancelled && snap.exists()) {
+          const loaded = mapOne(snap.id, snap.data() as Record<string, unknown>);
+          setP(loaded);
+          // Fetch similar randomly
+          const allListings = await fetchListings(20);
+          if (!cancelled) {
+             setSimilar(allListings.filter(x => x.id !== loaded.id).sort(() => 0.5 - Math.random()).slice(0, 3));
+          }
+        }
+      } catch (err) {
+        console.error("Property not found", err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => { cancelled = true; };
   }, [id]);
+
+  if (loading) {
+    return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', color: 'var(--gold)' }}>Loading / جاري التحميل...</div>;
+  }
+
+  if (!p) {
+    return (
+      <div className="hz" dir={isAr ? 'rtl' : 'ltr'}>
+        <Topbar /><Nav active="props" />
+        <div style={{ padding: '120px 20px', textAlign: 'center', minHeight: '60vh' }}>
+          <h1 style={{ color: 'var(--tx-s)' }}>{isAr ? 'العقار غير موجود' : 'Property Not Found'}</h1>
+          <p style={{ color: 'var(--tx-m)', marginTop: 16 }}>{isAr ? 'عذراً، هذا العقار غير متاح أو تم بيعه.' : 'Sorry, this property is unavailable or has been sold.'}</p>
+          <Link href="/properties" className="btn-gold" style={{ marginTop: 32 }}>{isAr ? 'العودة للعقارات' : 'Back to Properties'}</Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   const gallery = [p.img.replace('w=800', 'w=1400'), ...INTERIORS.slice(0, 4)];
   const feats = isAr
@@ -68,9 +96,6 @@ export default function PropertyDetail({ id }: { id: string }) {
   const desc = isAr
     ? `وحدة ${p.type} استثنائية في ${p.cmp} — تشطيب فاخر، إطلالات مفتوحة، ومجتمع مغلق بخدمات متكاملة. موثّقة ميدانياً من فريق سيرا، ومسعّرة ببيانات السوق الحية عبر محرك AVM. متاحة للمعاينة خلال 24 ساعة.`
     : `An exceptional ${p.type.toLowerCase()} in ${p.cmp} — premium finishing, open views, and a fully-serviced gated community. Verified on-site by the Sierra team and priced against live market data through our AVM engine. Available for viewing within 24 hours.`;
-
-  const similar = FALLBACK_LISTINGS.filter((x) => String(x.id) !== String(p.id))
-    .sort((a, b) => Math.abs(a.ai - p.ai) - Math.abs(b.ai - p.ai)).slice(0, 3);
 
   const mapCenter = useMemo(() => compoundCoords(p.cmp), [p.cmp]);
 

@@ -99,6 +99,9 @@ export interface Listing {
   /** Bathroom count (optional — some listings omit this). */
   bathrooms?: number;
 
+  /** Is this listing featured on the Client Portal homepage? */
+  featured?: boolean;
+
   /** Finishing level — affects AVM pricing. */
   finishing: FinishingLevel;
 

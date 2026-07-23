@@ -118,5 +118,4 @@ const nextConfig: NextConfig = {
 };
 
 nextConfig.typescript = { ignoreBuildErrors: true };
-nextConfig.eslint = { ignoreDuringBuilds: true };
 export default nextConfig;

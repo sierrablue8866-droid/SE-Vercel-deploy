@@ -13,7 +13,7 @@ import {
   Nav, Topbar, Footer, PropertyCard, Reveal, SierraConcierge, useT,
 } from './ui';
 import {
-  SLIDES, COMPOUNDS, COMPOUND_IMGS, FALLBACK_LISTINGS, fetchListings, Listing,
+  SLIDES, COMPOUNDS, COMPOUND_IMGS, fetchListings, Listing,
 } from './portalData';
 import {
   IconMapPin, IconChevronDown, IconSearch, IconArrowRight, IconBadgeCheck, IconMap,
@@ -75,9 +75,17 @@ export default function HomePortal() {
     let cancelled = false;
     fetchListings(48).then((live) => {
       if (!cancelled && live.length) {
-        // Randomly shuffle and take 3 for the homepage featured grid
-        const shuffled = [...live].sort(() => 0.5 - Math.random());
-        setList(shuffled.slice(0, 3));
+        // Find explicitly featured listings
+        const featuredListings = live.filter((l) => l.featured);
+        
+        if (featuredListings.length > 0) {
+          // If we have featured listings, take up to 3 of them
+          setList(featuredListings.slice(0, 3));
+        } else {
+          // Fallback: Randomly shuffle and take 3 for the homepage featured grid
+          const shuffled = [...live].sort(() => 0.5 - Math.random());
+          setList(shuffled.slice(0, 3));
+        }
       }
     });
     return () => { cancelled = true; };
