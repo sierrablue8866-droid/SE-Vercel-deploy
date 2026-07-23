@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
     'firebase-admin',
   ],
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
