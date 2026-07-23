@@ -4,18 +4,6 @@
   "regions": ["iad1"],
   "crons": [
     {
-      "path": "/api/cron/sync-leads",
-      "schedule": "0 12 * * *"
-    },
-    {
-      "path": "/api/cron/ingest-from-sheets",
-      "schedule": "0 12 * * *"
-    },
-    {
-      "path": "/api/cron/sync-listings",
-      "schedule": "0 12 * * *"
-    },
-    {
       "path": "/api/cron/maintenance",
       "schedule": "0 12 * * *"
     },
