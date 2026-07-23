@@ -192,3 +192,26 @@ export function parseSierraCode(code: string) {
     features: parts[2].includes('+') ? parts[2].split('+')[1].split('') : []
   };
 }
+
+/**
+ * Computes deterministic MD5 sync_hash for property deduplication.
+ */
+export function computeSyncHash(params: {
+  compound?: string;
+  area?: number;
+  floorLevel?: string | number;
+  unitNumber?: string | number;
+  price?: number;
+}): string {
+  const key = `${params.compound || ''}|${params.area || 0}|${params.floorLevel || ''}|${params.unitNumber || ''}|${params.price || 0}`;
+  // Pure JS simple hash if crypto is not available in Edge browser, else crypto MD5
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    const char = key.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0;
+  }
+  const hexHash = Math.abs(hash).toString(16).padStart(8, '0');
+  return `sbr_${hexHash}_${key.length}`;
+}
+

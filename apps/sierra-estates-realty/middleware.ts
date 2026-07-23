@@ -1,59 +1,53 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { corsHeaders } from '@/lib/server/cors';
+import { verifySession, SESSION_COOKIE } from '@/lib/auth';
 
 /**
- * Edge proxy (formerly middleware.ts — renamed for Next.js 16+).
- * Three concerns, kept apart:
- *
- * 0. Admin / public split — the staff admin console (and the bot/agent trigger
- *    routes it calls) is isolated from the public marketing site by host. When
- *    `ADMIN_HOST` is set (e.g. "admin.sierra-estates.net"), any `/admin` request
- *    arriving on a different host is redirected to the admin host, so the public
- *    domain never serves the console. INERT until `ADMIN_HOST` is configured —
- *    i.e. nothing changes until the admin subdomain + its own Vercel project
- *    exist — so local dev and the current single-deployment setup are unaffected.
- *
- * 1. CORS — the Sierra Estates frontend is a separate origin (its own repo /
- *    deployment), so every `/api` response carries an allowlisted CORS header
- *    set and preflight `OPTIONS` requests are answered here. The allowlist is
- *    driven by `ALLOWED_ORIGINS` (see `lib/server/cors.ts`). Dynamic origin
- *    reflection lives here because static `vercel.json` headers can only pin a
- *    single origin — which breaks preview deploys and local dev.
- *
- * 2. Shared-secret gate — ONLY `/api/orchestrate` is gated on `X-SBR-SECRET-KEY`.
- *    Public/browser routes (`/api/listings`, `/api/leads`, `/api/concierge`, …),
- *    cron routes (authenticated with `CRON_SECRET`) and inbound third-party
- *    webhooks (`/api/webhooks/*`, `/api/telegram`, `/api/whatsapp/*` — each with
- *    its own secret/HMAC) authenticate themselves and must NEVER be gated here,
- *    or we would 401 the public site and break inbound webhooks.
+ * Edge proxy (middleware.ts).
+ * Concerns:
+ * 0. Host split & RBAC Session Protection for /admin routes.
+ * 1. CORS for /api routes.
+ * 2. Shared-secret gate for internal automation routes (/api/orchestrate).
  */
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const adminHost = process.env.ADMIN_HOST;
   const requestHost = request.headers.get('host') ?? request.nextUrl.hostname;
   const onAdminHost = Boolean(adminHost) && requestHost === adminHost;
 
-  // 0a) On the admin host, the console IS the site: rewrite the root to
-  //     /admin so admin.sierra-estates.net/ serves the console directly.
-  //     API routes, /_next assets and /admin/* itself pass through untouched.
+  // 0a) On the admin host, the console IS the site: rewrite root to /admin
   if (onAdminHost && pathname === '/') {
     const url = request.nextUrl.clone();
     url.pathname = '/admin';
     return NextResponse.rewrite(url);
   }
 
-  // 0b) Admin / public host split (inert unless ADMIN_HOST is set).
+  // 0b) Admin route protection & host split
   if (pathname.startsWith('/admin')) {
     if (adminHost && !onAdminHost) {
       const url = new URL(request.url);
       url.hostname = adminHost;
       url.protocol = 'https:';
       url.port = '';
-      // 307 (temporary) keeps it easy to undo and avoids aggressive caching.
       return NextResponse.redirect(url, 307);
     }
-    // On the admin host (or single-deployment mode), serve the console as-is.
+
+    // Allow /admin/login without session verification
+    if (pathname === '/admin/login') {
+      return NextResponse.next();
+    }
+
+    // Guard all other /admin routes with RBAC session token
+    const token = request.cookies.get(SESSION_COOKIE)?.value;
+    const session = await verifySession(token);
+
+    if (!session) {
+      const loginUrl = new URL('/admin/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
     return NextResponse.next();
   }
 
