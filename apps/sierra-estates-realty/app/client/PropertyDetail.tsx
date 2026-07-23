@@ -26,18 +26,18 @@ const WHATSAPP = 'https://wa.me/201092048333';
 function mapOne(id: string, p: Record<string, unknown>): Listing {
   const num = (v: unknown, d: number) => (typeof v === 'number' ? v : d);
   const str = (v: unknown, d: string) => (typeof v === 'string' ? v : d);
-  const raw = p.price;
+  const raw = p.price_egp ?? p.price;
   const egpM = typeof raw === 'number' ? (raw > 1000 ? raw / 1e6 : raw) : num(p.egpM, 10);
   return {
     id, code: str(p.code, id.slice(0, 8).toUpperCase()),
-    cmp: str(p.compound, str(p.location, 'New Cairo')), zone: str(p.zone, str(p.district, 'New Cairo')),
-    type: str(p.propertyType, str(p.type, 'Villa')), beds: num(p.bedrooms, num(p.beds, 3)),
-    bath: num(p.bathrooms, num(p.bath, 2)), area: num(p.area, 200), egpM,
-    usd: num(p.usd, num(p.rent, Math.round(egpM * 180))), ai: num(p.ai, num(p.aiScore, 9.0)),
-    tag: typeof p.tag === 'string' ? p.tag : null,
+    cmp: str(p.compound_name, str(p.compound, str(p.location, 'New Cairo'))), zone: str(p.location_sector, str(p.zone, str(p.district, 'New Cairo'))),
+    type: str(p.property_type, str(p.propertyType, str(p.type, 'Villa'))), beds: num(p.bedrooms, num(p.beds, 3)),
+    bath: num(p.bathrooms, num(p.bath, 2)), area: num(p.area_sqm, num(p.area, 200)), egpM,
+    usd: num(p.usd, num(p.rent, Math.round(egpM * 180))), ai: num(p.ai_score, num(p.ai, num(p.aiScore, 9.0))),
+    tag: p.status === 'sold' ? 'Sold' : (typeof p.tag === 'string' ? p.tag : null),
     mode: p.mode === 'rent' || p.listingType === 'rent' ? 'rent' : 'sale',
     agent: str(p.agent, str(p.agentName, 'Sierra Advisor')), ago: str(p.ago, 'Live'),
-    img: str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img)),
+    img: str(p.cover_image_url, str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img))),
   };
 }
 
@@ -54,7 +54,7 @@ export default function PropertyDetail({ id }: { id: string }) {
     let cancelled = false;
     (async () => {
       try {
-        const snap = await getDoc(doc(db, 'properties', id));
+        const snap = await getDoc(doc(db, 'listings', id));
         if (!cancelled && snap.exists()) setP(mapOne(snap.id, snap.data() as Record<string, unknown>));
       } catch { /* keep fallback */ }
     })();

@@ -137,32 +137,32 @@ export function priceLabel(p: Pick<Listing, 'mode' | 'usd' | 'egpM'>): string {
 function mapDoc(id: string, p: Record<string, unknown>): Listing {
   const num = (v: unknown, d: number): number => (typeof v === 'number' ? v : d);
   const str = (v: unknown, d: string): string => (typeof v === 'string' ? v : d);
-  const rawPrice = p.price;
+  const rawPrice = p.price_egp ?? p.price;
   const egpM = typeof rawPrice === 'number' ? (rawPrice > 1000 ? rawPrice / 1e6 : rawPrice) : num(p.egpM, 10);
   const mode: 'sale' | 'rent' = p.mode === 'rent' || p.listingType === 'rent' ? 'rent' : 'sale';
   return {
     id,
     code: str(p.code, id.slice(0, 8).toUpperCase()),
-    cmp: str(p.compound, str(p.location, 'New Cairo')),
-    zone: str(p.zone, str(p.district, 'New Cairo')),
-    type: str(p.propertyType, str(p.type, 'Villa')),
+    cmp: str(p.compound_name, str(p.compound, str(p.location, 'New Cairo'))),
+    zone: str(p.location_sector, str(p.zone, str(p.district, 'New Cairo'))),
+    type: str(p.property_type, str(p.propertyType, str(p.type, 'Villa'))),
     beds: num(p.bedrooms, num(p.beds, 3)),
     bath: num(p.bathrooms, num(p.bath, 2)),
-    area: num(p.area, 200),
+    area: num(p.area_sqm, num(p.area, 200)),
     egpM,
     usd: num(p.usd, num(p.rent, Math.round(egpM * 180))),
-    ai: num(p.ai, num(p.aiScore, 9.0)),
-    tag: typeof p.tag === 'string' ? p.tag : null,
+    ai: num(p.ai_score, num(p.ai, num(p.aiScore, 9.0))),
+    tag: p.status === 'sold' ? 'Sold' : (typeof p.tag === 'string' ? p.tag : null),
     mode,
     agent: str(p.agent, str(p.agentName, 'Sierra Advisor')),
     ago: str(p.ago, 'Live'),
-    img: str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img)),
+    img: str(p.cover_image_url, str(p.featuredImage, str(p.img, FALLBACK_LISTINGS[0].img))),
   };
 }
 
 export async function fetchListings(max = 24): Promise<Listing[]> {
   try {
-    const snap = await getDocs(query(collection(db, 'properties'), fbLimit(max)));
+    const snap = await getDocs(query(collection(db, 'listings'), fbLimit(max)));
     if (snap.empty) return [];
     return snap.docs.map((d) => mapDoc(d.id, d.data() as Record<string, unknown>));
   } catch {
