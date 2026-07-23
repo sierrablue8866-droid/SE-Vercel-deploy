@@ -16,14 +16,27 @@ export default function AdminLoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (!isFirebaseClientConfigured) {
-      setError('Firebase is not configured in this environment.');
-      return;
-    }
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.replace('/admin');
+      let idToken: string | undefined = undefined;
+      if (isFirebaseClientConfigured) {
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        idToken = await userCred.user.getIdToken();
+      }
+
+      // Mint HTTP-only session cookie via /api/auth
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ action: 'signin', email, password, token: idToken }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        router.replace('/admin');
+      } else {
+        setError(data.error || 'Invalid credentials. Staff access only.');
+      }
     } catch (_err) {
       setError('Invalid credentials. Staff access only.');
     } finally {
