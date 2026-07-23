@@ -145,7 +145,8 @@ const NAV_ITEMS = (T) => [
   {id:'scribe',label:T('scribe'),icon:'✍️',section:T('operations')},
   {id:'closer',label:T('closer'),icon:'💼',section:T('operations')},
   {id:'reports',label:T('reports'),icon:'📊',section:T('analytics')},
-  {id:'users',label:T('users'),icon:'👥',section:T('system')},
+  {id:'memory',label:T('lang')==='ar'?'محرك الذاكرة':'Memory Engine',icon:'🧠',section:T('system'),badge:'AI',badgeCls:'nb-blue'},
+  {id:'command',label:T('lang')==='ar'?'مركز القيادة':'Command Center',icon:'🕹️',section:T('system'),badge:'DEV',badgeCls:'nb-red'},
   {id:'settings',label:T('settings'),icon:'🔧',section:T('system')},
   {id:'memoryEngine',label:T('lang')==='ar'?'محرك الذاكرة':'Memory Engine',icon:'🧠',section:T('system')},
 ];
@@ -1553,6 +1554,138 @@ function AutomationsPage({ T }) {
   );
 }
 
+/* ── NEW MODULES: MEMORY ENGINE & COMMAND CENTER ────────────── */
+function MemoryEnginePage({ T }) {
+  return (
+    <div className="page-animate">
+      <div className="grid-3" style={{marginBottom: 24}}>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Vector Database</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--emerald)'}}>1.2M</div>
+            <div className="text-dim">Active Embeddings (Pinecone)</div>
+          </div>
+        </div>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Semantic Cache Hits</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--blue)'}}>94.2%</div>
+            <div className="text-dim">Last 24 Hours</div>
+          </div>
+        </div>
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Active Cognitive Sessions</h3></div>
+          <div className="card-body">
+            <div style={{fontSize: 32, fontWeight: 700, color: 'var(--purple)'}}>143</div>
+            <div className="text-dim">Realtime WhatsApp & Web Contexts</div>
+          </div>
+        </div>
+      </div>
+      <div className="card glass-card">
+        <div className="card-header">
+          <h3 className="card-title">Memory Thought Graph</h3>
+          <span className="badge nb-blue">Live Stream</span>
+        </div>
+        <div className="card-body" style={{height: 400, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <div className="text-dim" style={{textAlign: 'center'}}>
+            <div style={{fontSize: 48, marginBottom: 16}}>🧠</div>
+            <p>Thought Graph Visualization Active</p>
+            <p style={{fontSize: 12, opacity: 0.6}}>Connecting vector nodes for client: +20 100 111 2233...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AdminCommandCenterPage({ T }) {
+  const [logs, setLogs] = useState([]);
+  useEffect(() => {
+    const msgs = [
+      '[SYSTEM] Initializing Master Command Override',
+      '[OK] Connected to Vercel Deployment API',
+      '[OK] Connected to Google Cloud Functions',
+      '[WARN] Stage-9 Closer API rate limit approaching (85%)',
+      '[SYSTEM] Syncing distributed agent state...',
+      '[OK] Synchronization complete.'
+    ];
+    let i = 0;
+    const interval = setInterval(() => {
+      if(i < msgs.length) {
+        setLogs(prev => [...prev, msgs[i]]);
+        i++;
+      } else clearInterval(interval);
+    }, 800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="page-animate">
+      <div className="grid-2">
+        <div className="card glass-card" style={{gridColumn: '1 / -1'}}>
+          <div className="card-header">
+            <h3 className="card-title">Master Override Terminal</h3>
+            <div style={{display:'flex', gap: 8}}>
+              <button className="btn btn-outline" style={{borderColor:'var(--red)', color:'var(--red)'}}>Emergency Stop All Agents</button>
+              <button className="btn btn-primary">Trigger Vercel Deploy</button>
+            </div>
+          </div>
+          <div className="card-body" style={{background: '#09090b', color: '#a1a1aa', fontFamily: 'monospace', padding: 16, borderRadius: 8, minHeight: 200}}>
+            {logs.map((log, i) => (
+              <div key={i} style={{marginBottom: 4}}>
+                <span style={{color: log.includes('[OK]') ? '#34d399' : log.includes('[WARN]') ? '#fbbf24' : '#60a5fa'}}>{log.split(' ')[0]}</span>
+                {' '}{log.substring(log.indexOf(' ') + 1)}
+              </div>
+            ))}
+            <div className="pulse-dot" style={{marginTop: 8, display: 'inline-block'}} />
+          </div>
+        </div>
+        
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Vercel Deployment Status</h3></div>
+          <div className="card-body">
+            <div style={{display: 'flex', alignItems: 'center', gap: 12, paddingBottom: 16, borderBottom: '1px solid var(--bd)'}}>
+              <div style={{width: 12, height: 12, borderRadius: '50%', background: 'var(--emerald)'}} />
+              <div>
+                <div style={{fontWeight: 600}}>Production (main)</div>
+                <div className="text-dim" style={{fontSize: 12}}>Ready • a4b9c1d • 2m ago</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', alignItems: 'center', gap: 12, paddingTop: 16}}>
+              <div style={{width: 12, height: 12, borderRadius: '50%', background: 'var(--blue)'}} />
+              <div>
+                <div style={{fontWeight: 600}}>Preview (feature/admin-page)</div>
+                <div className="text-dim" style={{fontSize: 12}}>Building... • 9f823dc • Just now</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="card glass-card">
+          <div className="card-header"><h3 className="card-title">Global AI Infrastructure</h3></div>
+          <div className="card-body">
+            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 12}}>
+              <span>OpenAI GPT-4o Token Usage</span>
+              <span style={{color: 'var(--purple)'}}>14.2M / 20M limit</span>
+            </div>
+            <div className="sparkline" style={{height: 8, background: 'var(--bg-card-hover)', borderRadius: 4, overflow: 'hidden'}}>
+              <div style={{width: '71%', height: '100%', background: 'var(--purple)'}} />
+            </div>
+            
+            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 12, marginTop: 24}}>
+              <span>Anthropic Claude 3.5 Sonnet</span>
+              <span style={{color: 'var(--emerald)'}}>2.1M / 10M limit</span>
+            </div>
+            <div className="sparkline" style={{height: 8, background: 'var(--bg-card-hover)', borderRadius: 4, overflow: 'hidden'}}>
+              <div style={{width: '21%', height: '100%', background: 'var(--emerald)'}} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function AdminApp() {
   const [tab,setTab]=useState('overview');
   const [theme,setTheme]=useState(()=>(typeof window!=='undefined'&&localStorage.getItem('admin_theme'))||'light');
@@ -1591,7 +1724,8 @@ function AdminApp() {
       case 'scribe':return <ScribePage T={T}/>;
       case 'closer':return <Stage9CloserPage T={T}/>;
       case 'reports':return <ReportsPage T={T}/>;
-      case 'users':return <UsersPage T={T}/>;
+      case 'memory':return <MemoryEnginePage T={T}/>;
+      case 'command':return <AdminCommandCenterPage T={T}/>;
       case 'settings':return <SettingsPage T={T}/>;
       case 'memoryEngine':return <MemoryEnginePage T={T}/>;
       default:return <OverviewPage T={T}/>;
