@@ -40,56 +40,56 @@ describe('proxy config', () => {
 });
 
 describe('proxy — admin / public host split', () => {
-  it('redirects /admin on the client host to the admin host (307)', () => {
+  it('redirects /admin on the client host to the admin host (307)', async () => {
     process.env.ADMIN_HOST = 'admin.sierra-estates.net';
-    const res = middleware(request('https://sierra-estates.net/admin'));
+    const res = await middleware(request('https://sierra-estates.net/admin'));
     expect(res.status).toBe(307);
     expect(res.headers.get('location')).toBe('https://admin.sierra-estates.net/admin');
   });
 
-  it('serves /admin as-is on the admin host', () => {
+  it('serves /admin as-is on the admin host', async () => {
     process.env.ADMIN_HOST = 'admin.sierra-estates.net';
-    const res = middleware(request('https://admin.sierra-estates.net/admin'));
+    const res = await middleware(request('https://admin.sierra-estates.net/admin'));
     expect(res.status).toBe(200);
     expect(res.headers.get('location')).toBeNull();
   });
 
-  it('rewrites the admin-host root `/` to /admin', () => {
+  it('rewrites the admin-host root `/` to /admin', async () => {
     process.env.ADMIN_HOST = 'admin.sierra-estates.net';
-    const res = middleware(request('https://admin.sierra-estates.net/'));
+    const res = await middleware(request('https://admin.sierra-estates.net/'));
     const rewrite = res.headers.get('x-middleware-rewrite');
     expect(rewrite).toContain('/admin');
   });
 
-  it('leaves the client-host root `/` untouched', () => {
+  it('leaves the client-host root `/` untouched', async () => {
     process.env.ADMIN_HOST = 'admin.sierra-estates.net';
-    const res = middleware(request('https://sierra-estates.net/'));
+    const res = await middleware(request('https://sierra-estates.net/'));
     expect(res.status).toBe(200);
     expect(res.headers.get('x-middleware-rewrite')).toBeNull();
     expect(res.headers.get('location')).toBeNull();
   });
 
-  it('is fully inert in single-deployment mode (no ADMIN_HOST)', () => {
+  it('is fully inert in single-deployment mode (no ADMIN_HOST)', async () => {
     delete process.env.ADMIN_HOST;
-    const admin = middleware(request('https://example.com/admin'));
+    const admin = await middleware(request('https://example.com/admin'));
     expect(admin.status).toBe(200);
     expect(admin.headers.get('location')).toBeNull();
-    const root = middleware(request('https://example.com/'));
+    const root = await middleware(request('https://example.com/'));
     expect(root.status).toBe(200);
     expect(root.headers.get('x-middleware-rewrite')).toBeNull();
   });
 });
 
 describe('proxy — CORS preflight', () => {
-  it('answers OPTIONS /api with 204', () => {
-    const res = middleware(
+  it('answers OPTIONS /api with 204', async () => {
+    const res = await middleware(
       request('https://sierra-estates.net/api/listings', { method: 'OPTIONS' }),
     );
     expect(res.status).toBe(204);
   });
 
-  it('does not hijack OPTIONS on non-api routes', () => {
-    const res = middleware(
+  it('does not hijack OPTIONS on non-api routes', async () => {
+    const res = await middleware(
       request('https://sierra-estates.net/', { method: 'OPTIONS' }),
     );
     expect(res.status).toBe(200);
@@ -101,15 +101,15 @@ describe('proxy — /api/orchestrate shared-secret gate', () => {
     process.env.SBR_SECRET_KEY = 'test-secret';
   });
 
-  it('blocks /api/orchestrate without X-SBR-SECRET-KEY', () => {
-    const res = middleware(
+  it('blocks /api/orchestrate without X-SBR-SECRET-KEY', async () => {
+    const res = await middleware(
       request('https://sierra-estates.net/api/orchestrate', { method: 'POST' }),
     );
     expect(res.status).toBe(401);
   });
 
-  it('blocks /api/orchestrate with wrong X-SBR-SECRET-KEY', () => {
-    const res = middleware(
+  it('blocks /api/orchestrate with wrong X-SBR-SECRET-KEY', async () => {
+    const res = await middleware(
       request('https://sierra-estates.net/api/orchestrate', {
         method: 'POST',
         headers: { 'X-SBR-SECRET-KEY': 'wrong' },
@@ -118,8 +118,8 @@ describe('proxy — /api/orchestrate shared-secret gate', () => {
     expect(res.status).toBe(401);
   });
 
-  it('allows /api/orchestrate with correct X-SBR-SECRET-KEY', () => {
-    const res = middleware(
+  it('allows /api/orchestrate with correct X-SBR-SECRET-KEY', async () => {
+    const res = await middleware(
       request('https://sierra-estates.net/api/orchestrate', {
         method: 'POST',
         headers: { 'X-SBR-SECRET-KEY': 'test-secret' },
@@ -128,9 +128,9 @@ describe('proxy — /api/orchestrate shared-secret gate', () => {
     expect(res.status).toBe(200);
   });
 
-  it('allows /api/orchestrate when SBR_SECRET_KEY is unset (local dev)', () => {
+  it('allows /api/orchestrate when SBR_SECRET_KEY is unset (local dev)', async () => {
     delete process.env.SBR_SECRET_KEY;
-    const res = middleware(
+    const res = await middleware(
       request('https://sierra-estates.net/api/orchestrate', { method: 'POST' }),
     );
     expect(res.status).toBe(200);
