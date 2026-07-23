@@ -60,15 +60,22 @@ Previous offers: ${context.previousOffers.length > 0 ? context.previousOffers.ma
 Negotiation history: ${context.negotiationHistory.slice(-3).join(' → ') || 'Fresh negotiation'}`;
 
       if (process.env.ANTHROPIC_API_KEY) {
-        const { Anthropic } = await import('@anthropic-ai/sdk');
-        const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-        const message = await anthropic.messages.create({
-          model: 'claude-3-5-sonnet-20241022',
-          max_tokens: 1500,
-          system: systemPrompt,
-          messages: [{ role: 'user', content: userMessage }],
-        });
-        return message.content[0].type === 'text' ? message.content[0].text : '';
+        try {
+          // Dynamic safe require to prevent bundler errors when SDK is absent
+          const anthropicModule = typeof require !== 'undefined' ? eval('require')('@anthropic-ai/sdk') : null;
+          if (anthropicModule && anthropicModule.Anthropic) {
+            const anthropic = new anthropicModule.Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+            const message = await anthropic.messages.create({
+              model: 'claude-3-5-sonnet-20241022',
+              max_tokens: 1500,
+              system: systemPrompt,
+              messages: [{ role: 'user', content: userMessage }],
+            });
+            return message.content[0]?.type === 'text' ? message.content[0].text : '';
+          }
+        } catch {
+          // Fall through to fallback template if SDK is missing
+        }
       }
 
       return this.generateFallbackProposal(context);
