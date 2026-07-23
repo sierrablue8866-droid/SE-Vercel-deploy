@@ -1,6 +1,11 @@
+/**
+ * Admin API Client
+ * Authenticated fetch wrapper for the Sierra Estates backend API.
+ * Converted from Vite (import.meta.env) to Next.js (process.env).
+ */
 import { auth } from '../firebase';
 
-const BASE_URL = import.meta.env.VITE_BACKEND_API_URL || '';
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL || '';
 
 async function authHeader(): Promise<Record<string, string>> {
   const token = await auth.currentUser?.getIdToken();
@@ -26,7 +31,9 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   get: <T>(path: string) => request<T>(path),
-  post: <T>(path: string, data?: unknown) => request<T>(path, { method: 'POST', body: JSON.stringify(data ?? {}) }),
-  patch: <T>(path: string, data?: unknown) => request<T>(path, { method: 'PATCH', body: JSON.stringify(data ?? {}) }),
+  post: <T>(path: string, data?: unknown) =>
+    request<T>(path, { method: 'POST', body: JSON.stringify(data ?? {}) }),
+  patch: <T>(path: string, data?: unknown) =>
+    request<T>(path, { method: 'PATCH', body: JSON.stringify(data ?? {}) }),
   delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
 };

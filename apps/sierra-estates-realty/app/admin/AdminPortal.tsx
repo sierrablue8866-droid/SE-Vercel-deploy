@@ -18,7 +18,6 @@ import PageEditorPage from './legacy-components/PageEditorPage';
 import DBEditorPage from './legacy-components/DBEditorPage';
 import SearchInsightsPage from './legacy-components/SearchInsightsPage';
 import FollowupsPage from './legacy-components/FollowupsPage';
-import RequestsTicketPage from './legacy-components/RequestsTicketPage';
 import AdminHealthMonitor from './legacy-components/AdminHealthMonitor';
 import GlobalProgressTracker from './legacy-components/GlobalProgressTracker';
 
@@ -147,9 +146,7 @@ const NAV_ITEMS = (T) => [
     {id:'pageEditor',label:'CMS Editor',icon:'🖋️',section:T('system')},
     {id:'dbEditor',label:'DB Editor',icon:'🗄️',section:T('system')},
     {id:'searchInsights',label:'Search Insights',icon:'🔍',section:T('analytics')},
-    {id:'followups',label:'Followups',icon:'📞',section:T('operations')},
-    {id:'requestsTickets',label:'Tickets',icon:'🎫',section:T('operations')},
-  {id:'commandCenter',label:T('lang')==='ar'?'مركز القيادة':'Command Center',icon:'🎛️',section:T('main')},
+    {id:'followups',label:'Followups',icon:'📞',section:T('operations')},  {id:'commandCenter',label:T('lang')==='ar'?'مركز القيادة':'Command Center',icon:'🎛️',section:T('main')},
   {id:'agents',label:T('agents'),icon:'🤖',section:T('main'),badge:'6',badgeCls:'nb-green'},
   {id:'workflows',label:T('workflows'),icon:'⚡',section:T('main'),badge:'8',badgeCls:'nb-blue'},
   {id:'automations',label:T('lang')==='ar'?'الأتمتة':'Automations',icon:'🪄',section:T('main'),badge:'3',badgeCls:'nb-green'},
@@ -1734,9 +1731,7 @@ function AdminApp() {
         case 'pageEditor':return <PageEditorPage T={T}/>;
         case 'dbEditor':return <DBEditorPage T={T}/>;
         case 'searchInsights':return <SearchInsightsPage T={T}/>;
-        case 'followups':return <FollowupsPage T={T}/>;
-        case 'requestsTickets':return <RequestsTicketPage T={T}/>;
-      case 'commandCenter':return <AdminCommandCenterPage T={T}/>;
+        case 'followups':return <FollowupsPage T={T}/>;      case 'commandCenter':return <AdminCommandCenterPage T={T}/>;
       case 'agents':return <AgentsPage T={T}/>;
       case 'workflows':return <WorkflowsPage T={T}/>;
       case 'openclaw':return <OpenClawPage T={T}/>;

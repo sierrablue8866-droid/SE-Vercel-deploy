@@ -49,7 +49,7 @@ export default function SystemHealth() {
 
     // Check n8n (ping the webhook endpoint)
     try {
-      const n8nUrl = import.meta.env.VITE_N8N_URL || 'http://localhost:5678';
+      const n8nUrl = process.env.NEXT_PUBLIC_N8N_URL || 'http://localhost:5678';
       // In production, this would be a real health check
       updated[1] = { name: 'n8n Workflows', icon: Zap, status: 'healthy', detail: '3 workflows active' };
     } catch {
