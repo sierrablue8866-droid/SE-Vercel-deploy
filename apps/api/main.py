@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 """Sierra Estates API main module."""
+=======
+>>>>>>> origin/client
 from __future__ import annotations
 
 import logging
@@ -34,7 +37,10 @@ sync_hub = PropertyFinderSyncHub()
 
 
 class PortfolioAsset(BaseModel):
+<<<<<<< HEAD
     """Represents a single portfolio asset for synchronization."""
+=======
+>>>>>>> origin/client
     id: str = Field(..., description="Internal Sierra Estates asset identifier")
     title_en: str | None = None
     title_ar: str | None = None
@@ -43,25 +49,37 @@ class PortfolioAsset(BaseModel):
 
 
 class SyncRequest(BaseModel):
+<<<<<<< HEAD
     """Request model containing a batch of assets to synchronize."""
+=======
+>>>>>>> origin/client
     assets: List[PortfolioAsset]
 
 
 @app.get("/health")
 def health() -> Dict[str, str]:
+<<<<<<< HEAD
     """Health check endpoint."""
+=======
+>>>>>>> origin/client
     return {"status": "ok", "service": "apps/api"}
 
 
 @app.post("/property-finder/format")
 def format_asset(asset: PortfolioAsset) -> Dict[str, Any]:
+<<<<<<< HEAD
     """Format a single asset for Property Finder."""
+=======
+>>>>>>> origin/client
     return sync_hub.format_portfolio_asset(asset.model_dump())
 
 
 @app.post("/property-finder/sync")
 def sync_assets(body: SyncRequest) -> Dict[str, Any]:
+<<<<<<< HEAD
     """Trigger a batch synchronization to Property Finder."""
+=======
+>>>>>>> origin/client
     return sync_hub.trigger_batch_sync([asset.model_dump() for asset in body.assets])
 
 
