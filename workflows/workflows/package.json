@@ -16,7 +16,7 @@
     "googleapis": "^136.0.0",
     "firebase-admin": "^13.0.0",
     "@sendgrid/mail": "^8.1.0",
-    "axios": "^1.7.0"
+    "axios": "^1.18.1"
   },
   "devDependencies": {
     "dotenv": "^16.4.0"

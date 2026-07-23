@@ -10,14 +10,7 @@
       "predeploy": ["pnpm -C \"$RESOURCE_DIR\" run build"]
     }
   ],
-  "hosting": {
-    "target": "sierra-estates-admin",
-    "public": "firebase/admin-redirect",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "redirects": [
-      { "source": "**", "destination": "https://sierra-estates.net/admin", "type": 302 }
-    ]
-  },
+  
   "firestore": {
     "rules": "apps/sierra-estates-realty/firestore.rules",
     "indexes": "firestore.indexes.json"

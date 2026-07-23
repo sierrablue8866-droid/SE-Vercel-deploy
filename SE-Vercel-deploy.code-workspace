@@ -3,5 +3,8 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "brightscript.bsdk": "1.0.0-alpha.52"
+    }
 }

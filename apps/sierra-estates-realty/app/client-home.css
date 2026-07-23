@@ -1,37 +1,70 @@
 /* ============================================================================
-   SIERRA ESTATES — CLIENT HOMEPAGE STYLES
-   Consumed by app/ClientHome.tsx. Uses the unified design tokens only.
-   PropertyCard block is ported verbatim from
-   design-system/components/property/PropertyCard.jsx.
+   SIERRA ESTATES — HIGH-END CLIENT HOMEPAGE STYLES
    ============================================================================ */
 
-.nav-link { color: var(--tx-m); text-decoration: none; font-family: var(--font-ui); font-size: 14px; transition: color var(--dur-base) var(--ease-std); }
+.nav-link { color: var(--tx-m); text-decoration: none; font-family: var(--font-ui); font-size: 14px; font-weight: 500; transition: color 200ms var(--ease-smooth); }
 .nav-link:hover { color: var(--gold-lt); }
 
-.btn-gold { display: inline-flex; align-items: center; justify-content: center; background: var(--grad-gold); color: var(--bg-d); border-radius: var(--radius-sm); padding: 10px 20px; font-family: var(--font-ui); font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: transform var(--dur-base) var(--ease-silk), box-shadow var(--dur-base) var(--ease-silk); }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: var(--shd-gold); color: var(--bg-d); }
-.btn-lg { padding: 15px 34px; font-size: 15px; border-radius: var(--radius-md); }
-.btn-wa { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid rgba(52,211,153,.55); color: var(--emerald); background: rgba(52,211,153,.08); border-radius: var(--radius-md); font-family: var(--font-ui); font-weight: 700; text-decoration: none; transition: background var(--dur-base) var(--ease-silk); }
-.btn-wa:hover { background: rgba(52,211,153,.16); color: var(--emerald); }
+.floating-nav {
+  background: rgba(11, 22, 38, 0.75);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  border-radius: 9999px;
+  padding: 8px 24px;
+}
 
-/* PropertyCard — ported verbatim from design-system/components/property/PropertyCard.jsx */
-.se-pcard { position: relative; display: flex; flex-direction: column; text-align: start; cursor: pointer; background: var(--bg-e); border: 1px solid var(--bd); border-radius: var(--radius-lg); overflow: hidden; transition: transform var(--dur-slow) var(--ease-silk), box-shadow var(--dur-slow) var(--ease-silk), border-color var(--dur-slow) var(--ease-silk); }
-.se-pcard:hover { transform: translateY(-5px); border-color: var(--bd-gold); box-shadow: var(--shd-gold); }
-.se-pcard__media { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-e2); }
-.se-pcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--dur-xslow) var(--ease-silk); }
-.se-pcard:hover .se-pcard__img { transform: scale(1.06); }
-.se-pcard__scrim { position: absolute; inset: 0; background: linear-gradient(to top, var(--ov-c), transparent 55%); }
-.se-pcard__code { position: absolute; top: 11px; inset-inline-start: 11px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .12em; color: var(--gold-lt); background: rgba(8,21,38,.7); backdrop-filter: blur(6px); padding: 5px 9px; border-radius: var(--radius-pill); border: 1px solid rgba(233,193,118,.25); }
-.se-pcard__badge { position: absolute; top: 11px; inset-inline-end: 11px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #fff; padding: 5px 10px; border-radius: var(--radius-pill); }
-.se-pcard__ai { position: absolute; bottom: 11px; inset-inline-start: 11px; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 10px; color: var(--emerald); background: rgba(8,21,38,.62); backdrop-filter: blur(6px); padding: 4px 9px; border-radius: var(--radius-pill); }
-.se-pcard__ai .live-dot { background: var(--emerald); animation: pulseGold 2s infinite; }
-.se-pcard__save { position: absolute; bottom: 11px; inset-inline-end: 11px; width: 34px; height: 34px; display: grid; place-items: center; border: none; cursor: pointer; border-radius: 50%; background: rgba(8,21,38,.62); backdrop-filter: blur(6px); color: #fff; transition: all var(--dur-base) var(--ease-silk); }
-.se-pcard__save:hover { background: rgba(8,21,38,.85); }
+.btn-gold { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #00AEFF, #5FC9FF); color: #071422; border-radius: 9999px; padding: 12px 24px; font-family: var(--font-ui); font-size: 13px; font-weight: 800; text-decoration: none; white-space: nowrap; transition: transform 250ms var(--ease-smooth), box-shadow 250ms var(--ease-smooth); }
+.btn-gold:hover { transform: scale(1.03); box-shadow: 0 10px 25px rgba(0, 174, 255, 0.4); color: #071422; }
+.btn-gold:active { transform: scale(0.97); }
+
+.btn-lg { padding: 16px 36px; font-size: 15px; border-radius: 9999px; }
+.btn-wa { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid rgba(16, 185, 129, 0.4); color: #10B981; background: rgba(16, 185, 129, 0.08); border-radius: 9999px; font-family: var(--font-ui); font-weight: 700; text-decoration: none; transition: background 250ms var(--ease-smooth), transform 250ms var(--ease-smooth); }
+.btn-wa:hover { background: rgba(16, 185, 129, 0.18); transform: translateY(-2px); }
+
+/* Double-Bezel Nested PropertyCard Architecture */
+.se-pcard-wrapper {
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 28px;
+  transition: border-color 300ms var(--ease-smooth), transform 300ms var(--ease-smooth);
+}
+.se-pcard-wrapper:hover {
+  border-color: rgba(0, 174, 255, 0.4);
+  transform: translateY(-6px);
+}
+
+.se-pcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  cursor: pointer;
+  background: var(--bg-e);
+  border: 1px solid var(--bd);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transition: transform 300ms var(--ease-smooth), box-shadow 300ms var(--ease-smooth);
+}
+
+.se-pcard__media { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--bg-e2); border-radius: 18px 18px 0 0; }
+.se-pcard__img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-smooth); }
+.se-pcard:hover .se-pcard__img { transform: scale(1.08); }
+.se-pcard__scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 14, 26, 0.85), transparent 60%); }
+.se-pcard__code { position: absolute; top: 12px; inset-inline-start: 12px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .12em; color: var(--gold-lt); background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 9999px; border: 1px solid rgba(0, 174, 255, 0.3); }
+.se-pcard__badge { position: absolute; top: 12px; inset-inline-end: 12px; font-family: var(--font-mono); font-weight: 700; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #fff; padding: 5px 11px; border-radius: 9999px; }
+.se-pcard__ai { position: absolute; bottom: 12px; inset-inline-start: 12px; display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-weight: 700; font-size: 10px; color: #10B981; background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); padding: 4px 10px; border-radius: 9999px; }
+.se-pcard__ai .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #10B981; animation: pulseGold 2s infinite; }
+.se-pcard__save { position: absolute; bottom: 12px; inset-inline-end: 12px; width: 36px; height: 36px; display: grid; place-items: center; border: none; cursor: pointer; border-radius: 50%; background: rgba(7, 14, 26, 0.75); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff; transition: all 200ms var(--ease-smooth); }
+.se-pcard__save:hover { background: rgba(7, 14, 26, 0.95); transform: scale(1.08); }
 .se-pcard__save--on { color: var(--red); }
-.se-pcard__body { padding: 15px 16px 17px; display: flex; flex-direction: column; gap: 9px; }
+.se-pcard__body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
 .se-pcard__loc { font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--tx-f); }
-.se-pcard__title { font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1.15; color: var(--tx-s); }
-.se-pcard__price { font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--gold-lt); }
-.se-pcard__specs { display: flex; gap: 14px; margin-top: 2px; padding-top: 11px; border-top: 1px solid var(--bd); }
+.se-pcard__title { font-family: var(--font-display); font-weight: 700; font-size: 20px; line-height: 1.15; color: var(--tx-s); }
+.se-pcard__price { font-family: var(--font-mono); font-weight: 800; font-size: 17px; color: var(--gold-lt); }
+.se-pcard__specs { display: flex; gap: 14px; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--bd); }
 .se-pcard__spec { display: flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; color: var(--tx-m); }
 @media (prefers-reduced-motion: reduce) { .se-pcard__ai .live-dot { animation: none; } }

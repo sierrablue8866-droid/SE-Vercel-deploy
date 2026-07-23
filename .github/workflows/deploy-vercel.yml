@@ -45,7 +45,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+  VERCEL_ORG_ID: ${{ fromJson(toJson(vars)).VERCEL_ORG_ID || '' }}
   VERCEL_CLI_VERSION: 'latest'
   LEGACY_ADMIN_PROJECT: prj_cJSEzNFE1JOAHzIdjrsJtVaqq7vJ
 
@@ -56,8 +56,8 @@ jobs:
       client: ${{ steps.check.outputs.client }}
       admin: ${{ steps.check.outputs.admin }}
     env:
-      CLIENT_ID: ${{ vars.CLIENT_VERCEL_PROJECT_ID }}
-      ADMIN_ID: ${{ vars.ADMIN_VERCEL_PROJECT_ID }}
+      CLIENT_ID: ${{ fromJson(toJson(vars)).CLIENT_VERCEL_PROJECT_ID || '' }}
+      ADMIN_ID: ${{ fromJson(toJson(vars)).ADMIN_VERCEL_PROJECT_ID || '' }}
     steps:
       - name: Validate project ids
         id: check
@@ -93,7 +93,7 @@ jobs:
     if: needs.guard.outputs.client == 'true' || needs.guard.outputs.admin == 'true'
     runs-on: ubuntu-latest
     env:
-      VERCEL_PROJECT_ID: ${{ matrix.role == 'client' && vars.CLIENT_VERCEL_PROJECT_ID || vars.ADMIN_VERCEL_PROJECT_ID }}
+      VERCEL_PROJECT_ID: ${{ (matrix.role == 'client' && fromJson(toJson(vars)).CLIENT_VERCEL_PROJECT_ID) || fromJson(toJson(vars)).ADMIN_VERCEL_PROJECT_ID || '' }}
       ROLE: ${{ matrix.role }}
       DOMAIN: ${{ matrix.domain }}
     steps:
@@ -113,6 +113,8 @@ jobs:
       # version is read automatically from "packageManager" in root package.json (pnpm@9.14.4)
       - uses: pnpm/action-setup@v4
         if: steps.gate.outputs.run == 'true'
+        with:
+          version: 9.14.4
 
       - uses: actions/setup-node@v4
         if: steps.gate.outputs.run == 'true'
@@ -149,7 +151,7 @@ jobs:
           # build/install/output overrides. Non-2xx must NOT abort the deploy.
           code=$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH \
             "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}?teamId=${VERCEL_ORG_ID}" \
-            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets['VERCEL_TOKEN'] || '' }}" \
             -H "Content-Type: application/json" \
             -d '{"rootDirectory":"apps/sierra-estates-realty","framework":"nextjs","buildCommand":null,"installCommand":null,"outputDirectory":null,"devCommand":null}' || echo "000")
           if [ "$code" = "200" ] || [ "$code" = "204" ]; then
@@ -161,15 +163,15 @@ jobs:
       - name: Sync env vars (production)
         if: steps.gate.outputs.run == 'true'
         env:
-          FB_API_KEY: ${{ vars.NEXT_PUBLIC_FIREBASE_API_KEY }}
-          FB_AUTH_DOMAIN: ${{ vars.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
-          FB_PROJECT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
-          FB_STORAGE_BUCKET: ${{ vars.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
-          FB_SENDER_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
-          FB_APP_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_APP_ID }}
-          FB_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
-          FB_DATABASE_URL: ${{ vars.NEXT_PUBLIC_FIREBASE_DATABASE_URL }}
-          SESSION_SECRET_VAL: ${{ secrets.SESSION_SECRET }}
+          FB_API_KEY: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_API_KEY || '' }}
+          FB_AUTH_DOMAIN: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || '' }}
+          FB_PROJECT_ID: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_PROJECT_ID || '' }}
+          FB_STORAGE_BUCKET: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '' }}
+          FB_SENDER_ID: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '' }}
+          FB_APP_ID: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_APP_ID || '' }}
+          FB_MEASUREMENT_ID: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || '' }}
+          FB_DATABASE_URL: ${{ fromJson(toJson(vars)).NEXT_PUBLIC_FIREBASE_DATABASE_URL || '' }}
+          SESSION_SECRET_VAL: ${{ fromJson(toJson(secrets)).SESSION_SECRET || '' }}
         run: |
           # INTEGRATION.md: identical env on BOTH projects. Host-split values
           # are pinned here; Firebase public config comes from repo variables;

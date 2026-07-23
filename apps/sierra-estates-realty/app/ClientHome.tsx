@@ -125,32 +125,34 @@ function SpecIcon({ d }: { d: string }) {
 function PropertyCard({ item, isAr: _isAr }: { item: Listing; isAr: boolean }) {
   const [saved, setSaved] = useState(false);
   return (
-    <Link href="/listings" className="se-pcard" style={{ textDecoration: 'none' }}>
-      <div className="se-pcard__media">
-        <img className="se-pcard__img" src={item.img} alt={item.title} loading="lazy" />
-        <div className="se-pcard__scrim" />
-        <span className="se-pcard__code">{item.code}</span>
-        {item.badge && <span className="se-pcard__badge" style={{ background: item.badgeColor || 'var(--gold)' }}>{item.badge}</span>}
-        <span className="se-pcard__ai"><span className="live-dot" /> AI {item.aiScore}</span>
-        <button type="button" className={saved ? 'se-pcard__save se-pcard__save--on' : 'se-pcard__save'}
-          aria-label={saved ? 'Saved' : 'Save'}
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((s) => !s); }}>
-          <svg viewBox="0 0 24 24" fill={saved ? 'var(--red)' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16 }}>
-            <path d={SPEC_ICONS.heart} />
-          </svg>
-        </button>
-      </div>
-      <div className="se-pcard__body">
-        <span className="se-pcard__loc">{item.location}</span>
-        <h3 className="se-pcard__title">{item.title}</h3>
-        <span className="se-pcard__price">{item.priceLabel}</span>
-        <div className="se-pcard__specs">
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bed} />{item.beds}</span>
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bath} />{item.baths}</span>
-          <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.area} />{item.area} m²</span>
+    <div className="se-pcard-wrapper">
+      <Link href="/listings" className="se-pcard" style={{ textDecoration: 'none' }}>
+        <div className="se-pcard__media">
+          <img className="se-pcard__img" src={item.img} alt={item.title} loading="lazy" />
+          <div className="se-pcard__scrim" />
+          <span className="se-pcard__code">{item.code}</span>
+          {item.badge && <span className="se-pcard__badge" style={{ background: item.badgeColor || 'var(--gold)' }}>{item.badge}</span>}
+          <span className="se-pcard__ai"><span className="live-dot" /> AI {item.aiScore}</span>
+          <button type="button" className={saved ? 'se-pcard__save se-pcard__save--on' : 'se-pcard__save'}
+            aria-label={saved ? 'Saved' : 'Save'}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSaved((s) => !s); }}>
+            <svg viewBox="0 0 24 24" fill={saved ? 'var(--red)' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 16, height: 16 }}>
+              <path d={SPEC_ICONS.heart} />
+            </svg>
+          </button>
         </div>
-      </div>
-    </Link>
+        <div className="se-pcard__body">
+          <span className="se-pcard__loc">{item.location}</span>
+          <h3 className="se-pcard__title">{item.title}</h3>
+          <span className="se-pcard__price">{item.priceLabel}</span>
+          <div className="se-pcard__specs">
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bed} />{item.beds}</span>
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.bath} />{item.baths}</span>
+            <span className="se-pcard__spec"><SpecIcon d={SPEC_ICONS.area} />{item.area} m²</span>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }
 
@@ -215,6 +217,37 @@ export default function ClientHome() {
 
   return (
     <div dir={isAr ? 'rtl' : 'ltr'} className={isAr ? 'sb-ar' : ''} style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+      {/* JSON-LD Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'RealEstateAgent',
+            name: 'Sierra Estates',
+            image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',
+            '@id': 'https://sierra-estates.net',
+            url: 'https://sierra-estates.net',
+            telephone: '+201061399688',
+            priceRange: 'EGP 5M - EGP 50M',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: '5th Settlement',
+              addressLocality: 'New Cairo',
+              addressRegion: 'Cairo',
+              postalCode: '11835',
+              addressCountry: 'EG',
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 30.0275,
+              longitude: 31.4914,
+            },
+            areaServed: ['5th Settlement', 'Hyde Park', 'Mivida', 'Uptown Cairo', 'Villette', 'Mountain View iCity'],
+          }),
+        }}
+      />
+
       {/* NAV */}
       <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'var(--nav)', backdropFilter: 'blur(16px)', borderBottom: '1px solid var(--bd)' }}>
         <nav style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '14px var(--gutter)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

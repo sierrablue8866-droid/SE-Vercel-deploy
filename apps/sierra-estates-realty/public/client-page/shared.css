@@ -17,12 +17,12 @@
   --green:#c8961a;
   --red:#e63946;
   --white:#fff;
-  --r-btn:32px;
-  --r-card:24px;
+  --r-btn:999px;
+  --r-card:28px;
   --r-chip:16px;
-  --shadow-s:0 8px 24px rgba(2,6,23,.06);
-  --shadow-m:0 24px 60px -12px rgba(200,150,26,.18);
-  --font:'Plus Jakarta Sans','Cairo',system-ui,sans-serif;
+  --shadow-s:0 4px 16px rgba(2,6,23,.04);
+  --shadow-m:0 20px 48px -12px rgba(2,6,23,.12);
+  --font:'Inter','Cairo',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
   --display:'Cormorant Garamond','Playfair Display','Cairo',Georgia,serif;
   --silk:cubic-bezier(0.16,1,0.3,1);
@@ -42,8 +42,8 @@
   --surface-2:#07111e;
   --topbar:#07111e;
   --footer:#020617;
-  --shadow-s:0 4px 12px rgba(0,0,0,.6);
-  --shadow-m:0 24px 64px rgba(0,0,0,.8);
+  --shadow-s:0 4px 12px rgba(0,0,0,.4);
+  --shadow-m:0 16px 40px rgba(0,0,0,.6);
 }
 [data-theme="dark"] body{background:#07111e;}
 [data-theme="dark"] .btn-pri{color:#07111e;box-shadow:0 8px 24px rgba(200,150,26,.3);background:linear-gradient(135deg,#e9c176,#c8961a);}
@@ -158,7 +158,7 @@ footer .brand .mark.logo{width:44px;height:44px;}
 [data-theme="dark"] .btn-navy:hover{background:#e9c176;}
 
 /* ── section shells ─────────────────────── */
-section.block{padding:78px 0;background:var(--white);}
+section.block{padding:96px 0;background:var(--white);}
 [data-theme="dark"] section.block{background:#0d0d0f;}
 section.block.well{background:var(--bg);}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;gap:24px;}
