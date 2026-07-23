@@ -15,7 +15,7 @@
 (function () {
   'use strict';
 
-  var ADMIN_API = 'https://admin.sierra-estates.net/api/leads';
+  var ADMIN_API = '/api/leads';
 
   /* ── Core POST helper ──────────────────────────────────────────────────── */
   function postToAdmin(payload) {

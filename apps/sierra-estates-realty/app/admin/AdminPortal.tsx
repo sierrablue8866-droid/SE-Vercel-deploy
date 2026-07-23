@@ -20,7 +20,7 @@ const LANG = {
     overview:'Intelligence OS', agents:'Agents & Bots', workflows:'Workflows',
     openclaw:'OpenClaw Terminal', nexus:'Nexus-AI Telemetry', leads:'CRM · Leads',
     listings:'Listings Hub', curator:'The Curator', scribe:'The Scribe',
-    closer:'Stage-9 Closer', reports:'Reports', settings:'System Config',
+    closer:'Stage-9 Closer', reports:'Reports', settings:'System Config', users:'Users & Roles',
     main:'Main', operations:'Operations', analytics:'Analytics', system:'System',
     collapse:'Collapse', livesite:'Live Site', theme:'Theme', lang:'Language',
     addLead:'+ Add Lead', exportCSV:'Export CSV', importCSV:'Import CSV',
@@ -50,7 +50,7 @@ const LANG = {
     overview:'لوحة التحكم', agents:'الوكلاء والبوتات', workflows:'سير العمل',
     openclaw:'طرفية أوبن كلو', nexus:'نيكسوس · البث المباشر', leads:'إدارة العملاء',
     listings:'قاعدة العقارات', curator:'المنظم', scribe:'الكاتب',
-    closer:'المغلق · المرحلة 9', reports:'التقارير', settings:'الإعدادات',
+    closer:'المغلق · المرحلة 9', reports:'التقارير', settings:'الإعدادات', users:'المستخدمين والأدوار',
     main:'رئيسي', operations:'العمليات', analytics:'التحليلات', system:'النظام',
     collapse:'طي', livesite:'الموقع المباشر', theme:'المظهر', lang:'اللغة',
     addLead:'+ إضافة عميل', exportCSV:'تصدير CSV', importCSV:'استيراد CSV',
@@ -277,8 +277,8 @@ function OverviewPage({ T }) {
         </div>
       </div>
       <div className="kpi-grid">
-        {kpis.map((k,i) => (
-          <div key={i} className="kpi-card" style={{'--accent':k.color}}>
+        {kpis.map((k) => (
+          <div key={k.lbl} className="kpi-card" style={{'--accent':k.color}}>
             <div style={{position:'absolute',top:0,left:0,width:3,height:'100%',background:k.color,borderRadius:'16px 0 0 16px'}}/>
             <div className="kpi-val gold-text">{k.val}</div>
             <div className="kpi-lbl">{k.lbl}</div>
@@ -303,8 +303,8 @@ function OverviewPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">{T('hotLeads')}</span><span className="chip chip-red">3 urgent</span></div>
           <div style={{maxHeight:160,overflowY:'auto'}}>
-            {LEADS_DATA.filter(l=>l.hot).map((l,i)=>(
-              <div key={i} className="lead-row">
+            {LEADS_DATA.filter(l=>l.hot).map((l)=>(
+              <div key={l.name} className="lead-row">
                 <div className="lead-avatar" style={{background:l.color}}>{l.name[0]}</div>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{fontSize:12,fontWeight:600,color:'var(--tx)',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{l.name}</div>
@@ -318,8 +318,8 @@ function OverviewPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">{T('agentStatus')}</span></div>
           <div className="card-body" style={{display:'flex',flexDirection:'column',gap:8}}>
-            {AGENTS(T).slice(0,4).map((a,i)=>(
-              <div key={i} style={{display:'flex',alignItems:'center',gap:8}}>
+            {AGENTS(T).slice(0,4).map((a)=>(
+              <div key={a.name} style={{display:'flex',alignItems:'center',gap:8}}>
                 <span style={{fontSize:16}}>{a.emoji}</span>
                 <div style={{flex:1}}>
                   <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
@@ -365,7 +365,7 @@ function AgentsPage({ T }) {
     <div className="fade-up">
       <div className="agent-grid" style={{marginBottom:20}}>
         {agents.map((a,i)=>(
-          <div key={i} className="agent-card" onClick={()=>setActive(active===i?null:i)} style={{borderColor:active===i?`${a.color}60`:'var(--bd)'}}>
+          <div key={a.name} className="agent-card" onClick={()=>setActive(active===i?null:i)} style={{borderColor:active===i?`${a.color}60`:'var(--bd)'}}>
             <div className="agent-icon" style={{background:`${a.color}18`,border:`1px solid ${a.color}30`}}>{a.emoji}</div>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:4}}>
               <div style={{fontWeight:700,fontSize:13,color:'var(--tx)'}}>{a.name}</div>
@@ -394,7 +394,7 @@ function AgentsPage({ T }) {
         <div className="card-body">
           <div style={{display:'flex',flexDirection:'column',gap:8,maxHeight:180,overflowY:'auto',marginBottom:10}}>
             {chatMsgs.map((m, idx) => (
-              <div key={idx} className={`chat-msg ${m.role}`}>{m.text}</div>
+              <div key={idx + m.text} className={`chat-msg ${m.role}`}>{m.text}</div>
             ))}
           </div>
           <div style={{display:'flex',gap:8}}>
@@ -435,7 +435,7 @@ function WorkflowsPage({ T }) {
           <div className="card-hd"><span className="card-title">Automation Workflows · n8n</span></div>
           <div style={{padding:'8px 0'}}>
             {wfs.map((w,i)=>(
-              <div key={i} className="wf-node">
+              <div key={w.name} className="wf-node">
                 <div className="wf-dot pulse-dot" style={{background:w.color}}/>
                 <div style={{flex:1,minWidth:0}}>
                   <p style={{fontSize:12,fontWeight:600,color:'var(--tx)',marginBottom:2}}>{w.name}</p>
@@ -452,8 +452,8 @@ function WorkflowsPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">Lead Pipeline · Stage Funnel</span></div>
           <div className="card-body">
-            {[{s:'S1-2',label:'Ingestion & Parsing',count:4821,pct:100,color:'#1E88D9'},{s:'S3-5',label:'Inventory & Pricing',count:3102,pct:64,color:'#00AEFF'},{s:'S6-8',label:'Matching & Outreach',count:1240,pct:26,color:'#34D399'},{s:'S9',label:'Negotiation',count:421,pct:8.7,color:'#7C3AED'},{s:'S10',label:'Closed Deals',count:97,pct:2,color:'#E63946'}].map((row,i)=>(
-              <div key={i} style={{marginBottom:12}}>
+            {[{s:'S1-2',label:'Ingestion & Parsing',count:4821,pct:100,color:'#1E88D9'},{s:'S3-5',label:'Inventory & Pricing',count:3102,pct:64,color:'#00AEFF'},{s:'S6-8',label:'Matching & Outreach',count:1240,pct:26,color:'#34D399'},{s:'S9',label:'Negotiation',count:421,pct:8.7,color:'#7C3AED'},{s:'S10',label:'Closed Deals',count:97,pct:2,color:'#E63946'}].map((row)=>(
+              <div key={row.s} style={{marginBottom:12}}>
                 <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
                   <span style={{fontSize:11,color:'var(--tx)'}}><strong style={{color:row.color,fontFamily:'JetBrains Mono'}}>{row.s}</strong> · {row.label}</span>
                   <span style={{fontFamily:'JetBrains Mono',fontSize:11,color:'var(--tx-m)'}}>{row.count.toLocaleString()}</span>
@@ -495,7 +495,7 @@ function OpenClawPage({ T }) {
       <div className="card" style={{marginBottom:14}}>
         <div className="card-hd"><span className="card-title">⚙️ OpenClaw · Sierra Intelligence Terminal</span><span className="chip chip-green"><span className="pulse-dot">●</span> Connected</span></div>
         <div ref={termRef} className="terminal" style={{height:340,margin:'0 14px 14px'}}>
-          {logs.map((l,i)=><div key={i} className={`term-line${l.t?' '+l.t:''} ${l.t==='prompt'?'term-prompt':''}`}>{l.l}</div>)}
+          {logs.map((l,i)=><div key={i + l.l} className={`term-line${l.t?' '+l.t:''} ${l.t==='prompt'?'term-prompt':''}`}>{l.l}</div>)}
           <div style={{display:'flex',alignItems:'center',gap:6,marginTop:8}}>
             <span style={{color:'var(--gold)'}}>sierra@intel:~$</span>
             <input value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={runCmd} style={{flex:1,background:'transparent',border:'none',outline:'none',fontFamily:'JetBrains Mono',fontSize:11,color:'var(--gold-lt)'}} placeholder="Type a command…"/>
@@ -503,8 +503,8 @@ function OpenClawPage({ T }) {
         </div>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))',gap:10}}>
-        {[{l:'Deploy Frontend',c:'🚀'},{l:'Sync Firestore',c:'🔄'},{l:'Run All Agents',c:'🤖'},{l:'Backup Database',c:'💾'},{l:'Clear Cache',c:'🧹'},{l:'Test Webhooks',c:'⚡'}].map((a,i)=>(
-          <button key={i} className="btn btn-ghost" style={{flexDirection:'column',height:56,justifyContent:'center',gap:4}}
+        {[{l:'Deploy Frontend',c:'🚀'},{l:'Sync Firestore',c:'🔄'},{l:'Run All Agents',c:'🤖'},{l:'Backup Database',c:'💾'},{l:'Clear Cache',c:'🧹'},{l:'Test Webhooks',c:'⚡'}].map((a)=>(
+          <button key={a.l} className="btn btn-ghost" style={{flexDirection:'column',height:56,justifyContent:'center',gap:4}}
             onClick={()=>setLogs(l=>[...l,{t:'blue',l:`[~] Running: ${a.l}...`},{t:'green',l:`[✓] ${a.l} completed`}])}>
             <span style={{fontSize:18}}>{a.c}</span><span style={{fontSize:9,fontFamily:'JetBrains Mono'}}>{a.l}</span>
           </button>
@@ -593,8 +593,8 @@ function LeadsPage({ T }) {
           <table className="data-table">
             <thead><tr><th>{T('client')}</th><th>{T('phone')}</th><th>{T('interest')}</th><th>{T('stage')}</th><th>{T('actions')}</th></tr></thead>
             <tbody>
-              {filtered.map((l,i)=>(
-                <tr key={i}>
+              {filtered.map((l)=>(
+                <tr key={l.phone}>
                   <td><div style={{display:'flex',alignItems:'center',gap:8}}><div className="lead-avatar" style={{background:l.color,width:28,height:28,fontSize:11}}>{l.name[0]}</div><span style={{color:'var(--tx)',fontWeight:600}}>{l.name}</span>{l.hot&&<span>🔥</span>}</div></td>
                   <td style={{fontFamily:'JetBrains Mono',fontSize:10}}>{l.phone}</td>
                   <td>{l.interest}</td>
@@ -680,11 +680,10 @@ function CuratorPage({ T }) {
         </button>
       </div>
 
-      {/* Compound Summary */}
       {selected && (
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(130px,1fr))',gap:10,marginBottom:20}}>
-          {[['AI Score',`${selected.ai}/10`,selected.color],['Avg Price',selected.avgM,'#00AEFF'],['Units',selected.units.toLocaleString(),'#1E88D9'],['Growth',selected.growth,'#34D399'],['Zone',selected.zone,'#7C3AED']].map(([l,v,c],i)=>(
-            <div key={i} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',borderTop:`3px solid ${c}`}}>
+          {[['AI Score',`${selected.ai}/10`,selected.color],['Avg Price',selected.avgM,'#00AEFF'],['Units',selected.units.toLocaleString(),'#1E88D9'],['Growth',selected.growth,'#34D399'],['Zone',selected.zone,'#7C3AED']].map(([l,v,c])=>(
+            <div key={l} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',borderTop:`3px solid ${c}`}}>
               <div style={{fontFamily:'JetBrains Mono',fontSize:13,fontWeight:700,color:c,marginBottom:3}}>{v}</div>
               <div style={{fontSize:9,color:'var(--tx-f)',textTransform:'uppercase',letterSpacing:'.12em'}}>{l}</div>
             </div>
@@ -719,8 +718,8 @@ function CuratorPage({ T }) {
           <div className="card-hd"><span className="card-title">📊 {T('qualityScore')} Distribution</span></div>
           <div className="card-body">
             <div className="bar-chart">
-              {[['90-100',4,'#34D399'],['80-90',8,'#00AEFF'],['70-80',6,'#1E88D9'],['60-70',3,'#7C3AED'],['<60',1,'#E63946']].map(([l,v,c],i)=>(
-                <div key={i} className="bar-col">
+              {[['90-100',4,'#34D399'],['80-90',8,'#00AEFF'],['70-80',6,'#1E88D9'],['60-70',3,'#7C3AED'],['<60',1,'#E63946']].map(([l,v,c])=>(
+                <div key={l} className="bar-col">
                   <div className="bar-fill" style={{height:`${v*9}%`,background:`linear-gradient(180deg,${c},${c}55)`}}/>
                   <span className="bar-lbl">{l}</span>
                 </div>
@@ -737,8 +736,8 @@ function CuratorPage({ T }) {
           <table className="data-table">
             <thead><tr><th>Unit Code</th><th>{T('type')}</th><th>{T('area')}</th><th>{T('beds')}</th><th>Base Price</th><th>Adj. Price</th><th>{T('qualityScore')}</th><th>{T('status')}</th><th>Actions</th></tr></thead>
             <tbody>
-              {listings.map((l,i)=>(
-                <tr key={i}>
+              {listings.map((l)=>(
+                <tr key={l.code}>
                   <td style={{fontFamily:'JetBrains Mono',fontSize:9,color:'var(--gold)'}}>{l.code}</td>
                   <td>{l.type}</td>
                   <td style={{fontFamily:'JetBrains Mono'}}>{l.area}m²</td>
@@ -866,8 +865,8 @@ function ScribePage({ T }) {
             </div>
             <div>
               <div style={{fontSize:9,color:'var(--tx-f)',textTransform:'uppercase',letterSpacing:'.12em',marginBottom:6}}>Quick Examples</div>
-              {EXAMPLES.map((ex,i)=>(
-                <button key={i} onClick={()=>setRaw(ex)} style={{display:'block',width:'100%',textAlign:'start',background:'var(--surf)',border:'1px solid var(--bd)',borderRadius:8,padding:'8px 10px',fontSize:10.5,color:'var(--tx-m)',cursor:'pointer',marginBottom:5,lineHeight:1.5}}>
+              {EXAMPLES.map((ex)=>(
+                <button key={ex} onClick={()=>setRaw(ex)} style={{display:'block',width:'100%',textAlign:'start',background:'var(--surf)',border:'1px solid var(--bd)',borderRadius:8,padding:'8px 10px',fontSize:10.5,color:'var(--tx-m)',cursor:'pointer',marginBottom:5,lineHeight:1.5}}>
                   {ex}
                 </button>
               ))}
@@ -884,8 +883,8 @@ function ScribePage({ T }) {
                 {[0,1,2].map(i=><span key={i} style={{width:6,height:6,borderRadius:'50%',background:'var(--gold)',display:'block',animation:`pulse ${.4+i*.15}s ease-in-out infinite`}}/>)}
               </div>
             </div>}
-            {parsed&&parsed.map((f,i)=>(
-              <div key={i} className="parsed-field">
+            {parsed&&parsed.map((f)=>(
+              <div key={f.k} className="parsed-field">
                 <span className="parsed-key">{f.k}</span>
                 <span className="parsed-val">{f.v}</span>
                 <span style={{marginInlineStart:'auto',color:'var(--emerald)',fontSize:10}}>✓</span>
@@ -905,8 +904,8 @@ function ScribePage({ T }) {
 
       {/* Ingestion Stats */}
       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(130px,1fr))',gap:10,marginTop:20}}>
-        {[['Ingested Today','41','#00AEFF'],['Parsed','38','#34D399'],['Processing','2','#f59e0b'],['Failed','1','#E63946'],['Queue','0','#1E88D9']].map(([l,v,c],i)=>(
-          <div key={i} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',textAlign:'center'}}>
+        {[['Ingested Today','41','#00AEFF'],['Parsed','38','#34D399'],['Processing','2','#f59e0b'],['Failed','1','#E63946'],['Queue','0','#1E88D9']].map(([l,v,c])=>(
+          <div key={l} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',textAlign:'center'}}>
             <div style={{fontFamily:'JetBrains Mono',fontSize:18,fontWeight:700,color:c}}>{v}</div>
             <div style={{fontSize:9,color:'var(--tx-f)',marginTop:4,textTransform:'uppercase',letterSpacing:'.1em'}}>{l}</div>
           </div>
@@ -953,8 +952,8 @@ function NexusAIPage({ T }) {
   return (
     <div className="fade-up">
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10,marginBottom:18}}>
-        {[[ctr,'Ingested Today','#00AEFF'],[Math.round(ctr*.93),'Parsed','#34D399'],[Math.max(0,Math.round(ctr*.06)),'Processing','#f59e0b'],[Math.max(0,Math.round(ctr*.01)),'Failed','#E63946']].map(([v,l,c],i)=>(
-          <div key={i} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',borderTop:`3px solid ${c}`}}>
+        {[[ctr,'Ingested Today','#00AEFF'],[Math.round(ctr*.93),'Parsed','#34D399'],[Math.max(0,Math.round(ctr*.06)),'Processing','#f59e0b'],[Math.max(0,Math.round(ctr*.01)),'Failed','#E63946']].map(([v,l,c])=>(
+          <div key={l} style={{background:'var(--bg-e)',border:'1px solid var(--bd)',borderRadius:12,padding:'12px 14px',borderTop:`3px solid ${c}`}}>
             <div style={{fontFamily:'JetBrains Mono',fontSize:22,fontWeight:700,color:c,marginBottom:4}}>{typeof v==='number'?v.toLocaleString():v}</div>
             <div style={{fontSize:9,color:'var(--tx-f)',textTransform:'uppercase',letterSpacing:'.1em'}}>{l}</div>
           </div>
@@ -990,8 +989,8 @@ function NexusAIPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">📊 Parse Stats · Live</span></div>
           <div className="card-body" style={{display:'flex',flexDirection:'column',gap:10}}>
-            {[['Parsed OK',93,'#34D399'],['Processing',6,'#f59e0b'],['Failed',1,'#E63946'],['Arabic entries',38,'#00AEFF'],['English entries',62,'#1E88D9']].map(([l,v,c],i)=>(
-              <div key={i}>
+            {[['Parsed OK',93,'#34D399'],['Processing',6,'#f59e0b'],['Failed',1,'#E63946'],['Arabic entries',38,'#00AEFF'],['English entries',62,'#1E88D9']].map(([l,v,c])=>(
+              <div key={l}>
                 <div style={{display:'flex',justifyContent:'space-between',marginBottom:4,fontSize:11}}>
                   <span style={{color:'var(--tx-m)'}}>{l}</span>
                   <span style={{fontFamily:'JetBrains Mono',fontWeight:700,color:c}}>{v}%</span>
@@ -1047,8 +1046,8 @@ function ReportsPage({ T }) {
         <div className="card">
           <div className="card-hd"><span className="card-title">{T('revPipeline')}</span></div>
           <div className="card-body" style={{display:'flex',flexDirection:'column',gap:10}}>
-            {[['Closed This Month','EGP 601M',100,'#34D399'],['Pipeline Value','EGP 2.1B',78,'#00AEFF'],['Avg Deal','EGP 6.2M',55,'#1E88D9'],['Commissions Due','EGP 18.4M',30,'#7C3AED']].map(([l,v,p,c],i)=>(
-              <div key={i}>
+            {[['Closed This Month','EGP 601M',100,'#34D399'],['Pipeline Value','EGP 2.1B',78,'#00AEFF'],['Avg Deal','EGP 6.2M',55,'#1E88D9'],['Commissions Due','EGP 18.4M',30,'#7C3AED']].map(([l,v,p,c])=>(
+              <div key={l}>
                 <div style={{display:'flex',justifyContent:'space-between',marginBottom:4,fontSize:11}}>
                   <span style={{color:'var(--tx-m)'}}>{l}</span>
                   <span style={{color:c,fontWeight:700,fontFamily:'JetBrains Mono'}}>{v}</span>
@@ -1074,6 +1073,63 @@ function ReportsPage({ T }) {
                   <td style={{fontFamily:'JetBrains Mono',color:'var(--emerald)',fontWeight:700}}>{d}</td>
                   <td style={{fontFamily:'JetBrains Mono',color:'var(--gold)',fontWeight:700}}>{p}</td>
                   <td style={{fontFamily:'JetBrains Mono',fontWeight:700,color:ai>=9.5?'var(--emerald)':ai>=9?'var(--gold)':'var(--tx-m)'}}>{ai}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── USERS PAGE ───────────────────────────────────────────────────────── */
+function UsersPage({ T }) {
+  const ar = T('lang')==='ar';
+  const USERS_DATA = [
+    { id: 'USR-001', name: 'Omar Khaled', email: 'omar@sierra-estates.net', role: 'Super Admin', status: 'Active', color: '#00AEFF' },
+    { id: 'USR-002', name: 'Leila Hassan', email: 'leila@sierra-estates.net', role: 'Broker (Elite)', status: 'Active', color: '#34D399' },
+    { id: 'USR-003', name: 'Samir Amin', email: 'samir@sierra-estates.net', role: 'Broker', status: 'Offline', color: '#f59e0b' },
+    { id: 'USR-004', name: 'Nour El-Din', email: 'nour@sierra-estates.net', role: 'Marketing', status: 'Active', color: '#1E88D9' },
+    { id: 'USR-005', name: 'Tariq Mansour', email: 'tariq@sierra-estates.net', role: 'Broker', status: 'Suspended', color: '#E63946' },
+  ];
+  return (
+    <div className="fade-up">
+      <div className="card">
+        <div className="card-hd">
+          <span className="card-title">👥 {ar?'إدارة المستخدمين والأدوار':'User & Role Management'}</span>
+          <button className="topbar-pill on">+ {ar?'مستخدم جديد':'New User'}</button>
+        </div>
+        <div style={{overflowX:'auto'}}>
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>{ar?'المستخدم':'User'}</th>
+                <th>{ar?'البريد الإلكتروني':'Email'}</th>
+                <th>{ar?'الدور':'Role'}</th>
+                <th>{ar?'الحالة':'Status'}</th>
+                <th>{ar?'الإجراءات':'Actions'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {USERS_DATA.map((u, i) => (
+                <tr key={i}>
+                  <td style={{fontWeight:600,color:'var(--tx)'}}>
+                    <div style={{display:'flex',alignItems:'center',gap:8}}>
+                      <div className="lead-avatar" style={{background:u.color}}>{u.name[0]}</div>
+                      {u.name}
+                    </div>
+                  </td>
+                  <td style={{fontFamily:'JetBrains Mono',color:'var(--tx-m)'}}>{u.email}</td>
+                  <td><span className="chip" style={{background:'var(--surf)',border:'1px solid var(--bd)'}}>{u.role}</span></td>
+                  <td>
+                    <span className={`chip chip-${u.status==='Active'?'green':u.status==='Offline'?'amber':'red'}`}>
+                      <span className="pulse-dot">●</span> {u.status}
+                    </span>
+                  </td>
+                  <td>
+                    <button className="btn btn-ghost" style={{padding:'4px 8px',fontSize:11}}>✏️ {ar?'تعديل':'Edit'}</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
