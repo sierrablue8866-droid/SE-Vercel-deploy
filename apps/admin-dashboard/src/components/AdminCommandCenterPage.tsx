@@ -226,12 +226,12 @@ export default function AdminCommandCenterPage() {
 
   const handleSaveEdit = () => {
     if (!editingItem) return;
-    setInventory(inventory.map(item => item.id === editingItem.id ? editingItem : item));
+    setInventory(inventory.map((item: InventoryItem) => item.id === editingItem.id ? editingItem : item));
     setEditingItem(null);
   };
 
   const toggleWorkflowStatus = (id: string) => {
-    setWorkflows(workflows.map(w => w.id === id ? { ...w, status: w.status === 'active' ? 'paused' : 'active' } : w));
+    setWorkflows(workflows.map((w: WorkflowItem) => w.id === id ? { ...w, status: w.status === 'active' ? 'paused' : 'active' } : w));
   };
 
   return (
