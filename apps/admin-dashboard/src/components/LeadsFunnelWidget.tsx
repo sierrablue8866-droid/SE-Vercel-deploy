@@ -65,13 +65,11 @@ export default function LeadsFunnelWidget() {
   }, []);
 
   return (
-    <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl w-full h-full min-h-[300px]">
-      <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400 font-bold select-none">
-          PIPELINE FUNNEL
-        </span>
+    <div className="card w-full h-full min-h-[300px]">
+      <div className="card-hd">
+        <span className="card-title" style={{ color: 'var(--purple)' }}>PIPELINE FUNNEL</span>
       </div>
-      <div className="p-5 h-[280px] w-full">
+      <div className="card-body" style={{ height: 280, padding: 20 }}>
         <ResponsiveContainer width="100%" height="100%">
           <FunnelChart>
             <Tooltip

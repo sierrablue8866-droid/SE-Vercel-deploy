@@ -161,10 +161,10 @@ export default function OverviewPage({ T }: OverviewPageProps) {
   };
 
   const CARD_STATS = [
-    { val: listingsCount.toString(), lbl: T('totalListings'), delta: '+12% this week', up: true, color: '#06b6d4', spark: [42, 55, 48, 70, 62, 85, 95] },
-    { val: activeLeadsCount.toString(), lbl: T('activeLeads'), delta: `+${hotLeads.length} hot today`, up: true, color: '#3b82f6', spark: [30, 45, 38, 55, 48, 70, 80] },
-    { val: 'EGP 6.2M', lbl: T('avgDeal'), delta: '+5% MoM', up: true, color: '#10b981', spark: [55, 60, 52, 68, 65, 78, 88] },
-    { val: '97', lbl: T('dealsClosed'), delta: 'This month', up: true, color: '#8b5cf6', spark: [20, 35, 28, 48, 42, 65, 75] },
+    { val: listingsCount.toString(), lbl: T('totalListings'), delta: '+12% this week', up: true, color: 'var(--blue)', spark: [42, 55, 48, 70, 62, 85, 95] },
+    { val: activeLeadsCount.toString(), lbl: T('activeLeads'), delta: `+${hotLeads.length} hot today`, up: true, color: 'var(--gold)', spark: [30, 45, 38, 55, 48, 70, 80] },
+    { val: 'EGP 6.2M', lbl: T('avgDeal'), delta: '+5% MoM', up: true, color: 'var(--emerald)', spark: [55, 60, 52, 68, 65, 78, 88] },
+    { val: '97', lbl: T('dealsClosed'), delta: 'This month', up: true, color: 'var(--purple)', spark: [20, 35, 28, 48, 42, 65, 75] },
   ];
 
   const searchTermsData = useMemo(() => {
@@ -242,26 +242,51 @@ export default function OverviewPage({ T }: OverviewPageProps) {
       .slice(0, 10);
   }, [recentSearches, searchRange]);
 
+  const isAr = T('lang') === 'ar';
+  const chips = isAr ? ['لخّص الصفقات الجارية', 'ما أولويات اليوم؟', 'اكتب رسالة متابعة', 'الصفقات المعرّضة للخطر'] : ['Summarize my pipeline', 'What should I focus on today?', 'Draft a follow-up (AR/EN)', 'Find deals at risk'];
+
   return (
-    <div className="space-y-6 animate-fade-in-up">
+    <div className="fade-up space-y-6">
+      {/* AI Hero Section */}
+      <div className="ai-hero">
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 8 }}>
+          {(isAr ? 'مساعد سييرا · ' : 'Sierra Copilot · ') + new Date().toLocaleDateString(isAr ? 'ar-EG' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+        </div>
+        <h2 style={{ fontFamily: isAr ? "'Cairo',sans-serif" : "'Cormorant Garamond',serif", fontSize: '1.9rem', fontWeight: isAr ? 700 : 500, color: 'var(--tx-s)', lineHeight: 1.15, marginBottom: 6 }}>
+          {isAr ? 'كيف تساعدك سييرا في الإغلاق اليوم؟' : 'How can Sierra help you close today?'}
+        </h2>
+        <p style={{ fontSize: 12.5, color: 'var(--tx-m)', maxWidth: 520, marginBottom: 14 }}>
+          {isAr ? 'مساعد المبيعات الذكي يدير خط الصفقات، يصيغ الرسائل، ويبرز ما يحتاج انتباهك — اسأل فقط.' : 'Your AI sales copilot runs the pipeline, drafts bilingual outreach, and surfaces what needs attention — just ask.'}
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+          {chips.map((c, i) => <button key={i} className="ai-chip">{c}</button>)}
+        </div>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button style={{ padding: '10px 20px', border: 'none', borderRadius: 11, background: 'linear-gradient(135deg,var(--gold),var(--gold-lt))', color: '#071422', fontSize: 12, fontWeight: 800, cursor: 'pointer' }}>
+            ✦ {isAr ? 'تحدث مع سييرا' : 'Chat with Sierra'} →
+          </button>
+          <button style={{ padding: '10px 18px', borderRadius: 11, border: '1px solid var(--bd-s)', background: 'var(--bg-e)', color: 'var(--tx)', fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
+            ⚡ {isAr ? 'تصرّف الآن' : 'Act Now'}
+          </button>
+          <span style={{ alignSelf: 'center', fontFamily: 'JetBrains Mono', fontSize: 10, color: 'var(--tx-f)' }}>
+            ● {hotLeads.length} {isAr ? 'عميل نشط' : 'active hot leads'}
+          </span>
+        </div>
+      </div>
+
       {/* Cards stats grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="kpi-grid">
         {CARD_STATS.map((k, i) => (
           <div
             key={i}
-            className="bg-[#0a0f1d] border border-slate-800 rounded-xl p-4 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300 shadow-inner"
+            className="kpi-card"
           >
             <div
-              className="absolute left-0 top-0 bottom-0 w-[3px]"
-              style={{ backgroundColor: k.color }}
+              style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, backgroundColor: k.color, borderRadius: '16px 0 0 16px' }}
             />
-            <div className="text-2xl font-bold text-white tracking-tight">
-              {k.val}
-            </div>
-            <div className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mt-1 select-none">
-              {k.lbl}
-            </div>
-            <div className={`text-[9px] font-mono font-semibold mt-1 ${k.up ? 'text-green-400' : 'text-red-400'}`}>
+            <div className="kpi-val text-white">{k.val}</div>
+            <div className="kpi-lbl">{k.lbl}</div>
+            <div className={`kpi-delta ${k.up ? 'up' : 'dn'}`}>
               {k.up ? '↑' : '↓'} {k.delta}
             </div>
             {renderSparkline(k.spark, k.color)}
@@ -269,66 +294,52 @@ export default function OverviewPage({ T }: OverviewPageProps) {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid-3">
         {/* Step Funnel Chart */}
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-          <div className="px-5 py-4 border-b border-slate-805 bg-slate-900/40">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
-              {T('pipelineTitle')}
-            </span>
-          </div>
-          <div className="p-5 flex items-end gap-2.5 h-[130px]">
-            {['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10'].map((s, i) => {
-              const h = [95, 88, 82, 79, 74, 68, 61, 55, 42, 28][i];
-              const c = ['#06b6d4', '#22d3ee', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4', '#3b82f6', '#10b981', '#22d3ee'][i];
-              return (
-                <div key={s} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
-                  <div
-                    className="w-full rounded-t-sm min-h-[4px] hover:brightness-110 transition duration-150 tooltip"
-                    style={{
-                      height: `${h}%`,
-                      background: `linear-gradient(to top, ${c}25, ${c})`
-                    }}
-                    title={`${s}: ${h}%`}
-                  />
-                  <span className="font-mono text-[8px] text-slate-500 select-none">{s}</span>
-                </div>
-              );
-            })}
+        <div className="card">
+          <div className="card-hd"><span className="card-title">{T('pipelineTitle')}</span></div>
+          <div className="card-body">
+            <div className="bar-chart">
+              {['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10'].map((s, i) => {
+                const h = [95, 88, 82, 79, 74, 68, 61, 55, 42, 28][i];
+                const c = ['#00AEFF', '#5FC9FF', '#1E88D9', '#34D399', '#7C3AED', '#E63946', '#00AEFF', '#1E88D9', '#34D399', '#00AEFF'][i];
+                return (
+                  <div key={s} className="bar-col">
+                    <div className="bar-fill" style={{ height: `${h}%`, background: `linear-gradient(180deg,${c},${c}44)` }} />
+                    <span className="bar-lbl">{s}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* Hot Leads Section */}
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl flex flex-col">
-          <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
-              {T('hotLeads')}
-            </span>
-            <span className="text-[9px] bg-red-500/10 text-red-500 border border-red-500/20 px-2 py-0.5 rounded-full font-bold">
-              {hotLeads.length} Urgent
-            </span>
+        <div className="card">
+          <div className="card-hd">
+            <span className="card-title">{T('hotLeads')}</span>
+            <span className="chip chip-red">{hotLeads.length} urgent</span>
           </div>
-          <div className="flex-1 max-h-[160px] overflow-y-auto divide-y divide-slate-800/30">
+          <div style={{ maxHeight: 160, overflowY: 'auto' }}>
             {loading ? (
-              <div className="p-4 text-center font-mono text-[10px] text-slate-500">LOADING LEADS FROM FIRESTORE...</div>
+              <div className="p-4 text-center font-mono text-[10px] text-slate-500">LOADING LEADS...</div>
             ) : hotLeads.length === 0 ? (
               <div className="p-8 text-center text-xs text-slate-500">No hot leads active currently.</div>
             ) : (
-              hotLeads.slice(0, 5).map((l) => (
-                <div key={l.id} className="p-3 flex items-center gap-3 hover:bg-white/5 transition">
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs select-none shadow text-[#05080f] shrink-0"
-                    style={{ backgroundColor: l.color || '#06b6d4' }}
-                  >
+              hotLeads.slice(0, 5).map((l, i) => (
+                <div key={i} className="lead-row">
+                  <div className="lead-avatar" style={{ background: l.color || '#00AEFF' }}>
                     {l.name[0]?.toUpperCase()}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-semibold text-slate-200 truncate">{l.name}</div>
-                    <div className="text-[10px] text-slate-400 truncate font-mono">{l.interest}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--tx)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {l.name}
+                    </div>
+                    <div style={{ fontSize: 9.5, color: 'var(--tx-f)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {l.interest}
+                    </div>
                   </div>
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shrink-0 bg-cyan-950/30 border border-cyan-800 text-cyan-400">
-                    {l.stage}
-                  </span>
+                  <span className="chip chip-amber">{l.stage}</span>
                 </div>
               ))
             )}
@@ -336,30 +347,21 @@ export default function OverviewPage({ T }: OverviewPageProps) {
         </div>
 
         {/* Agent Activity Tracker */}
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-          <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
-              {T('agentStatus')}
-            </span>
-          </div>
-          <div className="p-4 space-y-3.5 max-h-[160px] overflow-y-auto">
-            {agents.slice(0, 4).map((a) => (
-              <div key={a.id} className="flex items-center gap-2.5">
-                <span className="text-base shrink-0 select-none">{a.emoji}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs font-semibold text-slate-200 truncate">{a.name}</span>
-                    <span className={`text-[8px] font-mono tracking-wider uppercase font-bold px-1.5 rounded ${
-                      a.status === 'Online' || a.status === 'Running' ? 'text-green-400' : 'text-amber-500'
-                    }`}>
+        <div className="card">
+          <div className="card-hd"><span className="card-title">{T('agentStatus')}</span></div>
+          <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {agents.slice(0, 4).map((a, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 16 }}>{a.emoji}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--tx)' }}>{a.name}</span>
+                    <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: a.status === 'Idle' ? 'var(--tx-f)' : 'var(--emerald)' }}>
                       {a.status}
                     </span>
                   </div>
-                  <div className="w-full bg-slate-850 rounded-full h-[3px] overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-500"
-                      style={{ width: `${a.load}%`, backgroundColor: a.color || '#06b6d4' }}
-                    />
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{ width: `${a.load}%`, background: a.color || '#00AEFF' }} />
                   </div>
                 </div>
               </div>
@@ -370,29 +372,27 @@ export default function OverviewPage({ T }: OverviewPageProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         {/* Recharts Dual-Axis Visualization */}
-        <div className="lg:col-span-2 bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-          <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
-              {T('pipelineAndRevenueTrends') || 'PIPELINE & REVENUE TRENDS'}
-            </span>
+        <div className="lg:col-span-2 card">
+          <div className="card-hd">
+            <span className="card-title">{T('pipelineAndRevenueTrends') || 'PIPELINE & REVENUE TRENDS'}</span>
           </div>
-          <div className="p-5 h-[300px] w-full">
+          <div className="card-body" style={{ height: 300, padding: '20px 0' }}>
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart
                 data={CHART_DATA}
                 margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
               >
-                <CartesianGrid stroke="#1e293b" vertical={false} />
-                <XAxis dataKey="month" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis yAxisId="left" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
-                <YAxis yAxisId="right" orientation="right" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
+                <CartesianGrid stroke="var(--bd)" vertical={false} />
+                <XAxis dataKey="month" stroke="var(--tx-m)" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="left" stroke="var(--tx-m)" fontSize={10} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="right" orientation="right" stroke="var(--tx-m)" fontSize={10} tickLine={false} axisLine={false} />
                 <RechartsTooltip 
-                  contentStyle={{ backgroundColor: '#0a0f1d', borderColor: '#1e293b', fontSize: '12px', color: '#f8fafc', borderRadius: '8px' }}
-                  itemStyle={{ color: '#06b6d4' }}
+                  contentStyle={{ backgroundColor: 'var(--bg-e)', borderColor: 'var(--bd)', fontSize: '12px', color: 'var(--tx)', borderRadius: '8px' }}
+                  itemStyle={{ color: 'var(--blue)' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-                <Bar yAxisId="left" dataKey="deals" name="Monthly Deals Closed" fill="#3b82f6" radius={[4, 4, 0, 0]} maxBarSize={40} />
-                <Line yAxisId="right" type="monotone" dataKey="revenue" name="Revenue Pipeline (M)" stroke="#10b981" strokeWidth={3} dot={{ r: 4, fill: '#10b981', strokeWidth: 2, stroke: '#0a0f1d' }} activeDot={{ r: 6 }} />
+                <Bar yAxisId="left" dataKey="deals" name="Monthly Deals Closed" fill="var(--blue)" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                <Line yAxisId="right" type="monotone" dataKey="revenue" name="Revenue Pipeline (M)" stroke="var(--emerald)" strokeWidth={3} dot={{ r: 4, fill: 'var(--emerald)', strokeWidth: 2, stroke: 'var(--bg-e)' }} activeDot={{ r: 6 }} />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -406,9 +406,9 @@ export default function OverviewPage({ T }: OverviewPageProps) {
 
       <div className="grid grid-cols-1 gap-6 mt-6">
         {/* Popular Search Terms Chart */}
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl animate-fade-in-up">
-          <div className="px-5 py-3 border-b border-slate-800 bg-slate-900/40 flex justify-between items-center">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
+        <div className="card">
+          <div className="card-hd">
+            <span className="card-title">
               {searchRange === '7d' 
                 ? (T('popularSearches7d') || 'TOP SEARCH TERMS (LAST 7 DAYS)') 
                 : searchRange === '30d' 
@@ -419,14 +419,15 @@ export default function OverviewPage({ T }: OverviewPageProps) {
               id="overview-search-range-select"
               value={searchRange}
               onChange={(e) => setSearchRange(e.target.value as any)}
-              className="bg-slate-950 text-slate-300 border border-slate-800 rounded px-2 py-1 text-xs outline-none focus:border-cyan-500 transition-all font-sans cursor-pointer"
+              className="f-in"
+              style={{ width: 'auto', padding: '4px 8px', fontSize: 11 }}
             >
               <option value="7d">Last 7 Days</option>
               <option value="30d">Last 30 Days</option>
               <option value="all">All Time</option>
             </select>
           </div>
-          <div className="p-5 h-[300px] w-full">
+          <div className="card-body" style={{ height: 300, padding: '20px 0' }}>
             {searchTermsData.length === 0 ? (
               <div className="h-full flex items-center justify-center font-mono text-[10px] text-slate-500">
                 NO RECENT SEARCHES...
@@ -438,14 +439,14 @@ export default function OverviewPage({ T }: OverviewPageProps) {
                   layout="vertical"
                   margin={{ top: 20, right: 20, bottom: 20, left: 60 }}
                 >
-                  <CartesianGrid stroke="#1e293b" horizontal={true} vertical={false} />
-                  <XAxis type="number" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
-                  <YAxis dataKey="term" type="category" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} interval={0} />
+                  <CartesianGrid stroke="var(--bd)" horizontal={true} vertical={false} />
+                  <XAxis type="number" stroke="var(--tx-m)" fontSize={10} tickLine={false} axisLine={false} />
+                  <YAxis dataKey="term" type="category" stroke="var(--tx-m)" fontSize={10} tickLine={false} axisLine={false} interval={0} />
                   <RechartsTooltip 
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
                     content={<CustomSearchTooltip />}
                   />
-                  <Bar dataKey="count" name="Search Frequency" fill="#22d3ee" radius={[0, 4, 4, 0]} barSize={20} />
+                  <Bar dataKey="count" name="Search Frequency" fill="var(--blue)" radius={[0, 4, 4, 0]} barSize={20} />
                 </BarChart>
               </ResponsiveContainer>
             )}

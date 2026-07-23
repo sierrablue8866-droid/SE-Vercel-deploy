@@ -83,11 +83,9 @@ export default function DashboardWidgets() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 animate-fade-in-up">
       {/* Leads by Source Bar Chart */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl lg:col-span-1">
-        <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold select-none">
-            LEADS BY SOURCE
-          </span>
+      <div className="card lg:col-span-1">
+        <div className="card-hd">
+          <span className="card-title">LEADS BY SOURCE</span>
         </div>
         <div className="p-5 h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
@@ -114,11 +112,9 @@ export default function DashboardWidgets() {
       </div>
 
       {/* Property Price Distribution Scatter Plot */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl lg:col-span-1">
-        <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-bold select-none">
-            PROPERTY PRICE DISTRIBUTION
-          </span>
+      <div className="card lg:col-span-1">
+        <div className="card-hd">
+          <span className="card-title" style={{ color: 'var(--emerald)' }}>PROPERTY PRICE DISTRIBUTION</span>
         </div>
         <div className="p-5 h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">

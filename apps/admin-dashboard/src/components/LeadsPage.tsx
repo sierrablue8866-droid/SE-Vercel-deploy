@@ -635,7 +635,7 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
   return (
     <div className="space-y-6 animate-fade-in-up">
       {/* Real-time Search Panel & Interest Status Filter Board */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl p-5 shadow-lg space-y-4">
+      <div className="card p-5 space-y-4">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Main search and filter triggers */}
           <div className="relative flex-1">
@@ -794,9 +794,9 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
       </div>
 
       {/* Main CRM Table */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-        <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/40 select-none">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-bold">
+      <div className="card">
+        <div className="card-hd flex justify-between">
+          <span className="card-title">
             CRM SYSTEM · Core Leads Inventory
           </span>
           <span className="text-[9px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full font-bold">
@@ -804,7 +804,7 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
           </span>
         </div>
 
-        <div className="overflow-x-auto text-xs">
+        <div className="card-body" style={{ padding: 0, overflowX: 'auto' }}>
           {loading ? (
             <div className="p-12 text-center font-mono text-slate-500 select-none">
               FETCHING REALTOR PIPELINE...
@@ -814,9 +814,9 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
               No leads matching the criteria. Registrars empty.
             </div>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <table className="data-table">
               <thead>
-                <tr className="border-b border-slate-800 bg-[#05080f] font-mono text-[9px] text-cyan-400 uppercase tracking-wider">
+                <tr>
                   <th className="p-4 w-10 text-center select-none">
                     <input
                       type="checkbox"
@@ -839,10 +839,10 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
                   <th className="p-4">{T('interest')}</th>
                   <th className="p-4">{T('stage')}</th>
                   <th className="p-4">{isAr ? 'الوكيل المسؤول' : 'Assigned Agent'}</th>
-                  <th className="p-4 text-right">Actions</th>
+                  <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/40">
+              <tbody>
                 {filtered.map((l) => {
                   const isSelected = selectedLeadIds.includes(l.id);
                   return (
@@ -852,12 +852,10 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2 }}
                       key={l.id}
-                      className={`hover:bg-white/5 transition duration-100 border-b border-slate-800/50 cursor-pointer ${
-                        isSelected ? 'bg-cyan-500/5 hover:bg-cyan-500/10' : ''
-                      }`}
+                      className={isSelected ? 'bg-cyan-500/5 hover:bg-cyan-500/10' : ''}
                       onClick={() => recordAccess(l.id, 'leads')}
                     >
-                      <td className="p-4 text-center select-none w-10" onClick={(e) => e.stopPropagation()}>
+                      <td style={{ textAlign: 'center', width: 40 }} onClick={(e) => e.stopPropagation()}>
                         <input
                           type="checkbox"
                           checked={isSelected}
@@ -969,9 +967,9 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
       {/* Register Lead Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-scale-up">
-            <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-wider text-cyan-400 font-bold select-none">
+          <div className="card w-full max-w-md overflow-hidden shadow-2xl animate-scale-up" style={{ padding: 0 }}>
+            <div className="card-hd flex items-center justify-between">
+              <span className="card-title">
                 📁 System Register · Lead Docket
               </span>
               <button
@@ -1104,9 +1102,9 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
       {/* CSV Import Simulator Modal */}
       {showImportModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-scale-up">
-            <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-wider text-cyan-400 font-bold select-none">
+          <div className="card w-full max-w-md overflow-hidden shadow-2xl animate-scale-up" style={{ padding: 0 }}>
+            <div className="card-hd flex items-center justify-between">
+              <span className="card-title">
                 📂 Import CSV Leads File
               </span>
               <button
@@ -1183,9 +1181,9 @@ export default function LeadsPage({ T, isAr = false, searchQuery = '' }: LeadsPa
       {/* Twilio SMS & WhatsApp Communication Modal */}
       {twilioModalLead && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => setTwilioModalLead(null)}>
-          <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl w-full max-w-md overflow-hidden shadow-2xl animate-scale-up" onClick={(e) => e.stopPropagation()}>
-            <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-wider text-cyan-400 font-bold select-none">
+          <div className="card w-full max-w-md overflow-hidden shadow-2xl animate-scale-up" style={{ padding: 0 }} onClick={(e) => e.stopPropagation()}>
+            <div className="card-hd flex items-center justify-between">
+              <span className="card-title">
                 💬 Twilio Contact Hub
               </span>
               <button

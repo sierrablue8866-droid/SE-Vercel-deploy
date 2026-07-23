@@ -282,7 +282,7 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
       </div>
 
       {/* Summary Status Indicator */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl px-5 py-3 flex flex-wrap gap-6 md:gap-8 items-center shadow-md">
+      <div className="card px-5 py-3 flex flex-wrap gap-6 md:gap-8 items-center" style={{ flexDirection: 'row' }}>
         <div className="flex items-center gap-3">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse"></div>
           <div className="text-xs font-mono uppercase tracking-widest text-slate-400">
@@ -310,7 +310,7 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
       </div>
 
       <div className="flex flex-col md:flex-row gap-4 w-full">
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl p-4 flex-1 flex justify-between items-center shadow-xl">
+        <div className="card p-4 flex-1 flex justify-between items-center" style={{ margin: 0 }}>
           <div>
             <h4 className="text-white font-bold text-sm">Easy Listing Script</h4>
             <p className="text-slate-500 text-[10px] mt-1 font-mono">Automated property publishing across portals</p>
@@ -323,7 +323,7 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
           </button>
         </div>
         
-        <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl p-4 flex-1 flex justify-between items-center shadow-xl">
+        <div className="card p-4 flex-1 flex justify-between items-center" style={{ margin: 0 }}>
           <div>
             <h4 className="text-white font-bold text-sm">WhatsApp Sender</h4>
             <p className="text-slate-500 text-[10px] mt-1 font-mono">Meta API automated client outreach</p>
@@ -343,11 +343,11 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
           return (
             <div
               key={col.id}
-              className={`flex flex-col bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl ${col.color}`}
+              className={`card flex flex-col ${col.color}`}
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, col.id)}
             >
-              <div className={`px-5 py-3 border-b border-slate-800 flex justify-between items-center bg-slate-900/60`}>
+              <div className="card-hd">
                 <span className="font-mono text-xs uppercase tracking-wider text-white font-bold select-none">
                   {col.title}
                 </span>
@@ -423,9 +423,9 @@ export default function WorkflowsPage({ T, isAr, searchQuery = '' }: WorkflowsPa
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-4xl bg-[#0a0f1d] border border-slate-800 rounded-xl shadow-2xl flex flex-col overflow-hidden"
+            className="w-full max-w-4xl card flex flex-col overflow-hidden"
           >
-            <div className="flex justify-between items-center p-4 border-b border-slate-800 bg-slate-900/60">
+            <div className="card-hd">
               <h3 className="font-mono text-sm uppercase text-cyan-400 font-bold flex items-center gap-2">
                 <span className="text-xl">⚙️</span>
                 <span>{selectedWorkflow.name}</span>

@@ -131,35 +131,35 @@ export default function AgentLeaderboard() {
   }, [agentsData, leadsData]);
 
   return (
-    <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl animate-fade-in-up mt-6">
-      <div className="px-5 py-4 border-b border-slate-800 bg-slate-900/40 flex justify-between items-center">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-[#C9A24A] font-bold select-none">
+    <div className="card mt-6">
+      <div className="card-hd">
+        <span className="card-title">
           AGENT LEADERBOARD
         </span>
-        <span className="font-mono text-[10px] text-slate-500 uppercase">30-Day Activity</span>
+        <span className="chip chip-blue">30-Day Activity</span>
       </div>
       
-      <div className="p-0 overflow-x-auto">
-        <table className="w-full text-left border-collapse min-w-[650px]">
+      <div className="card-body" style={{ padding: 0, overflowX: 'auto' }}>
+        <table className="data-table">
           <thead>
-            <tr className="bg-slate-900/60 border-b border-slate-800">
-              <th className="py-3 px-5 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold w-12 text-center">Rank</th>
-              <th className="py-3 px-5 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">Agent Name</th>
-              <th className="py-3 px-5 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold text-right">Active Listings</th>
-              <th className="py-3 px-5 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold text-right">Closed Deals</th>
-              <th className="py-3 px-5 text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold text-right w-32">Performance</th>
+            <tr>
+              <th style={{ textAlign: 'center', width: 48 }}>Rank</th>
+              <th>Agent Name</th>
+              <th style={{ textAlign: 'right' }}>Active Listings</th>
+              <th style={{ textAlign: 'right' }}>Closed Deals</th>
+              <th style={{ textAlign: 'right', width: 128 }}>Performance</th>
             </tr>
           </thead>
           <tbody>
             {agents.map((agent, idx) => (
-              <tr key={agent.id} className="border-b border-slate-800/50 hover:bg-slate-800/20 transition group">
-                <td className="py-3 px-5 text-center font-mono text-xs">
-                  {idx === 0 ? <span className="text-[#C9A24A] text-lg">🥇</span> : 
-                   idx === 1 ? <span className="text-slate-300 text-lg">🥈</span> : 
-                   idx === 2 ? <span className="text-[#b47a46] text-lg">🥉</span> : 
-                   <span className="text-slate-500">#{idx + 1}</span>}
+              <tr key={agent.id}>
+                <td style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                  {idx === 0 ? <span style={{ color: 'var(--gold)', fontSize: 16 }}>🥇</span> : 
+                   idx === 1 ? <span style={{ color: '#E2E8F0', fontSize: 16 }}>🥈</span> : 
+                   idx === 2 ? <span style={{ color: '#cd7f32', fontSize: 16 }}>🥉</span> : 
+                   <span style={{ color: 'var(--tx-f)' }}>#{idx + 1}</span>}
                 </td>
-                <td className="py-3 px-5">
+                <td>
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-lg shadow-inner border border-white/5"
@@ -171,16 +171,16 @@ export default function AgentLeaderboard() {
                     <CloseRateGauge deals={agent.deals} totalLeads={agent.totalLeads} color={agent.color} />
                   </div>
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-sm text-cyan-400 font-medium">
+                <td style={{ textAlign: 'right', fontWeight: 'bold', color: 'var(--blue)' }}>
                   {agent.listings}
                 </td>
-                <td className="py-3 px-5 text-right font-mono text-sm text-emerald-400 font-bold">
+                <td style={{ textAlign: 'right', fontWeight: 'bold', color: 'var(--emerald)' }}>
                   {agent.deals}
                 </td>
-                <td className="py-3 px-5 text-right">
-                  <div className="w-full bg-slate-800 rounded-full h-1.5 mt-1 overflow-hidden">
+                <td style={{ textAlign: 'right' }}>
+                  <div className="progress-bar" style={{ marginTop: 0 }}>
                     <div 
-                      className="h-full rounded-full transition-all duration-1000 ease-out" 
+                      className="progress-fill" 
                       style={{ width: `${Math.min(100, (agent.deals / (agents[0]?.deals || 1)) * 100)}%`, backgroundColor: agent.color }}
                     />
                   </div>

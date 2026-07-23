@@ -353,7 +353,8 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
   return (
     <div className="space-y-6 animate-fade-in-up">
       {/* Search and filter toolbar */}
-      <div className="flex gap-2.5 flex-wrap items-center">
+      <div className="card p-5">
+        <div className="flex gap-2.5 flex-wrap items-center">
         <input
           type="text"
           value={q}
@@ -424,6 +425,7 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
             <span>Add Asset</span>
           </button>
         </div>
+        </div>
       </div>
 
       {/* Batch Action Toolbar */}
@@ -461,8 +463,8 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
       )}
 
       {/* Main listings list table */}
-      <div className="bg-[#0a0f1d] border border-slate-800 rounded-xl overflow-hidden shadow-xl">
-        <div className="overflow-x-auto text-xs">
+      <div className="card">
+        <div className="card-body" style={{ padding: 0, overflowX: 'auto' }}>
           {loading ? (
             <div className="p-12 text-center font-mono text-slate-500 select-none">
               LOADING ASSETS REGISTRY...
@@ -472,9 +474,9 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
               No matching listings in inventory.
             </div>
           ) : (
-            <table className="w-full text-left border-collapse">
+            <table className="data-table">
               <thead>
-                <tr className="border-b border-slate-800 bg-[#05080f] font-mono text-[9px] text-cyan-400 uppercase tracking-wider select-none">
+                <tr>
                   <th className="p-4 w-10">
                     <input
                       type="checkbox"
@@ -504,10 +506,10 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
                     AI ▸ {renderSortIndicator('ai')}
                   </th>
                   <th className="p-4">Status</th>
-                  <th className="p-4 text-right">Actions</th>
+                  <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/40">
+              <tbody>
                 {filtered.map((l) => (
                   <motion.tr
                     layout
@@ -515,10 +517,10 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
                     key={l.id}
-                    className={`hover:bg-white/5 border-b border-slate-800/55 transition duration-100 cursor-pointer ${selectedIds.has(l.id) ? 'bg-cyan-900/10' : ''}`}
+                    className={selectedIds.has(l.id) ? 'bg-cyan-900/10' : ''}
                     onClick={() => recordAccess(l.id, 'listings')}
                   >
-                    <td className="p-4" onClick={(e) => e.stopPropagation()}>
+                    <td style={{ textAlign: 'center', width: 40 }} onClick={(e) => e.stopPropagation()}>
                       <input
                         type="checkbox"
                         checked={selectedIds.has(l.id)}
@@ -633,12 +635,13 @@ export default function ListingsHubPage({ T, searchQuery = '' }: ListingsHubPage
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-[#0a0f1d] border border-slate-800 rounded-xl max-w-md w-full shadow-2xl overflow-hidden"
+            className="card max-w-md w-full shadow-2xl overflow-hidden"
+            style={{ padding: 0 }}
           >
-            <div className="bg-[#05080f] px-5 py-4 border-b border-slate-800 flex justify-between items-center">
-              <h3 className="text-cyan-400 font-mono text-sm tracking-wider uppercase font-bold">
+            <div className="card-hd flex justify-between items-center">
+              <span className="card-title">
                 {editingId ? 'Edit Property Asset' : 'New Property Asset'}
-              </h3>
+              </span>
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="text-slate-500 hover:text-white transition"

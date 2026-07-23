@@ -164,11 +164,12 @@ export default function BotsControlPage({ T, isAr = false }: BotsControlPageProp
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.18 }}
-                className={`group bg-white dark:bg-slate-900 border rounded-xl p-5 transition-colors ${
+                className={`card group ${
                   bot.status === 'error'
-                    ? 'border-red-200 dark:border-red-900/40'
-                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    ? 'border-red-900/40'
+                    : ''
                 }`}
+                style={{ padding: '1.25rem' }}
               >
                 {/* Header — icon + name + status, with proper spacing */}
                 <div className="flex items-start justify-between gap-3 mb-4">
@@ -177,7 +178,7 @@ export default function BotsControlPage({ T, isAr = false }: BotsControlPageProp
                       <BotIcon className="w-[18px] h-[18px] text-slate-600 dark:text-slate-400" strokeWidth={1.75} />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-[14px] font-medium text-slate-900 dark:text-white font-mono truncate">
+                      <h3 className="text-[14px] font-medium text-white font-mono truncate">
                         {bot.id}
                       </h3>
                       <p className="text-[12px] text-slate-500 truncate mt-0.5">
@@ -213,8 +214,8 @@ export default function BotsControlPage({ T, isAr = false }: BotsControlPageProp
                 </div>
 
                 {/* Action buttons — only on hover, prevents visual noise */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => sendCommand(bot.id, 'run_now')}
                       disabled={actionLoading === `${bot.id}:run_now` || !enabled}
