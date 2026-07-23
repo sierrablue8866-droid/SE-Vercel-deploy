@@ -358,7 +358,7 @@ class GoogleCalendarIntegration:
         }
 
         try:
-            created_event = self.service.events().insert(
+            created_event = self.service.events().insert(  # type: ignore
                 calendarId=self.calendar_id,
                 body=event,
                 sendUpdates="all",
@@ -388,7 +388,7 @@ class GoogleCalendarIntegration:
         }
 
         try:
-            freebusy = self.service.freebusy().query(body=freebusy_body).execute()
+            freebusy = self.service.freebusy().query(body=freebusy_body).execute()  # type: ignore
             busy_times = freebusy["calendars"][agent_email]["busy"]
 
             available_slots: List[Dict] = []
