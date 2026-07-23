@@ -8,8 +8,8 @@
 
 /* --- LIGHT THEME STYLES AND OVERRIDES --- */
 [data-theme="light"] {
-  background-color: #f8fafc !important;
-  color: #334155 !important;
+  background-color: #f8f6f2 !important;
+  color: #0f172a !important;
 }
 
 [data-theme="light"] h1, 
@@ -27,7 +27,7 @@
 [data-theme="light"] .text-slate-300, 
 [data-theme="light"] .text-slate-400,
 [data-theme="light"] .text-slate-350 {
-  color: #334155 !important;
+  color: #475569 !important;
 }
 
 [data-theme="light"] .text-slate-500 {
@@ -35,7 +35,7 @@
 }
 
 [data-theme="light"] .bg-\[\#05080f\] {
-  background-color: #f8fafc !important;
+  background-color: #f8f6f2 !important;
 }
 
 [data-theme="light"] .bg-\[\#0a0f1d\],
@@ -43,6 +43,7 @@
 [data-theme="light"] .bg-slate-900\/40,
 [data-theme="light"] .bg-\[\#07111E\]\/40 {
   background-color: #ffffff !important;
+  box-shadow: 6px 6px 18px #e4dfd5, -6px -6px 18px #ffffff, inset 1px 1px 2px rgba(255,255,255,0.9) !important;
 }
 
 [data-theme="light"] .border-slate-800,
