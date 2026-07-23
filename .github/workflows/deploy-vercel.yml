@@ -106,15 +106,18 @@ jobs:
 
       - uses: actions/checkout@v7
         if: steps.gate.outputs.run == 'true'
+        with:
+          submodules: false   # no active submodules — prevents ghost-submodule fetch failures
 
-      # pnpm must be set up BEFORE setup-node so the cache key is correct
+      # pnpm must be set up BEFORE setup-node so the cache key is correct.
+      # version is read automatically from "packageManager" in root package.json (pnpm@9.14.4)
       - uses: pnpm/action-setup@v4
         if: steps.gate.outputs.run == 'true'
 
       - uses: actions/setup-node@v4
         if: steps.gate.outputs.run == 'true'
         with:
-          node-version: '24'
+          node-version: '20'   # matches "engines": { "node": ">=20" } in root package.json
           cache: pnpm
 
       - name: Install dependencies
