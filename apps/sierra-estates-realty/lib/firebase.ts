@@ -125,6 +125,6 @@ export enum OperationType {
 }
 
 export const handleFirestoreError = (error: any, context?: string, opType?: OperationType) => {
-  console.error([Firestore Error]  ():, error);
+  console.error('[Firestore Error]:', error);
   return { success: false, error: error.message || String(error) };
 };
