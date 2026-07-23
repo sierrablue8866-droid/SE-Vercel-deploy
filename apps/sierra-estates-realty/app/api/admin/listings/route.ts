@@ -4,7 +4,10 @@ import { verifyAdminRequest } from '@/lib/server/auth-guard';
 import { adminDb } from '@/lib/server/firebase-admin';
 import { COLLECTIONS } from '@/lib/models/schema';
 import { mapListingToSpa, mapSpaToListingPatch } from '@/lib/server/admin-spa-mappers';
+<<<<<<< HEAD
 import { fingerprint } from '@/lib/services/inventory/dedupe';
+=======
+>>>>>>> origin/client
 import { Timestamp } from 'firebase-admin/firestore';
 import { logger } from '@/lib/logger';
 
@@ -63,6 +66,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'cmp and type are required' }, { status: 400 });
     }
 
+<<<<<<< HEAD
     // Inventory Domain Service (additive, non-breaking):
     // `dupeCheckHash` and `syncSource` already exist on the canonical Unit schema
     // (lib/models/schema.ts) but were never populated by this route. We fill them
@@ -93,6 +97,10 @@ export async function POST(req: NextRequest) {
     const ref = await adminDb.collection(COLLECTIONS.units).add({
       ...patch,
       ...inventoryFields,
+=======
+    const ref = await adminDb.collection(COLLECTIONS.units).add({
+      ...patch,
+>>>>>>> origin/client
       status: patch.status || 'available',
       category: 'residential',
       ownerType: 'internal',
