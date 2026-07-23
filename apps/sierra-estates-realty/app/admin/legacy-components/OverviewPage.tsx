@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 import { api } from '../lib/apiClient';
 import { Lead, Agent, SearchLog } from '@sierra-estates/types';
 import { ComposedChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';

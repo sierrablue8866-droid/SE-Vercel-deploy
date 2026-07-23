@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 import { ResponsiveContainer, Treemap } from 'recharts';
 
 export default function PriceHeatmapWidget() {

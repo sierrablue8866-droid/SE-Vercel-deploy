@@ -3,7 +3,7 @@
 /* eslint-disable */
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../firebase';
+import { db, handleFirestoreError, OperationType } from '@/lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   User, 

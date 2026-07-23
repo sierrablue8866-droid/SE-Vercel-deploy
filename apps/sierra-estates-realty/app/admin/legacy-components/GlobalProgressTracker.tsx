@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where, orderBy, limit } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 import { Workflow } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 

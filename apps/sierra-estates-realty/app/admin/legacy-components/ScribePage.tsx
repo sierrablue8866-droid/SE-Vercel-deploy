@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType, createSierraNotification } from '../firebase';
+import { db, handleFirestoreError, OperationType, createSierraNotification } from '@/lib/firebase';
 
 interface ScribePageProps {
   T: (key: string) => string;

@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, onSnapshot, addDoc, query, where, QueryConstraint } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 import { SearchLog } from '@sierra-estates/types';
 import { motion } from 'motion/react';
 import html2canvas from 'html2canvas';

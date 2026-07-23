@@ -8,7 +8,7 @@
  */
 import { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 
 interface Task {
   id: string;

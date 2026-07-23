@@ -13,7 +13,7 @@ import {
   deleteDoc,
   writeBatch
 } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../firebase';
+import { db, handleFirestoreError, OperationType } from '@/lib/firebase';
 import { SierraNotification } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';
 

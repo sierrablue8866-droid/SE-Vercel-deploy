@@ -10,7 +10,7 @@ import {
   Briefcase, CheckSquare, Palette, PenLine, Gavel, Activity, TerminalSquare, BarChart2, Settings2,
   type LucideIcon,
 } from 'lucide-react';
-import { auth } from '../firebase';
+import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
 
 interface SidebarProps {

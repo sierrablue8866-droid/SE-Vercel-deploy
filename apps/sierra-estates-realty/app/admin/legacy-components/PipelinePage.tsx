@@ -8,7 +8,7 @@
  */
 import { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 
 export const PIPE_STAGES = [
   { k: 'New', ar: 'جديد', c: '#1E88D9' },

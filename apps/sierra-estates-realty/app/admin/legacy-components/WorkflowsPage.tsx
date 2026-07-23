@@ -3,7 +3,7 @@
 /* eslint-disable */
 import React, { useEffect, useState, useMemo } from 'react';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '@/lib/firebase';
 import { api } from '../lib/apiClient';
 import { Workflow } from '@sierra-estates/types';
 import HighlightText from './HighlightText';

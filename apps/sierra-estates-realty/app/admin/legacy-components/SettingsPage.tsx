@@ -2,7 +2,7 @@
 // @ts-nocheck
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { createSierraNotification } from '../firebase';
+import { createSierraNotification } from '@/lib/firebase';
 import { api } from '../lib/apiClient';
 import { AdminUser } from '@sierra-estates/types';
 

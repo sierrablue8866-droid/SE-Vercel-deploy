@@ -2,7 +2,7 @@
 // @ts-nocheck
 /* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
-import { createSierraNotification } from '../firebase';
+import { createSierraNotification } from '@/lib/firebase';
 import { api } from '../lib/apiClient';
 import { Lead } from '@sierra-estates/types';
 import { motion, AnimatePresence } from 'motion/react';

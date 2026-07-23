@@ -10,7 +10,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '@/lib/firebase';
 import { api } from '../lib/apiClient';
 
 interface LoginPageProps {
