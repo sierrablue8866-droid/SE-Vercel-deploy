@@ -217,6 +217,37 @@ export default function ClientHome() {
 
   return (
     <div dir={isAr ? 'rtl' : 'ltr'} className={isAr ? 'sb-ar' : ''} style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+      {/* JSON-LD Schema.org Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'RealEstateAgent',
+            name: 'Sierra Estates',
+            image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',
+            '@id': 'https://sierra-estates.net',
+            url: 'https://sierra-estates.net',
+            telephone: '+201061399688',
+            priceRange: 'EGP 5M - EGP 50M',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: '5th Settlement',
+              addressLocality: 'New Cairo',
+              addressRegion: 'Cairo',
+              postalCode: '11835',
+              addressCountry: 'EG',
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 30.0275,
+              longitude: 31.4914,
+            },
+            areaServed: ['5th Settlement', 'Hyde Park', 'Mivida', 'Uptown Cairo', 'Villette', 'Mountain View iCity'],
+          }),
+        }}
+      />
+
       {/* NAV */}
       <header style={{ position: 'sticky', top: 0, zIndex: 100, background: 'var(--nav)', backdropFilter: 'blur(16px)', borderBottom: '1px solid var(--bd)' }}>
         <nav style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '14px var(--gutter)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
