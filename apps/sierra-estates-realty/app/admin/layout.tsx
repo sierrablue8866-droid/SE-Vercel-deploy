@@ -21,41 +21,76 @@ export default function AdminLayout({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isFirebaseClientConfigured) {
-      // No Firebase config (local dev without .env.local): keep the guard
-      // closed rather than open.
-      if (!isLoginPage) router.replace('/admin/login');
+    if (isLoginPage) {
       setIsLoading(false);
       return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        setIsAuth(false);
-        // The login page renders without the guard — don't redirect it to itself
-        if (!isLoginPage) router.replace('/admin/login');
-        setIsLoading(false);
-        return;
+    let isMounted = true;
+
+    async function checkAuth() {
+      // 1. Check server-side session cookie via /api/auth
+      try {
+        const res = await fetch('/api/auth');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.signedIn && (data.role === 'admin' || data.role === 'manager')) {
+            if (isMounted) {
+              setIsAuth(true);
+              setIsLoading(false);
+            }
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('[AdminLayout] Session check warning:', err);
       }
 
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        const role = userDoc.data()?.role;
+      // 2. If client Firebase is configured, check Firebase client auth state
+      if (isFirebaseClientConfigured) {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+          if (!user) {
+            if (isMounted) {
+              setIsAuth(false);
+              setIsLoading(false);
+              router.replace('/admin/login');
+            }
+            return;
+          }
 
-        if (role === 'admin' || role === 'manager') {
-          setIsAuth(true);
-        } else {
+          try {
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            const role = userDoc.data()?.role;
+
+            if (role === 'admin' || role === 'manager') {
+              if (isMounted) setIsAuth(true);
+            } else {
+              if (isMounted) router.replace('/admin/login');
+            }
+          } catch (error) {
+            console.error('Error checking admin role:', error);
+            if (isMounted) router.replace('/admin/login');
+          } finally {
+            if (isMounted) setIsLoading(false);
+          }
+        });
+
+        return () => unsubscribe();
+      } else {
+        // No valid session and Firebase not configured -> redirect to login
+        if (isMounted) {
+          setIsAuth(false);
+          setIsLoading(false);
           router.replace('/admin/login');
         }
-      } catch (error) {
-        console.error('Error checking admin role:', error);
-        router.replace('/admin/login');
-      } finally {
-        setIsLoading(false);
       }
-    });
+    }
 
-    return () => unsubscribe();
+    checkAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router, isLoginPage]);
 
   if (isLoginPage) return <>{children}</>;
