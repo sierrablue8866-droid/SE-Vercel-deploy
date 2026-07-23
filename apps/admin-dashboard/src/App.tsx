@@ -11,7 +11,8 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // Modular Component Imports
 import LoginPage from './components/LoginPage';
-import Sidebar, { NAV_ITEMS } from './components/Sidebar';
+import Sidebar from './components/Sidebar';
+import Topbar from './components/Topbar';
 // NAV_ITEMS is now a static array (Lucide icons, bilingual labels baked in).
 // langKey drives which label is shown — the T() function is still used by
 // child components for backwards compatibility.
@@ -565,7 +566,7 @@ export default function App() {
     }
 
     return (
-      <div className="flex flex-col md:flex-row h-screen w-full overflow-hidden bg-slate-50 dark:bg-[#05080f] text-slate-900 dark:text-white transition-colors duration-300">
+      <div className="admin-body" dir={isAr ? 'rtl' : 'ltr'} data-theme={theme}>
         <Sidebar
           collapsed={collapsed}
           setCollapsed={setCollapsed}
@@ -578,89 +579,23 @@ export default function App() {
           T={T}
         />
         
-        <div className="flex-1 flex flex-col min-w-0" style={{ zIndex: 10 }}>
-          {/* Header — refined, professional, no emojis */}
-          <header className="h-14 border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-950/80 backdrop-blur-lg flex items-center justify-between px-4 sticky top-0 transition-all z-20">
-            <div className="flex items-center gap-3 min-w-0">
-              {/* Active page title + breadcrumb-style subtitle */}
-              <div className="flex items-baseline gap-2.5 min-w-0">
-                <h1 className="font-semibold text-[15px] tracking-tight text-slate-900 dark:text-white select-none truncate">
-                  {activeTitle}
-                </h1>
-                <span className="hidden sm:inline text-[11px] text-slate-400 dark:text-slate-600 font-medium uppercase tracking-wider">
-                  {langKey === 'ar' ? 'سييرا إستيتس' : 'Sierra Estates'}
-                </span>
-              </div>
-            </div>
+        <div id="main">
+          <Topbar
+            T={T}
+            langKey={langKey}
+            activeTitle={activeTitle}
+            toggleVoiceSearch={toggleVoiceSearch}
+            isListening={isListening}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            pendingVoiceTranscript={pendingVoiceTranscript}
+            voiceCountdown={voiceCountdown}
+            speechError={speechError}
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+          />
 
-            <div className="flex items-center gap-1.5">
-              <AdminHealthMonitor />
-              <GlobalProgressTracker />
-
-              {/* Voice command — subtle, no glow */}
-              <button
-                onClick={toggleVoiceSearch}
-                className={`relative p-2 rounded-md border transition-all duration-200 ${
-                  isListening
-                    ? 'bg-red-500/10 border-red-500/40 text-red-500'
-                    : 'border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                }`}
-                title={T('voiceSearch')}
-                aria-label={T('voiceSearch')}
-              >
-                <Mic className="w-4 h-4" strokeWidth={1.75} />
-              </button>
-
-              {/* Global search — refined input */}
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="relative hidden sm:flex items-center group"
-              >
-                <Search
-                  className="absolute left-2.5 w-3.5 h-3.5 text-slate-400 group-focus-within:text-slate-600 dark:group-focus-within:text-slate-300 transition-colors pointer-events-none"
-                  strokeWidth={1.75}
-                />
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder={pendingVoiceTranscript ? T('listening') : (langKey === 'ar' ? 'بحث...' : 'Search...')}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`w-56 lg:w-64 bg-slate-100 dark:bg-slate-900 border rounded-md py-1.5 pl-8 pr-12 text-[13px] focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500/40 transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 ${
-                    pendingVoiceTranscript ? 'border-cyan-500/40' : 'border-slate-200 dark:border-slate-800'
-                  }`}
-                />
-                <kbd className="absolute right-2 text-[10px] font-mono text-slate-400 dark:text-slate-600 bg-white dark:bg-slate-950 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-800 select-none">
-                  ⌘K
-                </kbd>
-
-                {speechError && (
-                  <div className="absolute top-11 right-0 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-700 dark:text-red-400 text-[11px] px-2.5 py-1.5 rounded-md shadow-sm whitespace-nowrap z-50">
-                    {speechError}
-                  </div>
-                )}
-                {pendingVoiceTranscript && voiceCountdown > 0 && (
-                  <div className="absolute top-11 right-0 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/50 text-blue-700 dark:text-blue-300 text-[11px] px-2.5 py-1.5 rounded-md shadow-sm whitespace-nowrap z-50 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
-                    {voiceCountdown}s
-                  </div>
-                )}
-
-                {searchQuery && !pendingVoiceTranscript && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-9 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition"
-                    aria-label="Clear"
-                  >
-                    <X className="w-3.5 h-3.5" strokeWidth={1.75} />
-                  </button>
-                )}
-              </form>
-            </div>
-          </header>
-
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 custom-scrollbar bg-slate-50 dark:bg-slate-950">
+          <div id="content">
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
@@ -668,12 +603,12 @@ export default function App() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.18, ease: "easeOut" }}
-                className="h-full w-full mx-auto max-w-7xl"
+                style={{ height: '100%' }}
               >
                 {renderActiveProductPage()}
               </motion.div>
             </AnimatePresence>
-          </main>
+          </div>
         </div>
       </div>
     );
