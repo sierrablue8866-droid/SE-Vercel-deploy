@@ -1,8 +1,5 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useRef, useEffect } from 'react';
-import { db } from '@/lib/firebase';
+import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';

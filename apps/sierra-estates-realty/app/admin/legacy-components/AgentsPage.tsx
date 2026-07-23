@@ -1,11 +1,8 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot, addDoc } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '@/lib/firebase';
+import { db, handleFirestoreError, OperationType } from '../firebase';
 import { api } from '../lib/apiClient';
-import { Agent, ChatMessage } from '@sierra-estates/types';
+import { Agent, ChatMessage } from '../types';
 import HighlightText from './HighlightText';
 import { motion } from 'motion/react';
 import { recordAccess, getRelevanceScore } from '../utils/relevance';

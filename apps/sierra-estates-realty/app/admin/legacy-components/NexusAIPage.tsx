@@ -1,8 +1,5 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { createSierraNotification } from '@/lib/firebase';
+import { createSierraNotification } from '../firebase';
 
 interface ScrapeFeed {
   id: string;

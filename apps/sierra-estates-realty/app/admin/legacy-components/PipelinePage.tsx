@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 /**
  * PipelinePage — Kanban-style deal pipeline view.
  * Ported from Admin A (apps/sierra-estates-realty/app/admin/AdminPortal.tsx)
@@ -8,7 +5,7 @@
  */
 import { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '../firebase';
 
 export const PIPE_STAGES = [
   { k: 'New', ar: 'جديد', c: '#1E88D9' },

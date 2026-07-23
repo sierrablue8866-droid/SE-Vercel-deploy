@@ -1,10 +1,7 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
 import { collection, onSnapshot, doc, writeBatch } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType, createSierraNotification } from '@/lib/firebase';
-import { Listing } from '@sierra-estates/types';
+import { db, handleFirestoreError, OperationType, createSierraNotification } from '../firebase';
+import { Listing } from '../types';
 
 interface CuratorPageProps {
   T: (key: string) => string;

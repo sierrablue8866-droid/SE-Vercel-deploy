@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useMemo } from 'react';
 import { COMPOUNDS } from './compoundData';
 

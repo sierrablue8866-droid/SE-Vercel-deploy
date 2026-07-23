@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React from 'react';
 
 export default function DataSyncHubPage() {

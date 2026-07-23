@@ -1,9 +1,6 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useMemo, FormEvent } from 'react';
 import { api } from '../lib/apiClient';
-import { Listing } from '@sierra-estates/types';
+import { Listing } from '../types';
 import HighlightText from './HighlightText';
 import { motion } from 'motion/react';
 import { recordAccess, getRelevanceScore } from '../utils/relevance';

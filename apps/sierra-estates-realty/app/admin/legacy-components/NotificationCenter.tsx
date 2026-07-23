@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useRef } from 'react';
 import {
   collection,
@@ -13,8 +10,8 @@ import {
   deleteDoc,
   writeBatch
 } from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '@/lib/firebase';
-import { SierraNotification } from '@sierra-estates/types';
+import { db, handleFirestoreError, OperationType } from '../firebase';
+import { SierraNotification } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NotificationCenterProps {

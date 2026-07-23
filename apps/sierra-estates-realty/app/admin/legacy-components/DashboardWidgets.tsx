@@ -1,9 +1,6 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useEffect, useState, useMemo } from 'react';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '../firebase';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, Cell, ZAxis } from 'recharts';
 import LeadsFunnelWidget from './LeadsFunnelWidget';
 

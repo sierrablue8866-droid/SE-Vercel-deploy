@@ -1,10 +1,7 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, onSnapshot, doc, updateDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth, db } from '../firebase';
 import { Database, ShieldCheck, HardDrive, AlertTriangle, RefreshCw } from 'lucide-react';
 
 interface HealthData {

@@ -1,9 +1,6 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import '../admin.css';
-import { db } from '@/lib/firebase';
+import { db } from '../firebase';
 import { collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export function AdminMatrixApp() {

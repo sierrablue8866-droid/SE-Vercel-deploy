@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState } from 'react';
 import ROICalculator from './ROICalculator';
 import PricingCalculator from './PricingCalculator';

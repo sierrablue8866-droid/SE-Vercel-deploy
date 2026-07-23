@@ -1,10 +1,7 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useMemo } from 'react';
-import { createSierraNotification } from '@/lib/firebase';
+import { createSierraNotification } from '../firebase';
 import { api } from '../lib/apiClient';
-import { Lead } from '@sierra-estates/types';
+import { Lead } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 import HighlightText from './HighlightText';
 import { recordAccess, getRelevanceScore } from '../utils/relevance';

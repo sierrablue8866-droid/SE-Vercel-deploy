@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState } from 'react';
 import {
   signInWithPopup,
@@ -10,7 +7,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth } from '../firebase';
 import { api } from '../lib/apiClient';
 
 interface LoginPageProps {

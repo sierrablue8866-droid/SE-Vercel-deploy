@@ -1,16 +1,13 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React from 'react';
 import {
   LogOut, Languages, PanelLeftClose, PanelLeftOpen, X,
   LayoutDashboard, Users, Building2, CalendarCheck, BarChart3,
   FileText, Bot, Workflow, Zap, Settings, RefreshCw, Database,
-  Sun, Moon, MessageSquare, ClipboardList,
+  Sun, Moon,
   Briefcase, CheckSquare, Palette, PenLine, Gavel, Activity, TerminalSquare, BarChart2, Settings2,
   type LucideIcon,
 } from 'lucide-react';
-import { auth } from '@/lib/firebase';
+import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 
 interface SidebarProps {
@@ -39,6 +36,8 @@ interface NavItem {
 // Professional nav items — Lucide icons, no emojis.
 // Each item carries EN + AR labels so the sidebar re-renders cleanly on
 // language switch without re-deriving the labels via the T() lookup.
+// Consolidated from all 3 admin sources (Next.js Admin A + Vite Admin B +
+// orphan Admin C) — every section that existed in any admin is wired here.
 export const NAV_ITEMS: NavItem[] = [
   // ── Core operations (MegaDashboard scroll targets) ────────────────
   { id: 'overview',       label: 'Live Dashboard',    labelAr: 'لوحة التحكم',           icon: LayoutDashboard, section: 'core' },
@@ -47,27 +46,24 @@ export const NAV_ITEMS: NavItem[] = [
   { id: 'followups',      label: 'Follow-ups',        labelAr: 'المتابعات',             icon: CalendarCheck,   section: 'core' },
   { id: 'searchInsights', label: 'Search Insights',   labelAr: 'تحليلات البحث',         icon: BarChart3,       section: 'core' },
   { id: 'pageEditor',     label: 'Page Editor',       labelAr: 'محرر الصفحات',          icon: FileText,        section: 'core' },
-  // ── Operations (Pipeline + Tasks + Curator/Scribe/Closer) ──────────
+  // ── Operations (Pipeline + Tasks + Curator/Scribe/Closer from Admin A) ──
   { id: 'pipeline',       label: 'Deal Pipeline',     labelAr: 'خط الصفقات',            icon: Briefcase,       section: 'operations' },
   { id: 'tasks',          label: 'Tasks',             labelAr: 'المهام',                icon: CheckSquare,     section: 'operations', badge: '5', badgeTone: 'info' },
   { id: 'curator',        label: 'The Curator',       labelAr: 'المنظم',                icon: Palette,         section: 'operations' },
   { id: 'scribe',         label: 'The Scribe',        labelAr: 'الكاتب',                icon: PenLine,         section: 'operations' },
   { id: 'closer',         label: 'Stage-9 Closer',    labelAr: 'الإغلاق',               icon: Gavel,           section: 'operations' },
   // ── Automation & agents ────────────────────────────────────────────
-  { id: 'nexus',          label: 'Nexus-AI Telemetry',labelAr: 'نيكسوس',                icon: Activity,        section: 'intelligence', badge: 'LIVE', badgeTone: 'success' },
   { id: 'bots',           label: 'Bots Control',      labelAr: 'التحكم بالبوتات',       icon: Bot,             section: 'automation' },
   { id: 'agents',         label: 'AI Agents',         labelAr: 'وكلاء الذكاء',          icon: Bot,             section: 'automation', badge: '6', badgeTone: 'success' },
   { id: 'workflows',      label: 'Workflows',         labelAr: 'سير العمل',             icon: Workflow,        section: 'automation', badge: '8', badgeTone: 'info' },
-  // ── Intelligence (telemetry + reports) ─────────────────────────────
+  // ── Intelligence (telemetry + reports from Admin A) ────────────────
+  { id: 'nexus',          label: 'Nexus-AI Telemetry',labelAr: 'نيكسوس',                icon: Activity,        section: 'intelligence', badge: 'LIVE', badgeTone: 'success' },
   { id: 'openclaw',       label: 'OpenClaw Terminal', labelAr: 'أوبن كلو',              icon: TerminalSquare,  section: 'intelligence' },
   { id: 'reports',        label: 'Reports',           labelAr: 'التقارير',              icon: BarChart2,       section: 'intelligence' },
   // ── Integrations ───────────────────────────────────────────────────
   { id: 'easyListing',    label: 'Easy Listing',      labelAr: 'إدراج سريع',            icon: Zap,             section: 'integrations' },
   { id: 'automation',     label: 'Automation Portal', labelAr: 'بوابة الأتمتة',         icon: Settings,        section: 'integrations' },
   { id: 'dataSync',       label: 'Data Sync',         labelAr: 'مزامنة البيانات',       icon: RefreshCw,       section: 'integrations' },
-  // ── Phase 3: Typed CRUD pages ──────────────────────────────────────
-  { id: 'listingsManager', label: 'Listings Manager',  labelAr: 'إدارة العقارات',        icon: ClipboardList,   section: 'integrations' },
-  { id: 'requestsTickets', label: 'Request Tickets',   labelAr: 'تذاكر الطلبات',         icon: MessageSquare,   section: 'integrations' },
   // ── System ─────────────────────────────────────────────────────────
   { id: 'dbEditor',       label: 'DB Editor',         labelAr: 'محرر قاعدة البيانات',   icon: Database,        section: 'system' },
   { id: 'settings',       label: 'System Config',     labelAr: 'إعدادات النظام',        icon: Settings2,       section: 'system' },
@@ -100,7 +96,7 @@ export default function Sidebar({
   setLangKey,
 }: SidebarProps) {
   const isAr = langKey === 'ar';
-  const sections: NavItem['section'][] = ['core', 'automation', 'integrations', 'system'];
+  const sections: NavItem['section'][] = ['core', 'operations', 'automation', 'intelligence', 'integrations', 'system'];
 
   const handleSignOut = async () => {
     if (confirm(isAr ? 'تسجيل الخروج من لوحة التحكم؟' : 'Sign out of admin session?')) {
@@ -111,8 +107,12 @@ export default function Sidebar({
   const handleItemClick = (id: string) => {
     setTab(id);
     
-    // If it's a mega-dashboard section, scroll to it smoothly
-    if (['overview', 'leads', 'listings', 'nexus', 'bots', 'workflows', 'searchInsights', 'followups'].includes(id)) {
+    // If it's a mega-dashboard section, scroll to it smoothly.
+    // Other tabs (pipeline, tasks, curator, scribe, closer, nexus, openclaw,
+    // reports, settings, easyListing, automation, dataSync, pageEditor,
+    // dbEditor, agents) are rendered as separate pages by renderActiveProductPage()
+    // — clicking them just sets the tab; no scroll needed.
+    if (['overview', 'leads', 'listings', 'bots', 'workflows', 'searchInsights', 'followups'].includes(id)) {
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
       }, 100);

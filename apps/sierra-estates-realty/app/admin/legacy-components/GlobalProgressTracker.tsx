@@ -1,10 +1,7 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where, orderBy, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { Workflow } from '@sierra-estates/types';
+import { db } from '../firebase';
+import { Workflow } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function GlobalProgressTracker() {

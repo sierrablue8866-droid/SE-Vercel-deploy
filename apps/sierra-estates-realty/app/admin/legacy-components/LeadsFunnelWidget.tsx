@@ -1,9 +1,6 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { db } from '../firebase';
 import { FunnelChart, Funnel, Tooltip, LabelList, ResponsiveContainer, Cell } from 'recharts';
 
 const STAGE_ORDER = [

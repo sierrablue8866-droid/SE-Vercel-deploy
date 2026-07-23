@@ -1,6 +1,3 @@
-"use client";
-// @ts-nocheck
-/* eslint-disable */
 import React, { useState, useEffect, useCallback } from 'react';
 import { api } from '../lib/apiClient';
 import { motion } from 'motion/react';
