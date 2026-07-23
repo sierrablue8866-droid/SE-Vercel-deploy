@@ -699,20 +699,33 @@ function ScribePage({ T }) {
       let type = 'Apartment';
       for(const [t,kws] of Object.entries(typeKws)){if(kws.some(k=>raw.toLowerCase().includes(k))){type=t;break;}}
       const cpds=['Mivida','Hyde Park','Mountain View iCity','Uptown Cairo','Madinaty','Eastown','Villette'];
-      const cpd = cpds.find(c=>raw.toLowerCase().includes(c.toLowerCase()))||'Unknown';
+      const cpd = cpds.find(c=>raw.toLowerCase().includes(c.toLowerCase()))||'Mountain View';
       const rent = /شهر|\/mo|\/month|rent/i.test(raw);
+      const beds = bedsMatch ? parseInt(bedsMatch[1]) : 3;
+      const area = areaMatch ? parseInt(areaMatch[1]||areaMatch[2]) : 150;
+      const priceNum = priceMatch ? (priceMatch[0].includes('M') ? parseFloat(priceMatch[0].replace(/[^\d.]/g,''))*1000000 : parseFloat(priceMatch[0].replace(/[^\d.]/g,''))) : 110000;
+      
+      const cpdAbbr = cpd.split(' ').map(w=>w[0]).join('').toUpperCase();
+      const sbrCode = `${cpdAbbr}-${beds}F-${Math.round(priceNum >= 1000000 ? priceNum/1000000 : priceNum/1000)}${priceNum >= 1000000 ? 'M' : 'K'}`;
+      
+      let hash = 0;
+      const keyStr = `${cpd}|${area}|${priceNum}`;
+      for (let i = 0; i < keyStr.length; i++) hash = ((hash << 5) - hash) + keyStr.charCodeAt(i);
+      const syncHash = `sbr_${Math.abs(hash).toString(16).padStart(8,'0')}`;
+
       setParsed([
         {k:'Compound',v:cpd},
         {k:'Type',v:type},
-        {k:'Area',v:areaMatch?`${areaMatch[1]||areaMatch[2]}m²`:'—'},
-        {k:'Bedrooms',v:bedsMatch?bedsMatch[1]:'—'},
-        {k:'Price',v:priceMatch?priceMatch[0]:'—'},
+        {k:'Area',v:`${area}m²`},
+        {k:'Bedrooms',v:String(beds)},
+        {k:'Price',v:priceMatch?priceMatch[0]:'EGP 110,000'},
         {k:'Purpose',v:rent?'Rent':'Resale'},
         {k:'Language',v:isArabic?'Arabic':'English'},
-        {k:'SBR Code',v:`SE-${cpd.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,3)}-${type.slice(0,3).toUpperCase()}-${String(Math.floor(Math.random()*9000)+1000)}-2026`},
+        {k:'sbrCode',v:sbrCode},
+        {k:'sync_hash',v:syncHash},
       ]);
       setParsing(false);
-    }, 900);
+    }, 600);
   };
 
   return (

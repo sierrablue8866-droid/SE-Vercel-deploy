@@ -175,19 +175,21 @@ const SAMPLE_LEADS = [
 
 const SAMPLE_USERS = [
   {
-    uid: 'user-admin-001',
-    email: 'admin@sierraestatesrealty.com',
-    displayName: 'Sierra Admin',
+    uid: 'user-ceo-001',
+    email: 'ahmed.fawzy@sierra-estates.net',
+    displayName: 'Ahmed Fawzy',
     role: 'admin',
-    photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=admin',
+    title: 'Chief Executive Officer & Sales Manager',
+    photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=AhmedFawzy',
     createdAt: new Date(),
   },
   {
-    uid: 'user-advisor-001',
-    email: 'advisor@sierraestatesrealty.com',
-    displayName: 'Ahmed Fawzy',
-    role: 'advisor',
-    photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=advisor',
+    uid: 'user-teamlead-002',
+    email: 'farida@sierra-estates.net',
+    displayName: 'Farida',
+    role: 'manager',
+    title: 'Sales Team Leader & HR Manager',
+    photoURL: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Farida',
     createdAt: new Date(),
   },
 ];
