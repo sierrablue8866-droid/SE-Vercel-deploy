@@ -71,7 +71,6 @@ Negotiation history: ${context.negotiationHistory.slice(-3).join(' → ') || 'Fr
           }
         } catch {
           // Fall through to fallback template if SDK is missing
-        }
       }
     }
 
