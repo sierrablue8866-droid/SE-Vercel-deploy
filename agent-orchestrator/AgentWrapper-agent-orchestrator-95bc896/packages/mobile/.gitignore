@@ -1,0 +1,52 @@
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Push secrets — the FCM V1 service-account key and any admin SDK JSON must never
+# be committed (they authorize sending push to your devices).
+*-firebase-adminsdk-*.json
+*service-account*.json
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# generated native folders
+/ios
+/android
+
+# logs
+*.log
+
+# Firebase Android config — kept out of the public repo. The EAS build still
+# gets it via .easignore (which re-includes it); locally it must exist for
+# `expo run:android`.
+google-services.json
