@@ -33,6 +33,16 @@ minimumReleaseAgeExclude:
   # this setting guards against does not apply to our own packages.
   - '@replit/*'
   - stripe-replit-sync
+  - "@ai-sdk/*"
+  - "@rolldown/*"
+  - "@vercel/*"
+  - "@workflow/*"
+  - ai
+  - experimental-ai-sdk-code-mode
+  - eve
+  - nitro
+  - rolldown
+  - workflow
 
 packages:
   - "apps/*"
@@ -44,6 +54,7 @@ packages:
   - "lib/*"
   - "lib/integrations/*"
   - "scripts"
+  - my-agent
 
 catalog:
   '@replit/vite-plugin-cartographer': ^0.5.21
